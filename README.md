@@ -2,16 +2,5 @@
 
 This is the repository for our CSE110 group project. 
 
-The contributers to this project include:
+[Here](admin/team.md) is the link to our team page.
 
-- Ali Mohammadiasl
-- James Goodwin
-- Phoebe Tang 
-- Rain van Eetveldt
-- Sanjith Devineni
-- Andy Tran
-- Kabir Sachdev
-- Nathan Chao
-- Umar Khan
-- Kenneth Vuong
-- Shravi Jain
