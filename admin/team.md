@@ -4,6 +4,41 @@
 
 ## Team values
 
+- Treat all team members with respect, valuing diverse backgrounds and perspectives
+
+- Each team member should take ownership of their tasks and responsibilities, meeting deadlines and maintaining quality
+
+- Maintain open, honest, and respectful dialogue both in-person and online
+
+- Help each other out when it's needed
+
+- Communicate as effectively as possible
+
+- Be open to experimenting with different solutions
+
+- Do not be afraid to ask for help when you need it
+
+- Commit to honesty and transparency 
+
+- Embrace creative thinking and encourage new ideas
+
+- Address conflicts constructively
+
+- Respect each other’s time by being punctual
+
+- Uphold ethical standards in all aspects of the project, including coding, reporting, and peer interactions
+
+- Being open to change and adaptable in approaches
+
+- Recognize that there are different approaches and ideas for solving problems
+
+- Avoid blame, speculation and inflammatory language
+
+- Every task is integral to the project and should be completed with sincerity
+
+- Listen actively and with a genuine desire to understand each other’s perspective
+
+
 ## Team roster
 
 The contributers to this project include:
