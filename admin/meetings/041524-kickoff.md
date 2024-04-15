@@ -4,58 +4,63 @@
 
 **Date:** 04/15/2024 <br>
 **Time:** 1:00pm -1:45pm <br>
-**Location:** TBA  
+**Location:** Mosaic Second floor
 
 
 ## Attendance
 
-- [ ] Ali Mohammadiasl
-- [ ] James Goodwin
-- [ ] Phoebe Tang 
-- [ ] Rain van Eetveldt 
+- [x] Ali Mohammadiasl
+- [x] James Goodwin
+- [x] Phoebe Tang 
+- [x] Rain van Eetveldt 
 - [ ] Sanjith Devineni 
-- [ ] Andy Tran 
-- [ ] Kabir Sachdev 
-- [ ] Nathan Chao 
-- [ ] Umar Khan 
-- [ ] Kenneth Vuong 
-- [ ] Shravi Jain 
+- [x] Andy Tran 
+- [x] Kabir Sachdev 
+- [x] Nathan Chao 
+- [x] Umar Khan 
+- [x] Kenneth Vuong 
+- [x] Shravi Jain 
 
 
 ## Agenda
 
-1. **Topic 1:** Description or Objective
-   - Sub-point or Discussion
-2. **Topic 2:** Description or Objective
-   - Sub-point or Discussion
-3. **Topic 3:** Description or Objective
-   - Sub-point or Discussion
+1. **Topic 1:** Team colors, values
+2. **Topic 2:** Team name
+3. **Topic 3:** Team goals
 
 ## Previous Business
 
+- N/A
+
 ## Today's Discussion Summary
 
+- Creating a Trello so that we can delegate tasks and keep track
+
+- New logo has been decided and will be added to the page
+
+- The team colors are black/white/neon blue
+
+- Two develeopers and one lead will have to review pull requests and constructive ciricism given to the one who submitted
+
+- Paired programming sessions will be conducted for those who are interested
 
 
 ## Action Items
 
-- [ ] Task 1
+- [x] Intro video
 
-- [ ] Task 2
+- [x] Team values
 
-- [ ] Task 3
+- [x] Team logo
 
-## Decisions Made
 
-1. **[Decision 1]** - Description of the decision
-2. **[Decision 2]** - Description of the decision
-3. **[Decision 3]** - Description of the decision
 
-## Additional Notes
+## Conclusion
 
-- Additional information or observations not covered above.
+- Will be expanding more on the roles next meeting
 
 ## Next Meeting
 
-**Scheduled Date:** [Enter Date]  
-**Agenda:** [Proposed points for discussion]
+**Scheduled Date:** TBA 
+
+**Agenda:** TBA
