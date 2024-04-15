@@ -11,6 +11,7 @@ The contributers to this project include:
 - Ali Mohammadiasl https://github.com/AliMohammadiasl
     - My name is Ali and I am a third year transfer CS student. I love being active in my free time and really enjoy working out, biking, hiking, and sometimes going on runs. I am also a massive fan of sports, my favorites being Soccer and Formula 1. My favorite soccer team is Manchester United and my favorite F1 team is Ferrari. 
 - James Goodwin https://github.com/Cloud1379
+    - My name is James and I am a second year CS major. I’m an officer and varsity member on UCSD’s table tennis team, and I occasionally compete against other nationwide collegiate teams in tournaments. I also enjoy working out, playing videogames, and practicing guitar.  
 - Phoebe Tang https://github.com/adironene
 - Rain van Eetveldt https://github.com/beepbeeepimajeep
     - I am a 3rd year Computer Science major. I was born and raised in South Africa and have lived in San Diego for 8 years.  I am an avid reader - mostly fiction at the moment and have an 8 year old daughter who keeps me happy and busy. 
@@ -21,6 +22,7 @@ The contributers to this project include:
 - Kabir Sachdev https://github.com/kabirsachdev7
     - My name is Kabir and I am a third year Math-CS major. I was born and raised in Bangkok, Thailand, and have grown up speaking four different languages. In my free time, I enjoy playing classical piano, powerlifting, and going on hikes. Lately, I've found a fascinating way to merge my love for coding with trading options. On campus, I am involved with Triton Consulting Group and ACM. 
 - Nathan Chao https://github.com/ChooChooChao
+    - My name is Nathan Chao, I’m a third year Computer Engineering major in Seventh College. I spend most of my free time practicing/coaching martial arts and hanging out with friends. Taking part in competitions every couple months, my overall goal is to earn a spot on the national team and represent the US at international events.
 - Umar Khan https://github.com/ukcsd
 - Kenneth Vuong https://github.com/kennethkietvuong
     - My name is Kenneth, and I'm a third year CE Revelle student. My go-to things that I enjoy doing are hanging out with others, gaming it out, and making silly arduino projects. One thing that I want to explore later on is 3D printing and CAD! 3D printing is something that I’ve always wanted to do and it looks fun. Eventually, I’ll be able to 3D print stuff that would be practical for my other hobbies!
