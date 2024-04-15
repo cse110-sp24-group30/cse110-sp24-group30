@@ -5,7 +5,22 @@
 **Date:** 04/15/2024 <br>
 **Time:** 1:00pm -1:45pm <br>
 **Location:** TBA  
-**Attendees:** TBA
+
+
+## Attendance
+
+- [ ] Ali Mohammadiasl
+- [ ] James Goodwin
+- [ ] Phoebe Tang 
+- [ ] Rain van Eetveldt 
+- [ ] Sanjith Devineni 
+- [ ] Andy Tran 
+- [ ] Kabir Sachdev 
+- [ ] Nathan Chao 
+- [ ] Umar Khan 
+- [ ] Kenneth Vuong 
+- [ ] Shravi Jain 
+
 
 ## Agenda
 
@@ -16,22 +31,11 @@
 3. **Topic 3:** Description or Objective
    - Sub-point or Discussion
 
-## Discussion Summary
+## Previous Business
 
-### Topic 1
-- Key points discussed
-- Decisions made
-- Action items and responsible persons
+## Today's Discussion Summary
 
-### Topic 2
-- Key points discussed
-- Decisions made
-- Action items and responsible persons
 
-### Topic 3
-- Key points discussed
-- Decisions made
-- Action items and responsible persons
 
 ## Action Items
 

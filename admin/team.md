@@ -10,9 +10,10 @@ The contributers to this project include:
 
 - Ali Mohammadiasl https://github.com/AliMohammadiasl
     - My name is Ali and I am a third year transfer CS student. I love being active in my free time and really enjoy working out, biking, hiking, and sometimes going on runs. I am also a massive fan of sports, my favorites being Soccer and Formula 1. My favorite soccer team is Manchester United and my favorite F1 team is Ferrari. 
-- James Goodwin **[instert github]**
+- James Goodwin https://github.com/Cloud1379
 - Phoebe Tang https://github.com/adironene
-- Rain van Eetveldt **[instert github]**
+- Rain van Eetveldt https://github.com/beepbeeepimajeep
+    - I am a 3rd year Computer Science major. I was born and raised in South Africa and have lived in San Diego for 8 years.  I am an avid reader - mostly fiction at the moment and have an 8 year old daughter who keeps me happy and busy. 
 - Sanjith Devineni https://github.com/sanjithdevineni
     - My name is Sanjith, and I’m a third year computer science student. I love doing many things like playing sports, games, going to the beach, working out and other random things. I’ve been playing tennis since I was 5 and I’m actually on the Division 1 Men’s tennis team here at UCSD. I also love basketball, and I’m a huge fan of the Miami Heat. 
 - Andy Tran https://github.com/alt012ucsd
