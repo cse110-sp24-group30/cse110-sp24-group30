@@ -1,4 +1,4 @@
-# Team name echo 30
+# Team name: echo 30
 
 ## Team logo
 
@@ -6,7 +6,7 @@
 
 Our team colors are: 27c6d9, 000000, ffffff
 
-The theme for our future slides will be based on https://docs.google.com/presentation/d/1qEYWxrctAmRn9m88dR0w3sUcIVYOqKV8Za3N71i_jBg/edit#slide=id.p
+The theme for our future slides will be based on [this template](https://docs.google.com/presentation/d/1qEYWxrctAmRn9m88dR0w3sUcIVYOqKV8Za3N71i_jBg/edit#slide=id.p)
 
 ## Team mascot
 
@@ -54,22 +54,24 @@ The theme for our future slides will be based on https://docs.google.com/present
 The contributers to this project include:
 
 - Ali Mohammadiasl https://github.com/AliMohammadiasl
-    - My name is Ali and I am a third year transfer CS student. I love being active in my free time and really enjoy working out, biking, hiking, and sometimes going on runs. I am also a massive fan of sports, my favorites being Soccer and Formula 1. My favorite soccer team is Manchester United and my favorite F1 team is Ferrari. 
+    - My name is Ali, and I am a third year transfer CS student. I love being active in my free time and really enjoy working out, biking, hiking, and sometimes going on runs. I am also a massive fan of sports, my favorites being Soccer and Formula 1. My favorite soccer team is Manchester United and my favorite F1 team is Ferrari. 
 - James Goodwin https://github.com/Cloud1379
-    - My name is James and I am a second year CS major. I’m an officer and varsity member on UCSD’s table tennis team, and I occasionally compete against other nationwide collegiate teams in tournaments. I also enjoy working out, playing videogames, and practicing guitar.  
+    - My name is James, and I am a second year CS major. I’m an officer and varsity member on UCSD’s table tennis team, and I occasionally compete against other nationwide collegiate teams in tournaments. I also enjoy working out, playing videogames, and practicing guitar.  
 - Phoebe Tang https://github.com/adironene
+    - My name is Phoebe, and I am a third-year MATH-CS student. This is my last quarter at UCSD. I will pursue a MS in CS after graduation! At UCSD, I am the Vice President of Events at HKN (engineering honor society for IEEE). Feel free to come by our events for some fun socials and cool technicals. In my freetime, I enjoy snowboarding, dancing, and feeding stray cats. Also, someone told me to `touch grass`. Now I have a file named grass. Any idea on what to do next??
 - Rain van Eetveldt https://github.com/beepbeeepimajeep
-    - I am a 3rd year Computer Science major. I was born and raised in South Africa and have lived in San Diego for 8 years.  I am an avid reader - mostly fiction at the moment and have an 8 year old daughter who keeps me happy and busy. 
+    - I am a 3rd year Computer Science major. I was born and raised in South Africa and have lived in San Diego for 8 years. I am an avid reader - mostly fiction at the moment and have an 8 year old daughter who keeps me happy and busy. 
 - Sanjith Devineni https://github.com/sanjithdevineni
     - My name is Sanjith, and I’m a third year computer science student. I love doing many things like playing sports, games, going to the beach, working out and other random things. I’ve been playing tennis since I was 5 and I’m actually on the Division 1 Men’s tennis team here at UCSD. I also love basketball, and I’m a huge fan of the Miami Heat. 
 - Andy Tran https://github.com/alt012ucsd
     - My name is Andy, and I’m a second year CS student. I mainly enjoy watching tv shows and playing video games, but I’m also trying to get better at cooking. I’m from Chula Vista which is about half an hour from campus, but I currently live in ERC.
 - Kabir Sachdev https://github.com/kabirsachdev7
-    - My name is Kabir and I am a third year Math-CS major. I was born and raised in Bangkok, Thailand, and have grown up speaking four different languages. In my free time, I enjoy playing classical piano, powerlifting, and going on hikes. Lately, I've found a fascinating way to merge my love for coding with trading options. On campus, I am involved with Triton Consulting Group and ACM. 
+    - My name is Kabir, and I am a third year Math-CS major. I was born and raised in Bangkok, Thailand, and have grown up speaking four different languages. In my free time, I enjoy playing classical piano, powerlifting, and going on hikes. Lately, I've found a fascinating way to merge my love for coding with trading options. On campus, I am involved with Triton Consulting Group and ACM. 
 - Nathan Chao https://github.com/ChooChooChao
     - My name is Nathan Chao, I’m a third year Computer Engineering major in Seventh College. I spend most of my free time practicing/coaching martial arts and hanging out with friends. Taking part in competitions every couple months, my overall goal is to earn a spot on the national team and represent the US at international events.
 - Umar Khan https://github.com/ukcsd
+    - My name is Umar and I’m a third-year CS transfer student at UCSD. I was born in Portland, Oregon, but moved here when I was very young and have been living here since. During my free time, I enjoy playing video games and working out when I can. I also love to watch movies and spend quality time with my family and friends. 
 - Kenneth Vuong https://github.com/kennethkietvuong
     - My name is Kenneth, and I'm a third year CE Revelle student. My go-to things that I enjoy doing are hanging out with others, gaming it out, and making silly arduino projects. One thing that I want to explore later on is 3D printing and CAD! 3D printing is something that I’ve always wanted to do and it looks fun. Eventually, I’ll be able to 3D print stuff that would be practical for my other hobbies!
 - Shravi Jain https://github.com/shjucsd
-    - My name is Shravi and I’m a second year CS student at Revelle College. I am from Delhi, India and moved here for college. In my free time, I like to listen to music and read mystery thrillers. I also like watching my comfort shows like Friends, Modern Family and Brooklyn 99.  I am also a part of the undergraduate WIC (Women In Computing) where we host different types of events ranging from social to technical development to promote diversity in the tech industry.
+    - My name is Shravi, and I’m a second year CS student at Revelle College. I am from Delhi, India and moved here for college. In my free time, I like to listen to music and read mystery thrillers. I also like watching my comfort shows like Friends, Modern Family and Brooklyn 99.  I am also a part of the undergraduate WIC (Women In Computing) where we host different types of events ranging from social to technical development to promote diversity in the tech industry.
