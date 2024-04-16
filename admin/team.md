@@ -2,12 +2,15 @@
 
 ## Team logo
 
-<img src="imgs/110 Team 30.png" height=250>
+<img src="Branding/110 Team 30.png" height=250>
 
 Our team colors are: 27c6d9, 000000, ffffff
 
 The theme for our future slides will be based on https://docs.google.com/presentation/d/1qEYWxrctAmRn9m88dR0w3sUcIVYOqKV8Za3N71i_jBg/edit#slide=id.p
 
+## Team mascot
+
+<img src="Branding/Mascot.jpg" height=250>
 
 ## Team values
 
