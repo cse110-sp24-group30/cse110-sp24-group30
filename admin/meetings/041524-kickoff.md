@@ -24,9 +24,8 @@
 
 ## Agenda
 
-1. **Topic 1:** Team colors, values
-2. **Topic 2:** Team name
-3. **Topic 3:** Team goals
+1. **Topic 1:** Team colors, values, name, goals
+2. **Topic 2:** Team roles and fundamentals
 
 ## Previous Business
 
@@ -43,6 +42,7 @@
 - Two develeopers and one lead will have to review pull requests and constructive ciricism given to the one who submitted
 
 - Paired programming sessions will be conducted for those who are interested
+
 
 
 ## Action Items
