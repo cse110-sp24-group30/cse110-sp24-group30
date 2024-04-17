@@ -16,11 +16,11 @@ Creation 04/16/2024
 | Andy Tran            | alt012@ucsd.edu        | (619)-874-1914 | Developer          |
 | Donovan van Eetveldt | dvaneetv@ucsd.edu      |                | Developer          |
 | James Goodwin        | jsgoodwin@ucsd.edu     | (408)-757-7298 | Developer/Designer |
-| Kenneth Vuong        | k1vuong@ucsd.edu       | (562) 416-5271 | Developer          |
-| Nathan Chao          | nchao@ucsd.edu         |                | Developer          |
+| Kenneth Vuong        | k1vuong@ucsd.edu       | (562)-416-5271 | Developer          |
+| Nathan Chao          | nchao@ucsd.edu         | (626)-233-2052 | Developer          |
 | Sanjith Devineni     | sdevineni@ucsd.edu     | (858)-349-0804 | Developer          |
 | Shravi Jain          | shj009@ucsd.edu        | (650)-400-0519 | Developer/Planner  |
-| Umar Khan            | u1khan@ucsd.edu        | 858-790-2444   | Developer          |
+| Umar Khan            | u1khan@ucsd.edu        | (858)-790-2444 | Developer          |
 
 ## Primary Means of Communication and Expectations
 1. Team members should provide regular updates on their progress. This can be done through designated channels and threads on slack
