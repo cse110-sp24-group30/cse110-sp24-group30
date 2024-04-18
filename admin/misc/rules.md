@@ -83,7 +83,7 @@ Creation 04/16/2024
 ## Agreement
 Write your full name below to sign the contract <br>
 **Signature:**<br>
-**Date:**
+**Date:** 
 
 
 
