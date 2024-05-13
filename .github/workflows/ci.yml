@@ -26,7 +26,7 @@ jobs:
         run: npx eslint .
 
       - name: Run unit tests
-        run: npm test --passWithNoTests
+        run: npm test
 
       - name: Generate documentation
         run: npx jsdoc -c jsdoc.json
