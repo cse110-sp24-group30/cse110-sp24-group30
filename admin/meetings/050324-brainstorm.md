@@ -92,22 +92,22 @@
 
 **TODO List**
 1. Dashboard
-   1. link to other 3 pages
+   1. link to other 3 pages (DONE)
 2. Journal
-   1. modifying journal
-   2. folders
-   3. search + filter
-   4. Decision/reflection page
-   5. export as pdf
+   1. modifying journal (Add journal - DONE, Edit journal DONE, Delete journal DONE)
+   2. folders (done)
+   3. search + filter (DONE)
+   4. Decision/reflection page (Integrated as one of the subtitles in journal page)
+   5. export as pdf (DONE)
 3. to-do
-   1. modify tasks
-   2. link to journal
-   3. tags for categories
-   4. due dates
-   5. columns
-4. calendar
-   1. modify
-   2. task shows up
+   1. modify tasks (Done)
+   2. link to journal (Done)
+   3. tags for categories (Done)
+   4. due dates (Done)
+   5. columns (Done)
+4. calendar (Google calendar API will be used)
+   1. modify (done)
+   2. task shows up (done)
    3. can extend task into window
    4. connect to todo
    5. connect to journal
@@ -144,3 +144,4 @@
 ### APIs
 - 
 ### User interface
+
