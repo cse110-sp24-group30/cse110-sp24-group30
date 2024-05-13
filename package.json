@@ -14,5 +14,5 @@
   "jest": {
     "transform": {},
     "verbose": true
-  },
+  }
 }
