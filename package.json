@@ -10,7 +10,7 @@
   },
   "type": "module",
   "jest": {
-    "tranform": {},
+    "transform": {},
     "verbose": true
   }
 }
