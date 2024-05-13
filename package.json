@@ -7,8 +7,7 @@
     "jsdoc": "^4.0.3"
   },
   "scripts": {
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --passWithNoTests",
-    "build": "node --experimental-vm-modules node_modules/jest/bin/jest.js --passWithNoTests"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --passWithNoTests"
   },
   "type": "module",
   "jest": {
