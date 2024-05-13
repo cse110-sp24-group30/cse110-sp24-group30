@@ -1,11 +1,11 @@
-window.addEventListener('DOMContentLoaded', init);
+// window.addEventListener('DOMContentLoaded', init);
 
-async function init() {
-    try {
+// async function init() {
+//     try {
       
-    } catch (err) {
-      console.log(`Error loading: ${err}`);
-      return; 
-    }
+//     } catch (err) {
+//       console.log(`Error loading: ${err}`);
+//       return; 
+//     }
     
-}
+// }
