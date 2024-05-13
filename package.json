@@ -9,5 +9,8 @@
   "jest": {
     "tranform": {},
     "verbose": true
+  },
+  "dependencies": {
+    "@eslint/js": "^9.2.0"
   }
 }
