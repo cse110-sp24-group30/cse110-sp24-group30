@@ -1,0 +1,108 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+}
+
+/* Grid outline */
+#journal-app {
+    max-width: 14in;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+
+    display: grid;
+    /*grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));*/
+    /* grid-template-columns: repeat(6, 150px); */
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 20px;
+    justify-items: center;
+    align-items: center;
+}
+
+/* Add Journal Button */
+.add-journal {
+    
+    padding: 5px 10px;
+    height: 100px;
+    width: 100px;
+    /* margin-bottom: 10px; */
+    cursor: pointer;
+}
+
+/* The journal(s) displayed on the page */
+.journal-widget {
+    display: grid;
+    box-sizing: border-box;
+    width: 250px;
+    height: 250px;
+    border-radius: 1em;
+    background: lightblue;
+    align-items: center;
+    text-align: center;
+    user-select: none;
+}
+
+/* A fixed div position that is fixed to the center of page for the journal content below */
+#modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* The "popup" of that particular journal */
+.journal-entry {
+    width: 12in;
+    height: 8in;
+    resize: none;
+    /* border-color: black; */
+    /* margin-top: 10px; */
+    /* margin-bottom: 10px; */
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px
+}
+
+/* The textarea for the journal's title, doc, reflect */
+.journal-entry textarea {
+    width: 12in;
+    height: 100px;
+}
+
+/* Textarea of journal title section */
+.journal-entry textarea.journal-title {
+    height: 10%;
+    font-size: 40px;
+}
+
+/* Textarea of journal documentation section */
+.journal-entry textarea.journal-documentation {
+    height: 50%;
+}
+
+/* Textarea of journal reflection section */
+.journal-entry textarea.journal-reflection {
+    height: 37%;
+}
+
+/* Makes it so what is not in focus is 'darkened' or 'grayed' out */
+#overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
