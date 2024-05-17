@@ -107,6 +107,25 @@ function createJournalWidget(journalContainer, journalID) {
     // Add event listener for edit button click
     editButton.addEventListener('click', openJournalModal);
 
+
+    // Function to delete the journal
+    function deleteJournal(event) {
+        const widget = event.target.closest('.journal-widget');
+        const currentJournalID = widget.getAttribute('widget-id');
+
+        // Remove the journal element from the DOM
+        widget.remove();
+
+        // Remove the journal entry from localStorage
+        const journalList = getJournals();
+        const updatedJournalList = journalList.filter(journal => journal.id != currentJournalID);
+        saveNotes(updatedJournalList);
+    }
+
+    // Add event listener for delete button click
+    deleteButton.addEventListener('click', deleteJournal);
+
+
     journalContainer.append(journalElementTest);
 }
 
