@@ -40,8 +40,37 @@ function addJournalNew(journalContainer, existing) {
 
                 const journalElementTest = document.createElement('div');
                 journalElementTest.classList.add('journal-widget');
-                journalElementTest.textContent = 'Placeholder Title';
+                journalElementTest.textContent = 'Insert Title';
                 journalElementTest.setAttribute('widget-id', journalID);
+
+                // Create a container for the buttons
+            var buttonContainer = document.createElement('div');
+            buttonContainer.style.position = 'absolute';
+            buttonContainer.style.top = '5px';
+            buttonContainer.style.right = '5px';
+            
+            // Create the 'Edit' button
+            var editButton = document.createElement('button');
+            editButton.innerText = 'Edit';
+            editButton.style.fontSize = '12px';
+            editButton.style.padding = '5px 10px';
+            editButton.style.marginRight = '5px';  // Space between buttons
+
+            // Create the 'Delete' button
+            var deleteButton = document.createElement('button');
+            deleteButton.innerText = 'Delete';
+            deleteButton.style.fontSize = '12px';
+            deleteButton.style.padding = '5px 10px';
+
+            // Append buttons to the container
+            buttonContainer.appendChild(editButton);
+            buttonContainer.appendChild(deleteButton);
+
+            // Ensure the parent div has relative positioning
+            journalElementTest.style.position = 'relative';
+
+            // Append the button container to the div
+            journalElementTest.append(buttonContainer);
             
                 journalElementTest.addEventListener('dblclick', function(event) {
                     overlay.style.display = 'block';
@@ -92,7 +121,7 @@ function addJournalNew(journalContainer, existing) {
             // Append the button container to the div
             journalElementTest.append(buttonContainer);
         
-            journalElementTest.addEventListener('click', function(event) {
+            journalElementTest.addEventListener('dblclick', function(event) {
                 overlay.style.display = 'block';
                 const currentJournalID = event.target.getAttribute('widget-id');
                 const journalEntries = document.querySelectorAll('.journal-entry');
