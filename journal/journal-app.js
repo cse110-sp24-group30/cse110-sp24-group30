@@ -151,6 +151,21 @@ function createJournalElement(id, title, documentation, reflection, modalRef) {
     const journalDocumentation = document.createElement('textarea');
     const journalReflection = document.createElement('textarea');
 
+    // Create the 'Save' button
+    var saveButton = document.createElement('button');
+    saveButton.innerText = 'Save';
+
+    // Apply styles to the 'Save' button
+    saveButton.style.position = 'absolute';
+    saveButton.style.top = '5px';
+    saveButton.style.right = '5px';
+    saveButton.style.fontSize = '12px';
+    saveButton.style.padding = '5px 10px';
+
+    journalBody.style.position = 'relative';
+
+    //journalEntry.appendChild(saveButton);
+
     journalBody.classList.add('journal-entry');
     journalBody.id = `${id}`;
     journalTitle.classList.add('journal-title');
@@ -169,6 +184,12 @@ function createJournalElement(id, title, documentation, reflection, modalRef) {
     journalBody.append(journalTitle);
     journalBody.append(journalDocumentation);
     journalBody.append(journalReflection);
+    journalBody.append(saveButton);
+
+    saveButton.addEventListener('click', () => {
+        overlay.style.display = 'none';
+        modal.style.display = 'none';
+    });
 
     modalRef.append(journalBody);
 
