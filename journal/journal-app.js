@@ -56,7 +56,11 @@ function addJournalNew(journalContainer, existing) {
 function createJournalWidget(journalContainer, journalID) {
     const journalElementTest = document.createElement('div');
     journalElementTest.classList.add('journal-widget');
-    journalElementTest.textContent = 'Insert Title';
+    // journalElementTest.textContent = 'Insert Title';
+    const journalWidgetTitle = document.createElement('span')
+    journalWidgetTitle.classList.add('journal-widget-title')
+    journalWidgetTitle.textContent = 'Insert Title';
+    journalElementTest.append(journalWidgetTitle);
     journalElementTest.setAttribute('widget-id', journalID);
 
     // Create a container for the buttons
@@ -189,6 +193,14 @@ function createJournalElement(id, title, documentation, reflection, modalRef) {
     saveButton.addEventListener('click', () => {
         overlay.style.display = 'none';
         modal.style.display = 'none';
+    });
+
+    // Update the title in the journal widget as the user types
+    journalTitle.addEventListener('input', function() {
+        var journalWidgetTitle = document.querySelector(`.journal-widget[widget-id="${id}"] .journal-widget-title`);
+        if (journalWidgetTitle) {
+            journalWidgetTitle.textContent = journalTitle.value || 'Insert Title';
+        }
     });
 
     modalRef.append(journalBody);
