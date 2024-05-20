@@ -4,13 +4,16 @@ window.addEventListener('DOMContentLoaded', init);
 function init() {
     const journalContainer = document.getElementById('journal-app');
     const addButton = journalContainer.querySelector('.add-journal');
+    const overlayRef = document.getElementById('overlay');
+    const modalRef = document.getElementById('modal');
 
     addButton.addEventListener('click', () => addJournalNew(journalContainer, false));
 
     // When a user clicks "out" of the journal content/popup, it closes it
-    overlay.addEventListener('click', () => {
-        overlay.style.display = 'none';
-        modal.style.display = 'none';
+    
+    overlayRef.addEventListener('click', () => {
+        overlayRef.style.display = 'none';
+        modalRef.style.display = 'none';
     });
 
     // Add saved journals from localStorage
@@ -33,7 +36,7 @@ function addJournalNew(journalContainer, existing) {
     const modalRef = document.getElementById('modal');
 
     if (existing) {
-        
+
         journalList.forEach(journal => {
             journalID = createJournalElement(journal.id, journal.title, 
                 journal.documentation, journal.reflection, modalRef);
@@ -44,11 +47,11 @@ function addJournalNew(journalContainer, existing) {
                 journalElementTest.setAttribute('widget-id', journalID);
             
                 journalElementTest.addEventListener('dblclick', function(event) {
-                    overlay.style.display = 'block';
+                    document.getElementById('overlay').style.display = 'block';
                     const currentJournalID = event.target.getAttribute('widget-id');
                     const journalEntries = document.querySelectorAll('.journal-entry');
                     hideOtherJournalEntries(journalEntries, currentJournalID);
-                    modal.style.display = 'block';
+                    document.getElementById('modal').style.display = 'block';
                 });
 
                 journalContainer.append(journalElementTest);
@@ -64,11 +67,11 @@ function addJournalNew(journalContainer, existing) {
             journalElementTest.setAttribute('widget-id', journalID);
         
             journalElementTest.addEventListener('dblclick', function(event) {
-                overlay.style.display = 'block';
+                document.getElementById('overlay').style.display = 'block';
                 const currentJournalID = event.target.getAttribute('widget-id');
                 const journalEntries = document.querySelectorAll('.journal-entry');
                 hideOtherJournalEntries(journalEntries, currentJournalID);
-                modal.style.display = 'block';
+                document.getElementById('modal').style.display = 'block';
             });
             
             journalContainer.append(journalElementTest);
@@ -133,10 +136,10 @@ function getJournals() {
     return JSON.parse(localStorage.getItem("journal-list") || "[]");
 }
 
-// Get a certain journal based on id
-function getJournal(journals, id) {
-    return journals.filter(journals => journals.id == id)[0];
-}
+// // Get a certain journal based on id
+// function getJournal(journals, id) {
+//     return journals.filter(journals => journals.id == id)[0];
+// }
 
 // Saves all journal array to localStorage
 function saveNotes(journals){
