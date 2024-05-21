@@ -37,13 +37,19 @@ Shravi
 - this is what i have rn, it updates the mood according to the day it is
 - ![img](./imgs/Shravi_progress.png)
 - i havent pushed them yet because there are few PRs pending in the repo and want to push once they are settled so that there r no merge conflicts
+
+
 Umar
 - task - to work on delete button with nathan
 - sanjith already kind of had a working delete button 
 - waiting for new task
+
+
 Ali
 - finished canvas for journal entries
 - looking to pick up new tasks / help out with other people's tasks
+
+
 Kenneth
 - working on add journal. got most of it complete.
 - PR and github issue up. recently fixed lint. PR should be ready
@@ -52,20 +58,28 @@ Kenneth
 - CSS help
 - will be testing journal functionality 
   - we should write tests
+
+
 Andy
 - make base template files for todo, journal, and calendar
 - linked them to buttons
 - wasn't sure if supposed to have assets for the files
 - folders for each separate page
 - waiting on new tasks
+
+
 Nathan
 - wanted to help pick up delete task but alr figured out
 - was a little busy last week.
 - looking to get new task going
+
+
 Phoebe
 - Was able to resolve the CI CD pipeline issue
 - did research with database. will try to upload documentation by mid this week
 - would like developing tasks as well
+
+
 Sanjith
 - I worked on the functionality of the task edit journal, This included the edit button, delete button and save button along with changing the Title of the journal once a title entered.
 - I wasn't blocked by anything
