@@ -66,6 +66,10 @@ Phoebe
 - Was able to resolve the CI CD pipeline issue
 - did research with database. will try to upload documentation by mid this week
 - would like developing tasks as well
+Sanjith
+- I worked on the functionality of the task edit journal, This included the edit button, delete button and save button along with changing the Title of the journal once a title entered.
+- I wasn't blocked by anything
+- I wanted to know if there is anything else that the edit journal task needed, and if we should make a pr for the branch edit journal
 
 ## TODOs
 - Phoebe 
@@ -93,3 +97,6 @@ Phoebe
 - Andy
   - work with Nathan and Umar on todolist 
     - (phoebe will write up accepting criteria)
+- Sanjith
+  - work on finalizing edit journal and make PR
+  - work on unit testing for edit journal
