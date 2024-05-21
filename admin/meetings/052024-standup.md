@@ -100,3 +100,15 @@ Sanjith
 - Sanjith
   - work on finalizing edit journal and make PR
   - work on unit testing for edit journal
+- Shravi
+  - [TBD] work with people on unit testing
+  - [TBD] join TODO list team
+  - [TBD] propose new task
+- Kabir
+  - [TBD] work with people on unit testing
+  - [TBD] join TODO list team
+  - [TBD] propose new task
+- James
+  - [TBD] work with people on unit testing
+  - [TBD] join TODO list team
+  - [TBD] propose new task
