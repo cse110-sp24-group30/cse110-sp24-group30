@@ -3,7 +3,6 @@ import pluginJs from "@eslint/js";
 
 export default [
   {
- // Adjust the file patterns as needed
     languageOptions: {
       globals: {
         ...globals.browser,
