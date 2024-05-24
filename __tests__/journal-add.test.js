@@ -56,4 +56,21 @@ describe("Journal Add Tests", () => {
         expect(savedContent).toBe('Random Content');
         expect(savedReflection).toBe('Random Reflection');
     });
+
+    //Test after refreshing the entries remain the same
+    it('Check entries after reload', async() => {
+        console.log('test that number of entries remain same after reload...');
+
+        const num1 = await page.evaluate(() => {
+            return JSON.parse(localStorage.getItem('journal-list') || '[]').length;
+        });
+
+        await page.reload();
+
+        const num2 = await page.evaluate(() => {
+            return JSON.parse(localStorage.getItem('journal-list') || '[]').length;
+        });
+
+        expect(num2).toBe(num1);
+    });
 });
