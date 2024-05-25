@@ -4,13 +4,16 @@ window.addEventListener('DOMContentLoaded', init);
 function init() {
     const journalContainer = document.getElementById('journal-app');
     const addButton = journalContainer.querySelector('.add-journal');
+    const overlayRef = document.getElementById('overlay');
+    const modalRef = document.getElementById('modal');
 
     addButton.addEventListener('click', () => addJournalNew(journalContainer, false));
 
     // When a user clicks "out" of the journal content/popup, it closes it
-    overlay.addEventListener('click', () => {
-        overlay.style.display = 'none';
-        modal.style.display = 'none';
+    
+    overlayRef.addEventListener('click', () => {
+        overlayRef.style.display = 'none';
+        modalRef.style.display = 'none';
     });
 
     // Add saved journals from localStorage
