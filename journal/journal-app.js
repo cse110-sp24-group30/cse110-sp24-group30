@@ -133,8 +133,6 @@ function createJournalWidget(journalContainer, journalID) {
     journalContainer.append(journalElementTest);
 }
 
-function editJournal() {}
-
 // Hides other journals' contents when focusing on a particular journal
 function hideOtherJournalEntries(journalEntries, currentJournalID) {
     // Convert nodeList to array & loop through each journal entry
