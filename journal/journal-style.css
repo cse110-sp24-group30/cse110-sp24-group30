@@ -62,11 +62,11 @@ body {
 /* The "popup" of that particular journal */
 .journal-entry {
     width: 12in;
-    height: 8in;
+    height: 6in;
     resize: none;
-    /* border-color: black; */
-    /* margin-top: 10px; */
-    /* margin-bottom: 10px; */
+    
+    overflow-y: scroll;
+    overflow-x: hidden;
 
     display: flex;
     flex-direction: column;

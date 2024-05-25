@@ -1,4 +1,4 @@
-# Sprint 1 Review Meeting Notes
+# Sprint 2 Meeting Notes
 
 ## Meeting Details
 
