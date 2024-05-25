@@ -97,6 +97,7 @@ function createJournalWidget(journalContainer, journalID) {
 
     // Function to open the journal modal
     function openJournalModal(event) {
+        let overlay = document.getElementById('overlay');
         overlay.style.display = 'block';
         
         // Use closest to find the parent element with the journal-widget class
@@ -105,6 +106,7 @@ function createJournalWidget(journalContainer, journalID) {
         
         const journalEntries = document.querySelectorAll('.journal-entry');
         hideOtherJournalEntries(journalEntries, currentJournalID);
+        let modal = document.getElementById('modal');
         modal.style.display = 'block';
     }
 
@@ -192,6 +194,8 @@ function createJournalElement(id, title, documentation, reflection, modalRef) {
     journalBody.append(saveButton);
 
     saveButton.addEventListener('click', () => {
+        let overlay = document.getElementById('overlay');
+        let modal = document.getElementById('modal');
         overlay.style.display = 'none';
         modal.style.display = 'none';
     });
@@ -215,9 +219,9 @@ function getJournals() {
 }
 
 // Get a certain journal based on id
-function getJournal(journals, id) {
-    return journals.filter(journal => journal.id == id)[0];
-}
+// function getJournal(journals, id) {
+//     return journals.filter(journal => journal.id == id)[0];
+// }
 
 // Saves all journal array to localStorage
 function saveNotes(journals) {
