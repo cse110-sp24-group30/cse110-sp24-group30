@@ -9,6 +9,71 @@
 </head>
 <body>
     <h1 style="text-align: center;">To-Do Page</h1>
-    
+    <div id="list-container">
+        <div class="list-column">
+            <div id="not-started-title">
+                <h2>Not Started</h2>
+                <h2>2</h2>
+            </div>
+            <div id="not-started-content">
+                <div id="not-started-list">
+                    <list>
+                        <div class="task">
+                            <input type="checkbox" id="radio-button"> 
+                            <p>Complete Lab 9</p>
+                            <span id="due-date">Due Date: 6/4</span>
+                            <button id="edit-button">Edit Button</button>
+                        </div>
+                        <div class="task">
+                            <input type="checkbox" id="radio-button"> 
+                            <p>CSE 110 Final Project</p>
+                            <span id="due-date">Due Date: 6/7</span>
+                            <button id="edit-button">Edit Button</button>
+                        </div>
+                    </list>
+                </div>
+                <button class="new-task-button">Add New Task</button>
+            </div>
+        </div>
+
+        <!-- In Progress Column -->
+        <div class="list-column">
+            <div id="in-progress-title">
+                <h2>In Progress</h2>
+            </div>
+            <div id="in-progress-content">
+                <div id="in-progress-list">
+                    <list>
+                        <div class="task">
+                            <input type="checkbox" id="radio-button"> 
+                            <p>Todo List Canvas</p>
+                            <span id="due-date">Due Date: 5/31</span>
+                            <button id="edit-button">Edit Button</button>
+                        </div>
+                    </list>
+                </div>
+                <button class="new-task-button">Add New Task</button>
+            </div>
+        </div>
+
+        <!-- Done Column -->
+        <div class="list-column">
+            <div id="done-title">
+                <h2>Done</h2>
+            </div>
+            <div id="done-content">
+                <div id="done-list">
+                    <list>
+                        <div class="task">
+                            <input type="checkbox" id="radio-button"> 
+                            <p>Journal Canvas</p>
+                            <span id="due-date">Due Date: 5/28</span>
+                            <button id="edit-button">Edit Button</button>
+                        </div>
+                    </list>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
