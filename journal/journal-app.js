@@ -68,22 +68,25 @@ function createJournalWidget(journalContainer, journalID) {
 
     // Create a container for the buttons
     var buttonContainer = document.createElement('div');
-    buttonContainer.style.position = 'absolute';
-    buttonContainer.style.top = '5px';
-    buttonContainer.style.right = '5px';
+    buttonContainer.className = 'button-container';
+    // buttonContainer.style.position = 'absolute';
+    // buttonContainer.style.top = '5px';
+    // buttonContainer.style.right = '5px';
 
     // Create the 'Edit' button
     var editButton = document.createElement('button');
     editButton.innerText = 'Edit';
-    editButton.style.fontSize = '12px';
-    editButton.style.padding = '5px 10px';
-    editButton.style.marginRight = '5px';  // Space between buttons
+    editButton.className = 'edit-button';
+    // editButton.style.fontSize = '12px';
+    // editButton.style.padding = '5px 10px';
+    // editButton.style.marginRight = '5px';  // Space between buttons
 
     // Create the 'Delete' button
     var deleteButton = document.createElement('button');
     deleteButton.innerText = 'Delete';
-    deleteButton.style.fontSize = '12px';
-    deleteButton.style.padding = '5px 10px';
+    deleteButton.className = 'delete-button';
+    // deleteButton.style.fontSize = '12px';
+    // deleteButton.style.padding = '5px 10px';
 
     // Append buttons to the container
     buttonContainer.appendChild(editButton);
@@ -95,21 +98,6 @@ function createJournalWidget(journalContainer, journalID) {
     // Append the button container to the div
     journalElementTest.append(buttonContainer);
 
-    // Function to open the journal modal
-    function openJournalModal(event) {
-        let overlay = document.getElementById('overlay');
-        overlay.style.display = 'block';
-        
-        // Use closest to find the parent element with the journal-widget class
-        const widget = event.target.closest('.journal-widget');
-        const currentJournalID = widget.getAttribute('widget-id'); // Correctly get the widget-id
-        
-        const journalEntries = document.querySelectorAll('.journal-entry');
-        hideOtherJournalEntries(journalEntries, currentJournalID);
-        let modal = document.getElementById('modal');
-        modal.style.display = 'block';
-    }
-
     // Add event listener for double-click
     journalElementTest.addEventListener('dblclick', openJournalModal);
 
@@ -117,25 +105,40 @@ function createJournalWidget(journalContainer, journalID) {
     editButton.addEventListener('click', openJournalModal);
 
 
-    // Function to delete the journal
-    function deleteJournal(event) {
-        const widget = event.target.closest('.journal-widget');
-        const currentJournalID = widget.getAttribute('widget-id');
-
-        // Remove the journal element from the DOM
-        widget.remove();
-
-        // Remove the journal entry from localStorage
-        const journalList = getJournals();
-        const updatedJournalList = journalList.filter(journal => journal.id != currentJournalID);
-        saveNotes(updatedJournalList);
-    }
-
     // Add event listener for delete button click
     deleteButton.addEventListener('click', deleteJournal);
 
 
     journalContainer.append(journalElementTest);
+}
+
+// Function to open the journal modal
+function openJournalModal(event) {
+    let overlay = document.getElementById('overlay');
+    overlay.style.display = 'block';
+    
+    // Use closest to find the parent element with the journal-widget class
+    const widget = event.target.closest('.journal-widget');
+    const currentJournalID = widget.getAttribute('widget-id'); // Correctly get the widget-id
+    
+    const journalEntries = document.querySelectorAll('.journal-entry');
+    hideOtherJournalEntries(journalEntries, currentJournalID);
+    let modal = document.getElementById('modal');
+    modal.style.display = 'block';
+}
+
+// Function to delete the journal
+function deleteJournal(event) {
+    const widget = event.target.closest('.journal-widget');
+    const currentJournalID = widget.getAttribute('widget-id');
+
+    // Remove the journal element from the DOM
+    widget.remove();
+
+    // Remove the journal entry from localStorage
+    const journalList = getJournals();
+    const updatedJournalList = journalList.filter(journal => journal.id != currentJournalID);
+    saveNotes(updatedJournalList);
 }
 
 // Hides other journals' contents when focusing on a particular journal
@@ -161,15 +164,18 @@ function createJournalElement(id, title, documentation, reflection, modalRef) {
     // Create the 'Save' button
     var saveButton = document.createElement('button');
     saveButton.innerText = 'Save';
+    saveButton.className = 'save-button';
 
-    // Apply styles to the 'Save' button
-    saveButton.style.position = 'absolute';
-    saveButton.style.top = '5px';
-    saveButton.style.right = '5px';
-    saveButton.style.fontSize = '12px';
-    saveButton.style.padding = '5px 10px';
+    journalBody.className = 'journal-body';
 
-    journalBody.style.position = 'relative';
+    // // Apply styles to the 'Save' button
+    // saveButton.style.position = 'absolute';
+    // saveButton.style.top = '5px';
+    // saveButton.style.right = '5px';
+    // saveButton.style.fontSize = '12px';
+    // saveButton.style.padding = '5px 10px';
+
+    // journalBody.style.position = 'relative';
 
     //journalEntry.appendChild(saveButton);
 
