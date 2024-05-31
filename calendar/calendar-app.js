@@ -18,8 +18,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const firstDayOfMonth = new Date(year, month, 1).getDay();
         const daysInMonth = new Date(year, month + 1, 0).getDate();
 
+        const events = getEvents();
+
         for (let i = 0; i < firstDayOfMonth; i++) {
-            calendarGrid.appendChild(document.createElement('div'));
+            const emptyCell = document.createElement('div');
+            calendarGrid.appendChild(emptyCell);
         }
 
         for (let i = 1; i <= daysInMonth; i++) {
@@ -27,9 +30,17 @@ document.addEventListener('DOMContentLoaded', () => {
             dayElement.classList.add('day');
             dayElement.textContent = i;
 
+            const eventForDay = events.filter(event => event.date === `${year}-${String(month + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`);
+            if (eventForDay.length > 0) {
+                const eventElement = document.createElement('div');
+                eventElement.classList.add('event');
+                eventElement.textContent = eventForDay[0].title;
+                dayElement.appendChild(eventElement);
+            }
+
             dayElement.addEventListener('click', () => {
                 document.getElementById('event-date').value = `${year}-${String(month + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`;
-                eventModal.style.display = 'block';
+                eventModal.style.display = 'flex';
             });
 
             calendarGrid.appendChild(dayElement);

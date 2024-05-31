@@ -8,12 +8,12 @@
     <script src="./calendar-app.js" defer></script>
   </head>
   <body>
-    <h1 style="text-align: center">Calendar Page</h1>
+    <h1 class="header-title">Welcome back!</h1>
     <div id="calendar-app">
       <div id="calendar-header">
-        <button id="prev-month">&lt;</button>
+        <button id="prev-month" class="nav-button">&lt;</button>
         <h2 id="current-month-year"></h2>
-        <button id="next-month">&gt;</button>
+        <button id="next-month" class="nav-button">&gt;</button>
       </div>
       <div id="calendar-days">
         <div class="day-header">Sun</div>
@@ -31,20 +31,23 @@
       <div class="modal-content">
         <span class="close-button">&times;</span>
         <form id="event-form">
-          <label for="event-title">Event Title:</label>
-          <input type="text" id="event-title" name="event-title" required />
-
-          <label for="event-date">Event Date:</label>
-          <input type="date" id="event-date" name="event-date" required />
-
-          <label for="event-description">Event Description:</label>
-          <textarea
-            id="event-description"
-            name="event-description"
-            required
-          ></textarea>
-
-          <button type="submit">Save Event</button>
+          <div class="form-group">
+            <label for="event-title">Event Title:</label>
+            <input type="text" id="event-title" name="event-title" required />
+          </div>
+          <div class="form-group">
+            <label for="event-date">Event Date:</label>
+            <input type="date" id="event-date" name="event-date" required />
+          </div>
+          <div class="form-group">
+            <label for="event-description">Event Description:</label>
+            <textarea
+              id="event-description"
+              name="event-description"
+              required
+            ></textarea>
+          </div>
+          <button type="submit" class="save-button">Save Event</button>
         </form>
       </div>
     </div>
