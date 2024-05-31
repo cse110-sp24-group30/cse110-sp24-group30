@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calendar</title>
+    <link rel="stylesheet" href="./calendar-style.css" />
+    <script src="./calendar-app.js" defer></script>
+  </head>
+  <body>
+    <h1 style="text-align: center">Calendar Page</h1>
+    <div id="calendar-app">
+      <div id="calendar-header">
+        <button id="prev-month">&lt;</button>
+        <h2 id="current-month-year"></h2>
+        <button id="next-month">&gt;</button>
+      </div>
+      <div id="calendar-days">
+        <div class="day-header">Sun</div>
+        <div class="day-header">Mon</div>
+        <div class="day-header">Tue</div>
+        <div class="day-header">Wed</div>
+        <div class="day-header">Thu</div>
+        <div class="day-header">Fri</div>
+        <div class="day-header">Sat</div>
+      </div>
+      <div id="calendar-grid"></div>
+    </div>
+
+    <div id="event-modal" class="modal">
+      <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <form id="event-form">
+          <label for="event-title">Event Title:</label>
+          <input type="text" id="event-title" name="event-title" required />
+
+          <label for="event-date">Event Date:</label>
+          <input type="date" id="event-date" name="event-date" required />
+
+          <label for="event-description">Event Description:</label>
+          <textarea
+            id="event-description"
+            name="event-description"
+            required
+          ></textarea>
+
+          <button type="submit">Save Event</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
