@@ -13,7 +13,7 @@
         <div class="list-column">
             <div id="not-started-title">
                 <h2>Not Started</h2>
-                <h2>2</h2>
+                <h2 id="num-not-started">2</h2>
             </div>
             <div id="not-started-content">
                 <div id="not-started-list">
@@ -21,25 +21,38 @@
                         <div class="task">
                             <input type="checkbox" id="radio-button"> 
                             <p>Complete Lab 9</p>
+                            <div class="category">
+                                <p id="work-category">work</p>
+                            </div>
                             <span id="due-date">Due Date: 6/4</span>
-                            <button id="edit-button">Edit Button</button>
+                            <div class="buttons">
+                                <button id="edit-button">Edit Button</button>
+                                <button id="delete-button">Delete</button>
+                            </div>
                         </div>
                         <div class="task">
                             <input type="checkbox" id="radio-button"> 
                             <p>CSE 110 Final Project</p>
+                            <div class="category">
+                                <p id="people-category">people</p>
+                            </div>
                             <span id="due-date">Due Date: 6/7</span>
-                            <button id="edit-button">Edit Button</button>
+                            <div class="buttons">
+                                <button id="edit-button">Edit Button</button>
+                                <button id="delete-button">Delete</button>
+                            </div>
                         </div>
                     </list>
                 </div>
                 <button class="new-task-button">Add New Task</button>
             </div>
         </div>
-
+    
         <!-- In Progress Column -->
         <div class="list-column">
             <div id="in-progress-title">
                 <h2>In Progress</h2>
+                <h2 id="num-in-progress">1</h2>
             </div>
             <div id="in-progress-content">
                 <div id="in-progress-list">
@@ -47,19 +60,26 @@
                         <div class="task">
                             <input type="checkbox" id="radio-button"> 
                             <p>Todo List Canvas</p>
+                            <div class="category">
+                                <p id="school-category">school</p>
+                            </div>
                             <span id="due-date">Due Date: 5/31</span>
-                            <button id="edit-button">Edit Button</button>
+                            <div class="buttons">
+                                <button id="edit-button">Edit Button</button>
+                                <button id="delete-button">Delete</button>
+                            </div>
                         </div>
                     </list>
                 </div>
                 <button class="new-task-button">Add New Task</button>
             </div>
         </div>
-
+    
         <!-- Done Column -->
         <div class="list-column">
             <div id="done-title">
                 <h2>Done</h2>
+                <h2 id="num-done">1</h2>
             </div>
             <div id="done-content">
                 <div id="done-list">
@@ -67,13 +87,19 @@
                         <div class="task">
                             <input type="checkbox" id="radio-button"> 
                             <p>Journal Canvas</p>
+                            <div class="category">
+                                <p id="work-category">work</p>
+                            </div>
                             <span id="due-date">Due Date: 5/28</span>
-                            <button id="edit-button">Edit Button</button>
+                            <div class="buttons">
+                                <button id="edit-button">Edit Button</button>
+                                <button id="delete-button">Delete</button>
+                            </div>
                         </div>
                     </list>
                 </div>
             </div>
         </div>
-    </div>
+    </div>    
 </body>
 </html>
