@@ -33,6 +33,7 @@ jobs:
 
       - name: Generate documentation
         run: npx jsdoc -c jsdoc.json
+        working-directory: ./config
 
   build-and-deploy:
     needs: lint-and-test
