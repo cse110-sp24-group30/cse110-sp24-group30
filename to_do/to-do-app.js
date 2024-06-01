@@ -1,11 +1,12 @@
 window.addEventListener('DOMContentLoaded', init);
 
+//Initialization which calls all the other functions
 function init() {
     const toDoContainer = document.getElementById('list-container');
     const addButtonNotStarted = document.querySelector('.new-task-button-not-started');
     const addButtonInProgress = document.querySelector('.new-task-button-in-progress');
-    const overlayRef = document.getElementById('overlay');
-    const modalRef = document.getElementById('modal');
+    // const overlayRef = document.getElementById('overlay');
+    // const modalRef = document.getElementById('modal');
 
 
     addButtonNotStarted.addEventListener('click', () => addTask(toDoContainer, false, 1));
@@ -14,10 +15,10 @@ function init() {
     console.log("clicked addbutton in progress");
 
     // When a user clicks "out" of the journal content/popup, it closes it
-    overlayRef.addEventListener('click', () => {
-        overlayRef.style.display = 'none';
-        modalRef.style.display = 'none';
-    });
+    // overlayRef.addEventListener('click', () => {
+    //     overlayRef.style.display = 'none';
+    //     modalRef.style.display = 'none';
+    // });
 
     // Add saved journals from localStorage
     addTask(toDoContainer, true);
@@ -25,31 +26,46 @@ function init() {
 
 function addTask(toDoContainer, existing, category) {
     console.log("add task");
-    const toDoList = [];
+    //const toDoList = [];
     //const toDoList = getToDos();
+    const notStartedList = getNotStarted();
+    const inProgressList = getInProgress();
+    const doneList = getDone();
     let toDoID = 0;
     
     const toDoTemplate = {
         id: Math.floor(Math.random() * 2000000),
         title: "Default Title",
         dueDate: "",
+        category: "self",
     };
 
     if (existing) {
         console.log("existing")
-        toDoList.forEach(toDo => {
-            toDoID = createToDoElement(toDo.id, toDo.title, toDo.dueDate, toDoContainer);
+        // toDoList.forEach(toDo => {
+        //     toDoID = createToDoElement(toDo.id, toDo.title, toDo.dueDate, toDoContainer);
+        // });
+        notStartedList.forEach(notStarted => {
+            toDoID = createToDoElement(notStarted.id, notStarted.title, notStarted.dueDate, notStarted.category);
         });
+
+        inProgressList.forEach(inProgress => {
+            toDoID = createToDoElement(inProgress.id, inProgress.title, inProgress.dueDate, inProgress.category);
+        });
+
+
     }
     else {
         console.log("not existing")
         toDoID = createToDoElement(toDoTemplate.id, toDoTemplate.title, toDoTemplate.dueDate, category);
-        toDoList.push(toDoTemplate);
-        //saveToDos(toDoList);
+        // toDoList.push(toDoTemplate);
+        // saveToDos(toDoList);
 
         const toDoElement = document.createElement('div');
         if(category === 1) {
             console.log("category 1")
+            notStartedList.push(toDoTemplate);
+            saveNotStarted(notStartedList);
             toDoElement.classList.add('not-started');
         }
         else if(category === 2) {
@@ -122,12 +138,43 @@ function createToDoElement(id, title, dueDate, category) {
 }
 
 // TO DO: Local storage     
-/*
-function getToDos() {
-    return JSON.parse(localStorage.getItem("to-do-list") || "[]");
+
+// function getToDos() {
+//     return JSON.parse(localStorage.getItem("to-do-list") || "[]");
+// }
+
+// function saveToDos(toDos){
+//     localStorage.setItem("to-do-list", JSON.stringify(toDos));
+// }
+
+// Get all the notStarted entries from localStorage
+function getNotStarted() {
+    return JSON.parse(localStorage.getItem("not-started") || "[]");
 }
 
-function saveToDos(toDos){
-    localStorage.setItem("to-do-list", JSON.stringify(toDos));
+// Saves all notStarted array to localStorage
+function saveNotStarted(notStarted){
+    localStorage.setItem("not-started", JSON.stringify(notStarted));
 }
-*/
+
+// Get all the inProgress entries from localStorage
+function getInProgress() {
+    return JSON.parse(localStorage.getItem("in-progress") || "[]");
+}
+
+// Saves all inProgress array to localStorage
+function saveInProgress(inProgress){
+    localStorage.setItem("in-progress", JSON.stringify(inProgress));
+}
+
+// Get all the done entries from localStorage
+function getDone() {
+    return JSON.parse(localStorage.getItem("done") || "[]");
+}
+
+// Saves all done array to localStorage
+function saveDone(done){
+    localStorage.setItem("done", JSON.stringify(done));
+}
+
+
