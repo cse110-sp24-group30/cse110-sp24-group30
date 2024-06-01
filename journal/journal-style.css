@@ -109,17 +109,17 @@ body {
 
 .button-container {
     position: absolute;
-    top: 5px;
-    right: 5px;
+    top: 200px;
+    right: 60px;
 }
 
-.edit-button {
+.edit-button, .fa.fa-pencil {
     font-size: 12px;
     padding: 5px 10px;
     margin-right: 5px;  /* Space between buttons */
 }
 
-.delete-button {
+.delete-button, .fa.fa-close {
     font-size: 12px;
     padding: 5px 10px;
 }

@@ -1,6 +1,8 @@
 window.addEventListener('DOMContentLoaded', init);
 
-// Main function that initializes every other function
+/**
+ * Main function that initializes every other function
+ */
 function init() {
     const journalContainer = document.getElementById('journal-app');
     const addButton = journalContainer.querySelector('.add-journal');
@@ -20,7 +22,12 @@ function init() {
     addJournalNew(journalContainer, true);
 }
 
-// Display the new journal element to the page
+/**
+ * Creates and displays journal(s) onto the page
+ * 
+ * @param {HTMLElement} journalContainer - DOM element to display journals in
+ * @param {Boolean} existing - Displays existing journal(s) from localStorage if true
+ */
 function addJournalNew(journalContainer, existing) {
     const journalList = getJournals();
     let journalID = 0;
@@ -55,7 +62,12 @@ function addJournalNew(journalContainer, existing) {
     }
 }
 
-// Extracted function to create and append the journal widget
+/**
+ * Creates a "journal widget" to be displayed on the page
+ * 
+ * @param {HTMLElement} journalContainer - DOM element to display journals in
+ * @param {Number} journalID - The journal's unique identifier
+ */
 function createJournalWidget(journalContainer, journalID) {
     const journalElementTest = document.createElement('div');
     journalElementTest.classList.add('journal-widget');
@@ -69,24 +81,16 @@ function createJournalWidget(journalContainer, journalID) {
     // Create a container for the buttons
     var buttonContainer = document.createElement('div');
     buttonContainer.className = 'button-container';
-    // buttonContainer.style.position = 'absolute';
-    // buttonContainer.style.top = '5px';
-    // buttonContainer.style.right = '5px';
 
     // Create the 'Edit' button
     var editButton = document.createElement('button');
     editButton.innerText = 'Edit';
-    editButton.className = 'edit-button';
-    // editButton.style.fontSize = '12px';
-    // editButton.style.padding = '5px 10px';
-    // editButton.style.marginRight = '5px';  // Space between buttons
+    editButton.className = 'fa fa-pencil';
 
     // Create the 'Delete' button
     var deleteButton = document.createElement('button');
     deleteButton.innerText = 'Delete';
-    deleteButton.className = 'delete-button';
-    // deleteButton.style.fontSize = '12px';
-    // deleteButton.style.padding = '5px 10px';
+    deleteButton.className = 'fa fa-close';
 
     // Append buttons to the container
     buttonContainer.appendChild(editButton);
@@ -108,11 +112,14 @@ function createJournalWidget(journalContainer, journalID) {
     // Add event listener for delete button click
     deleteButton.addEventListener('click', deleteJournal);
 
-
     journalContainer.append(journalElementTest);
 }
 
-// Function to open the journal modal
+/**
+ * Opens the "pop-up" when accessing a journal
+ * 
+ * @param {*} event - Event listener target
+ */
 function openJournalModal(event) {
     let overlay = document.getElementById('overlay');
     overlay.style.display = 'block';
@@ -127,7 +134,11 @@ function openJournalModal(event) {
     modal.style.display = 'block';
 }
 
-// Function to delete the journal
+/**
+ * Deletes a journal (of its content in localStorage and on the page)
+ * 
+ * @param {*} event - Event listener target
+ */
 function deleteJournal(event) {
     const widget = event.target.closest('.journal-widget');
     const currentJournalID = widget.getAttribute('widget-id');
@@ -141,7 +152,12 @@ function deleteJournal(event) {
     saveNotes(updatedJournalList);
 }
 
-// Hides other journals' contents when focusing on a particular journal
+/**
+ * Hides other journals' contents when focusing on a particular journal
+ * 
+ * @param {NodeList} journalEntries - NodeList of all journals
+ * @param {Number} currentJournalID - Unique identifier to display only the particular journal
+ */
 function hideOtherJournalEntries(journalEntries, currentJournalID) {
     // Convert nodeList to array & loop through each journal entry
     let journalArray = [...journalEntries];
@@ -154,7 +170,16 @@ function hideOtherJournalEntries(journalEntries, currentJournalID) {
     });
 }
 
-// Creates a "sub-div" that will contain each journal's content
+/**
+ * Creates the section that will contain each journal's content
+ * 
+ * @param {Number} id 
+ * @param {String} title 
+ * @param {String} documentation 
+ * @param {String} reflection 
+ * @param {HTMLElement} modalRef 
+ * @returns {Number} - The journal's unique ID
+ */
 function createJournalElement(id, title, documentation, reflection, modalRef) {
     const journalBody = document.createElement('div'); // sub div per journal
     const journalTitle = document.createElement('textarea');
@@ -167,17 +192,6 @@ function createJournalElement(id, title, documentation, reflection, modalRef) {
     saveButton.className = 'save-button';
 
     journalBody.className = 'journal-body';
-
-    // // Apply styles to the 'Save' button
-    // saveButton.style.position = 'absolute';
-    // saveButton.style.top = '5px';
-    // saveButton.style.right = '5px';
-    // saveButton.style.fontSize = '12px';
-    // saveButton.style.padding = '5px 10px';
-
-    // journalBody.style.position = 'relative';
-
-    //journalEntry.appendChild(saveButton);
 
     journalBody.classList.add('journal-entry');
     journalBody.id = `${id}`;
@@ -219,7 +233,11 @@ function createJournalElement(id, title, documentation, reflection, modalRef) {
     return journalBody.id;
 }
 
-// Get all the journal entries from localStorage
+/**
+ * Get all journals from localStorage
+ * 
+ * @returns {Array} - An array containing journals from localStorage
+ */
 function getJournals() {
     return JSON.parse(localStorage.getItem("journal-list") || "[]");
 }
@@ -229,7 +247,11 @@ function getJournals() {
 //     return journals.filter(journal => journal.id == id)[0];
 // }
 
-// Saves all journal array to localStorage
+/**
+ * Saves all journals into localStorage
+ * 
+ * @param {Array} journals - An array containing journals
+ */
 function saveNotes(journals) {
     localStorage.setItem("journal-list", JSON.stringify(journals));
 }
