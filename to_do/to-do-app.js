@@ -5,32 +5,20 @@ function init() {
     const toDoContainer = document.getElementById('list-container');
     const addButtonNotStarted = document.querySelector('.new-task-button-not-started');
     const addButtonInProgress = document.querySelector('.new-task-button-in-progress');
-    // const overlayRef = document.getElementById('overlay');
-    // const modalRef = document.getElementById('modal');
-
 
     addButtonNotStarted.addEventListener('click', () => addTask(toDoContainer, false, 1));
     console.log("clicked addbutton not started");
     addButtonInProgress.addEventListener('click', () => addTask(toDoContainer, false, 2));
     console.log("clicked addbutton in progress");
 
-    // When a user clicks "out" of the journal content/popup, it closes it
-    // overlayRef.addEventListener('click', () => {
-    //     overlayRef.style.display = 'none';
-    //     modalRef.style.display = 'none';
-    // });
-
-    // Add saved journals from localStorage
+    // Add saved tasks for Not Started and In Progress from localStorage
     addTask(toDoContainer, true);
 }
 
 function addTask(toDoContainer, existing, category) {
     console.log("add task");
-    //const toDoList = [];
-    //const toDoList = getToDos();
     const notStartedList = getNotStarted();
     const inProgressList = getInProgress();
-    const doneList = getDone();
     let toDoID = 0;
     
     const toDoTemplate = {
@@ -41,25 +29,19 @@ function addTask(toDoContainer, existing, category) {
     };
 
     if (existing) {
-        console.log("existing")
-        // toDoList.forEach(toDo => {
-        //     toDoID = createToDoElement(toDo.id, toDo.title, toDo.dueDate, toDoContainer);
-        // });
+        console.log("existing");
         notStartedList.forEach(notStarted => {
-            toDoID = createToDoElement(notStarted.id, notStarted.title, notStarted.dueDate, notStarted.category);
+            toDoID = createToDoElement(notStarted.id, notStarted.title, notStarted.dueDate, 1);
         });
 
         inProgressList.forEach(inProgress => {
-            toDoID = createToDoElement(inProgress.id, inProgress.title, inProgress.dueDate, inProgress.category);
+            toDoID = createToDoElement(inProgress.id, inProgress.title, inProgress.dueDate, 2);
         });
-
 
     }
     else {
         console.log("not existing")
         toDoID = createToDoElement(toDoTemplate.id, toDoTemplate.title, toDoTemplate.dueDate, category);
-        // toDoList.push(toDoTemplate);
-        // saveToDos(toDoList);
 
         const toDoElement = document.createElement('div');
         if(category === 1) {
@@ -68,8 +50,11 @@ function addTask(toDoContainer, existing, category) {
             saveNotStarted(notStartedList);
             toDoElement.classList.add('not-started');
         }
+
         else if(category === 2) {
-            console.log("category 2")
+            console.log("category 2");
+            inProgressList.push(toDoTemplate);
+            saveInProgress(inProgressList);
             toDoElement.classList.add('in-progress');
         }
 
@@ -167,19 +152,7 @@ function updateCategoryColor(selectElement) {
     selectElement.style.backgroundColor = categoryColors[category] || 'orange';
 }
 
-
-
-// TO DO: Local storage     
-
-// function getToDos() {
-//     return JSON.parse(localStorage.getItem("to-do-list") || "[]");
-// }
-
-// function saveToDos(toDos){
-//     localStorage.setItem("to-do-list", JSON.stringify(toDos));
-// }
-
-// Get all the notStarted entries from localStorage
+//Get all the notStarted entries from localStorage
 function getNotStarted() {
     return JSON.parse(localStorage.getItem("not-started") || "[]");
 }
