@@ -95,11 +95,25 @@ function createToDoElement(id, title, dueDate, category) {
     const categoryDiv = document.createElement('div');
     categoryDiv.classList.add('category');
 
-    const categoryP = document.createElement('p');
-    categoryP.id = 'school-category';
-    categoryP.textContent = 'school';
+    const categorySelect = document.createElement('select');
+    categorySelect.id = 'category-select';
 
-    categoryDiv.appendChild(categoryP);
+    const categories = ['self', 'work', 'school', 'other'];
+    categories.forEach(cat => {
+        const option = document.createElement('option');
+        option.value = cat;
+        option.textContent = cat.charAt(0).toUpperCase() + cat.slice(1);
+        if (cat === 'self') { 
+            option.selected = true;
+        }
+        categorySelect.appendChild(option);
+    });
+
+    categorySelect.addEventListener('change', (event) => {
+        updateCategoryColor(event.target);
+    });
+
+    categoryDiv.appendChild(categorySelect);
 
     const dueDateSpan = document.createElement('span');
     dueDateSpan.id = 'due-date';
@@ -115,6 +129,10 @@ function createToDoElement(id, title, dueDate, category) {
     const deleteButton = document.createElement('button');
     deleteButton.id = 'delete-button';
     deleteButton.textContent = 'Delete';
+
+    deleteButton.addEventListener('click', () => {
+        taskDiv.remove();
+    });
 
     buttonsDiv.appendChild(editButton);
     buttonsDiv.appendChild(deleteButton);
@@ -136,6 +154,20 @@ function createToDoElement(id, title, dueDate, category) {
 
     return taskDiv.id;
 }
+
+function updateCategoryColor(selectElement) {
+    const category = selectElement.value;
+    const categoryColors = {
+        self: 'orange',
+        work: 'blue',
+        school: 'green',
+        other: 'purple'
+    };
+    
+    selectElement.style.backgroundColor = categoryColors[category] || 'orange';
+}
+
+
 
 // TO DO: Local storage     
 
