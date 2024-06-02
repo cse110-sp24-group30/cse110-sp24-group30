@@ -60,6 +60,15 @@ function addJournalNew(journalContainer, existing) {
         journalList.push(journalTemplate);
         saveNotes(journalList);
     }
+
+    // Ensures save/cancel buttons always at the bottom
+    if (!modalRef.querySelector('.save-cancel-container')) {
+        createSaveCancelButtons(modalRef);
+    } else {
+        // Move save/cancel container to the end
+        const buttonContainer = modalRef.querySelector('.save-cancel-container');
+        modalRef.appendChild(buttonContainer);
+    }
 }
 
 /**
@@ -166,6 +175,7 @@ function hideOtherJournalEntries(journalEntries, currentJournalID) {
             journal.style.display = 'none';
         } else {
             journal.style.display = 'block';
+            journal.style.removeProperty('display');
         }
     });
 }
@@ -186,49 +196,72 @@ function createJournalElement(id, title, documentation, reflection, modalRef) {
     const journalDocumentation = document.createElement('textarea');
     const journalReflection = document.createElement('textarea');
 
-    // Create the 'Save' button
-    var saveButton = document.createElement('button');
-    saveButton.innerText = 'Save';
-    saveButton.className = 'save-button';
+    // IMPLEMENT:
+    const markdownInput = document.createElement('textarea');
+    const htmlOutput = document.createElement('div');
 
+    markdownInput.classList.add('journal-markdownInput');
+    htmlOutput.classList.add('journal-htmlOutput');
+
+    markdownInput.placeholder = 'Input Markdown here';
+    markdownInput.rows = 25;
+    markdownInput.cols = 50;
+
+    // Live preview of markdown text to formatted html
+    markdownInput.addEventListener('input', () => {
+        let markdownText = markdownInput.value;
+        let htmlContent = marked.parse(markdownText);
+        htmlOutput.innerHTML = htmlContent;
+    });
+
+    journalBody.append(markdownInput);
+    journalBody.append(htmlOutput);
+
+    
+    
+    // Add class names to elements
     journalBody.className = 'journal-body';
-
     journalBody.classList.add('journal-entry');
     journalBody.id = `${id}`;
-    journalTitle.classList.add('journal-title');
-    journalDocumentation.classList.add('journal-documentation');
-    journalReflection.classList.add('journal-reflection');
+    // journalTitle.classList.add('journal-title');
+    // journalDocumentation.classList.add('journal-documentation');
+    // journalReflection.classList.add('journal-reflection');
 
-    journalTitle.value = title;
-    journalTitle.placeholder = 'Insert title here';
+    // // Change journal title accordingly
+    // journalTitle.value = title;
+    // journalTitle.placeholder = 'Insert title here';
 
-    journalDocumentation.value = documentation;
-    journalDocumentation.placeholder = 'Insert documentation here';
+    // // Change documentation accordingly
+    // journalDocumentation.value = documentation;
+    // journalDocumentation.placeholder = 'Insert documentation here';
 
-    journalReflection.value = reflection;
-    journalReflection.placeholder = 'Insert reflection here';
+    // // Change reflection accordingly
+    // journalReflection.value = reflection;
+    // journalReflection.placeholder = 'Insert reflection here';
 
-    journalBody.append(journalTitle);
-    journalBody.append(journalDocumentation);
-    journalBody.append(journalReflection);
-    journalBody.append(saveButton);
+    // Attach to journal element
+    // journalBody.append(journalTitle);
+    // journalBody.append(journalDocumentation);
+    // journalBody.append(journalReflection);
+    // journalBody.append(saveButton);
 
-    saveButton.addEventListener('click', () => {
-        let overlay = document.getElementById('overlay');
-        let modal = document.getElementById('modal');
-        overlay.style.display = 'none';
-        modal.style.display = 'none';
-    });
+    
+    // // Update the title in the journal widget as the user types
+    // journalTitle.addEventListener('input', function() {
+    //     var journalWidgetTitle = document.querySelector(`.journal-widget[widget-id="${id}"] .journal-widget-title`);
+    //     if (journalWidgetTitle) {
+    //         journalWidgetTitle.textContent = journalTitle.value || 'Insert Title';
+    //     }
+    // });
 
-    // Update the title in the journal widget as the user types
-    journalTitle.addEventListener('input', function() {
-        var journalWidgetTitle = document.querySelector(`.journal-widget[widget-id="${id}"] .journal-widget-title`);
-        if (journalWidgetTitle) {
-            journalWidgetTitle.textContent = journalTitle.value || 'Insert Title';
-        }
-    });
 
+    // Attach to "pop-up" window
     modalRef.append(journalBody);
+
+    // Initially create Save/Cancel Button
+    if (!modalRef.querySelector('.save-cancel-container')) {
+        createSaveCancelButtons(modalRef);
+    }
 
     return journalBody.id;
 }
@@ -254,4 +287,31 @@ function getJournals() {
  */
 function saveNotes(journals) {
     localStorage.setItem("journal-list", JSON.stringify(journals));
+}
+
+function createSaveCancelButtons(modalRef) {
+    let buttonContainer = document.createElement('div');
+    buttonContainer.className = 'save-cancel-container';
+    
+    // Create 'Cancel' Button
+    let cancelButton = document.createElement('button');
+    cancelButton.innerText = 'Cancel';
+    cancelButton.className = 'cancel-button';
+    
+    // Create the 'Save' button
+    let saveButton = document.createElement('button');
+    saveButton.innerText = 'Save';
+    saveButton.className = 'save-button';
+
+    // Event listener for save button
+    saveButton.addEventListener('click', () => {
+        let overlay = document.getElementById('overlay');
+        let modal = document.getElementById('modal');
+        overlay.style.display = 'none';
+        modal.style.display = 'none';
+    });
+
+    buttonContainer.append(saveButton);
+    buttonContainer.append(cancelButton);
+    modalRef.append(buttonContainer);
 }
