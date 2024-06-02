@@ -43,14 +43,14 @@ function addJournalNew(journalContainer, existing) {
     if (existing) {
         journalList.forEach(journal => {
             journalID = createJournalElement(journal.id, journal.title,
-                journal.documentation, journal.reflection, modalRef);
+                journal.content, modalRef);
 
             // Creating journal widget for existing journal
             createJournalWidget(journalContainer, journalID);
         });
     } else {
         journalID = createJournalElement(journalTemplate.id, journalTemplate.title,
-            journalTemplate.documentation, journalTemplate.reflection, modalRef);
+            journalTemplate.content, modalRef);
 
         // Creating journal widget for new journal
         createJournalWidget(journalContainer, journalID);
@@ -196,16 +196,15 @@ function hideOtherJournalEntries(journalEntries, currentJournalID) {
  * 
  * @param {Number} id 
  * @param {String} title 
- * @param {String} documentation 
- * @param {String} reflection 
+ * @param {String} content
  * @param {HTMLElement} modalRef 
  * @returns {Number} - The journal's unique ID
  */
-function createJournalElement(id, title, documentation, reflection, modalRef) {
+function createJournalElement(id, title, content, modalRef) {
     const journalBody = document.createElement('div');
-    const journalTitle = document.createElement('textarea');
-    const journalDocumentation = document.createElement('textarea');
-    const journalReflection = document.createElement('textarea');
+    // const journalTitle = document.createElement('textarea');
+    // const journalDocumentation = document.createElement('textarea');
+    // const journalReflection = document.createElement('textarea');
 
     // IMPLEMENT:
     const markdownInput = document.createElement('textarea');
@@ -215,6 +214,7 @@ function createJournalElement(id, title, documentation, reflection, modalRef) {
     htmlOutput.classList.add('journal-htmlOutput');
 
     markdownInput.placeholder = 'Input Markdown here';
+    markdownInput.name = "markdownInput";
     markdownInput.rows = 25;
     markdownInput.cols = 50;
 
@@ -225,13 +225,19 @@ function createJournalElement(id, title, documentation, reflection, modalRef) {
         htmlOutput.innerHTML = htmlContent;
     });
 
+    if (getJournals() != 0) {
+        markdownInput.value = content;
+        let htmlContent = marked.parse(content);
+        htmlOutput.innerHTML = htmlContent;
+    }
+
     journalBody.append(markdownInput);
     journalBody.append(htmlOutput);
 
     
     
     // Add class names to elements
-    journalBody.className = 'journal-body';
+    // journalBody.className = 'journal-body';
     journalBody.classList.add('journal-entry');
     journalBody.id = `${id}`;
     // journalTitle.classList.add('journal-title');
@@ -333,7 +339,7 @@ function createSaveCancelButtons(modalRef) {
 function saveContent(event) {
 
     let modal = document.getElementById('modal');
-    const activeJournal = modal.querySelector('.journal-body.journal-entry:not([style*="display: none"])');
+    const activeJournal = modal.querySelector('.journal-entry:not([style*="display: none"])');
 
     if (activeJournal) {
         const markdownInput = activeJournal.querySelector('.journal-markdownInput');

@@ -60,7 +60,7 @@ body {
 }
 
 /* The "popup" of that particular journal */
-.journal-body.journal-entry {
+.journal-entry {
     width: 14in;
     height: 6in;
     
