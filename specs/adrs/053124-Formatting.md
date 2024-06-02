@@ -50,4 +50,4 @@ After careful consideration, we have decided to adopt Prettier as the default fo
 We anticipate a more consistent code formatting across the entire codebase, reduced manual effort in code reviews focused on formatting and improved collaboration and readability of code.
 
 ## More Information
-We will refer to this resource - [Prettier Documentation] (https://prettier.io/docs/en/) to guide us through the installation and configuration process.
+We will refer to this resource - [Prettier Documentation](https://prettier.io/docs/en/) to guide us through the installation and configuration process.
