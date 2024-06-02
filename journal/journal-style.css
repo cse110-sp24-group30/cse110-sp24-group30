@@ -172,15 +172,16 @@ body {
     cursor: pointer;
 }
 
-/* .save-button {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    font-size: 12px;
-    padding: 5px 10px;
-} */
+nav {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+    font-size: 18pt;
+}
 
-/* .journal-body {
-    position: relative;
-} */
-
+#team-logo>img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+}
