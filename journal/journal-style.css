@@ -106,3 +106,33 @@ body {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
 }
+
+.button-container {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+.edit-button {
+    font-size: 12px;
+    padding: 5px 10px;
+    margin-right: 5px;  /* Space between buttons */
+}
+
+.delete-button {
+    font-size: 12px;
+    padding: 5px 10px;
+}
+
+.save-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 12px;
+    padding: 5px 10px;
+}
+
+.journal-body {
+    position: relative;
+}
+
