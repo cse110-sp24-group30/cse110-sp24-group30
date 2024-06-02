@@ -21,6 +21,8 @@ function init() {
 
   // Add saved tasks for Not Started and In Progress from localStorage
   addTask(toDoContainer, true);
+
+  updateCount();
 }
 
 function addTask(toDoContainer, existing, category) {
@@ -86,6 +88,8 @@ function addTask(toDoContainer, existing, category) {
       saveInProgress(inProgressList);
       toDoElement.classList.add("in-progress");
     }
+
+    updateCount();
   }
 }
 
@@ -218,6 +222,18 @@ function removeTask(id, category) {
       saveInProgress(taskList);
     }
   }
+  updateCount();
+}
+
+function updateCount() {
+  const numNotStarted = document.getElementById("num-not-started");
+  numNotStarted.innerText = getNotStarted().length;
+
+  const numInProgress = document.getElementById("num-in-progress");
+  numInProgress.innerText = getInProgress().length;
+
+  const numDone = document.getElementById("num-done");
+  numDone.innerText = getDone().length;
 }
 
 //Get all the notStarted entries from localStorage
