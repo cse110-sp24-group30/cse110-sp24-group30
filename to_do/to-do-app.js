@@ -20,28 +20,35 @@ function addTask(toDoContainer, existing, category) {
     const notStartedList = getNotStarted();
     const inProgressList = getInProgress();
     let toDoID = 0;
+
+    const date = new Date();
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+
+    let currentDate = `${month}-${day}-${year}`;
     
     const toDoTemplate = {
         id: Math.floor(Math.random() * 2000000),
         title: "Default Title",
-        dueDate: "",
-        category: "self",
+        dueDate: `${currentDate}`,
+        label: "self",
     };
 
     if (existing) {
         console.log("existing");
         notStartedList.forEach(notStarted => {
-            toDoID = createToDoElement(notStarted.id, notStarted.title, notStarted.dueDate, 1);
+            toDoID = createToDoElement(notStarted.id, notStarted.title, notStarted.dueDate, notStarted.label, 1);
         });
 
         inProgressList.forEach(inProgress => {
-            toDoID = createToDoElement(inProgress.id, inProgress.title, inProgress.dueDate, 2);
+            toDoID = createToDoElement(inProgress.id, inProgress.title, inProgress.dueDate, inProgress.label, 2);
         });
 
     }
     else {
         console.log("not existing")
-        toDoID = createToDoElement(toDoTemplate.id, toDoTemplate.title, toDoTemplate.dueDate, category);
+        toDoID = createToDoElement(toDoTemplate.id, toDoTemplate.title, toDoTemplate.dueDate, toDoTemplate.label, category);
 
         const toDoElement = document.createElement('div');
         if(category === 1) {
@@ -57,25 +64,22 @@ function addTask(toDoContainer, existing, category) {
             saveInProgress(inProgressList);
             toDoElement.classList.add('in-progress');
         }
-
-        toDoElement.taskTitle = "Placeholder title";
-        toDoElement.taskDueDate = "Placeholder date";
-        toDoElement.setAttribute('task-id', toDoID);
     }
     
 }
 
-function createToDoElement(id, title, dueDate, category) {
+function createToDoElement(id, title, dueDate, label, category) {
     
     const taskDiv = document.createElement('div');
     taskDiv.classList.add('task');
+    taskDiv.setAttribute('task-id', id);
 
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
     checkbox.id = 'radio-button';
 
     const taskTitle = document.createElement('p');
-    taskTitle.textContent = 'Todo List Canvas';
+    taskTitle.textContent = `${title}`;
 
     const categoryDiv = document.createElement('div');
     categoryDiv.classList.add('category');
@@ -88,21 +92,24 @@ function createToDoElement(id, title, dueDate, category) {
         const option = document.createElement('option');
         option.value = cat;
         option.textContent = cat.charAt(0).toUpperCase() + cat.slice(1);
-        if (cat === 'self') { 
+        if (cat === `${label}`) { 
             option.selected = true;
         }
         categorySelect.appendChild(option);
     });
 
+    updateCategoryColor(categorySelect);
+
     categorySelect.addEventListener('change', (event) => {
         updateCategoryColor(event.target);
+        updateTaskLabel(id, event.target.value, category);
     });
 
     categoryDiv.appendChild(categorySelect);
 
     const dueDateSpan = document.createElement('span');
     dueDateSpan.id = 'due-date';
-    dueDateSpan.textContent = 'Due Date: 5/31';
+    dueDateSpan.textContent = `Due Date: ${dueDate}`;
 
     const buttonsDiv = document.createElement('div');
     buttonsDiv.classList.add('buttons');
@@ -117,6 +124,7 @@ function createToDoElement(id, title, dueDate, category) {
 
     deleteButton.addEventListener('click', () => {
         taskDiv.remove();
+        removeTask(id, category);
     });
 
     buttonsDiv.appendChild(editButton);
@@ -150,6 +158,52 @@ function updateCategoryColor(selectElement) {
     };
     
     selectElement.style.backgroundColor = categoryColors[category] || 'orange';
+}
+
+function updateTaskLabel(id, newLabel, category) {
+
+    let taskList;
+    if (category === 1){
+        taskList = getNotStarted();
+    }
+    else {
+        taskList = getInProgress();
+    }
+
+    const taskIndex = taskList.findIndex(task => task.id === id);
+
+    if (taskIndex > -1) {
+        taskList[taskIndex].label = newLabel;
+        if (category === 1) {
+            saveNotStarted(taskList);
+        } 
+        else {
+            saveInProgress(taskList);
+        }
+    }
+}
+
+function removeTask(id, category) {
+
+    let taskList;
+    if (category === 1){
+        taskList = getNotStarted();
+    }
+    else {
+        taskList = getInProgress();
+    }
+
+    const taskIndex = taskList.findIndex(task => task.id === id);
+
+    if (taskIndex > -1) {
+        taskList.splice(taskIndex, 1);
+        if (category === 1) {
+            saveNotStarted(taskList);
+        } 
+        else {
+            saveInProgress(taskList);
+        }
+    }
 }
 
 //Get all the notStarted entries from localStorage
