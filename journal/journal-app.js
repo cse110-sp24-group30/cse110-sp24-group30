@@ -225,9 +225,11 @@ function closeJournalModal(event) {
 function deleteJournal(event) {
     const widget = event.target.closest('.journal-widget');
     const currentJournalID = widget.getAttribute('widget-id');
+    const entry = document.querySelector(`.journal-entry[id="${currentJournalID}"]`);
 
     // Remove the journal element from the DOM
     widget.remove();
+    entry.remove()
 
     // Remove the journal entry from localStorage
     const journalList = getJournals();
