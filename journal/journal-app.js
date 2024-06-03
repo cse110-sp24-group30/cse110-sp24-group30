@@ -1,7 +1,7 @@
 window.addEventListener('DOMContentLoaded', init);
 
 /**
- * Main function that initializes every other function
+ * Main function that initializes the journal page
  */
 function init() {
     const journalContainer = document.getElementById('journal-app');
@@ -12,7 +12,6 @@ function init() {
     addButton.addEventListener('click', () => addJournalNew(journalContainer, false));
 
     // When a user clicks "out" of the journal content/popup, it closes it
-    
     overlayRef.addEventListener('click', () => {
         overlayRef.style.display = 'none';
         modalRef.style.display = 'none';
@@ -57,7 +56,7 @@ function addJournalNew(journalContainer, existing) {
 
         // Save new journal to localStorage
         journalList.push(journalTemplate);
-        saveNotes(journalList);
+        saveJournals(journalList);
     }
 
     // Ensures save/cancel buttons always at the bottom
@@ -71,10 +70,72 @@ function addJournalNew(journalContainer, existing) {
 }
 
 /**
+ * Creates the "pop-up" that will contain each journal's content
+ * 
+ * @param {Number} id - The journal's unique ID
+ * @param {String} title - The journal's title
+ * @param {String} content - Existing journal content if any
+ * @param {HTMLElement} modalRef - Reference to the modal element
+ * @returns {Number} - The journal's unique ID
+ */
+function createJournalElement(id, title, content, modalRef) {
+    const journalBody = document.createElement('div');
+    const markdownInput = document.createElement('textarea');
+    const htmlOutput = document.createElement('div');
+
+    markdownInput.classList.add('journal-markdownInput');
+    htmlOutput.classList.add('journal-htmlOutput');
+
+    markdownInput.placeholder = 'Input Markdown here';
+    markdownInput.name = "markdownInput";
+    markdownInput.rows = 25;
+    markdownInput.cols = 50;
+
+    // Live preview of markdown text to formatted html
+    markdownInput.addEventListener('input', () => {
+        let markdownText = markdownInput.value;
+        let htmlContent = marked.parse(markdownText);
+        htmlOutput.innerHTML = htmlContent;
+
+        // Update the title in the journal widget as the user types
+        const firstHeader = getFirstHeader(markdownText);
+        const journalWidgetTitle = document.querySelector(`.journal-widget[widget-id="${id}"] .journal-widget-title`);
+        if (journalWidgetTitle) {
+            journalWidgetTitle.textContent = firstHeader || 'Insert Title';
+        }
+    });
+
+    // If existing journals, also update htmlOutput based from journal's markdownInput
+    if (getJournals() != 0) {
+        markdownInput.value = content;
+        let htmlContent = marked.parse(content);
+        htmlOutput.innerHTML = htmlContent;
+    }
+
+    journalBody.append(markdownInput);
+    journalBody.append(htmlOutput);
+
+    // Add class names to elements
+    journalBody.classList.add('journal-entry');
+    journalBody.id = `${id}`;
+
+    // Attach to "pop-up" window
+    modalRef.append(journalBody);
+
+    // Initially create Save/Cancel Button
+    if (!modalRef.querySelector('.save-cancel-container')) {
+        createSaveCancelButtons(modalRef);
+    }
+
+    return journalBody.id;
+}
+
+/**
  * Creates a "journal widget" to be displayed on the page
  * 
  * @param {HTMLElement} journalContainer - DOM element to display journals in
  * @param {Number} journalID - The journal's unique identifier
+ * @param {String} content - Existing journal content if any
  */
 function createJournalWidget(journalContainer, journalID, content) {
     const journalWidget = document.createElement('div');
@@ -118,7 +179,6 @@ function createJournalWidget(journalContainer, journalID, content) {
     // Add event listener for edit button click
     editButton.addEventListener('click', openJournalModal);
 
-
     // Add event listener for delete button click
     deleteButton.addEventListener('click', deleteJournal);
 
@@ -158,7 +218,7 @@ function closeJournalModal(event) {
 }
 
 /**
- * Deletes a journal (of its content in localStorage and on the page)
+ * Deletes a journal (removes its content from localStorage and from the page)
  * 
  * @param {*} event - Event listener target
  */
@@ -172,7 +232,7 @@ function deleteJournal(event) {
     // Remove the journal entry from localStorage
     const journalList = getJournals();
     const updatedJournalList = journalList.filter(journal => journal.id != currentJournalID);
-    saveNotes(updatedJournalList);
+    saveJournals(updatedJournalList);
 }
 
 /**
@@ -194,86 +254,6 @@ function hideOtherJournalEntries(journalEntries, currentJournalID) {
 }
 
 /**
- * Creates the section that will contain each journal's content
- * 
- * @param {Number} id 
- * @param {String} title 
- * @param {String} content
- * @param {HTMLElement} modalRef 
- * @returns {Number} - The journal's unique ID
- */
-function createJournalElement(id, title, content, modalRef) {
-    const journalBody = document.createElement('div');
-    const markdownInput = document.createElement('textarea');
-    const htmlOutput = document.createElement('div');
-
-    markdownInput.classList.add('journal-markdownInput');
-    htmlOutput.classList.add('journal-htmlOutput');
-
-    markdownInput.placeholder = 'Input Markdown here';
-    markdownInput.name = "markdownInput";
-    markdownInput.rows = 25;
-    markdownInput.cols = 50;
-
-    // Live preview of markdown text to formatted html
-    markdownInput.addEventListener('input', () => {
-        let markdownText = markdownInput.value;
-        let htmlContent = marked.parse(markdownText);
-        htmlOutput.innerHTML = htmlContent;
-
-        // Update the title in the journal widget as the user types
-        const firstHeader = getFirstHeader(markdownText);
-        const journalWidgetTitle = document.querySelector(`.journal-widget[widget-id="${id}"] .journal-widget-title`);
-        if (journalWidgetTitle) {
-            journalWidgetTitle.textContent = firstHeader || 'Insert Title';
-        }
-    });
-
-    if (getJournals() != 0) {
-        markdownInput.value = content;
-        let htmlContent = marked.parse(content);
-        htmlOutput.innerHTML = htmlContent;
-    }
-
-    journalBody.append(markdownInput);
-    journalBody.append(htmlOutput);
-
-    
-    
-    // Add class names to elements
-    journalBody.classList.add('journal-entry');
-    journalBody.id = `${id}`;
-
-    // Attach to "pop-up" window
-    modalRef.append(journalBody);
-
-    // Initially create Save/Cancel Button
-    if (!modalRef.querySelector('.save-cancel-container')) {
-        createSaveCancelButtons(modalRef);
-    }
-
-    return journalBody.id;
-}
-
-/**
- * Get all journals from localStorage
- * 
- * @returns {Array} - An array containing journals from localStorage
- */
-function getJournals() {
-    return JSON.parse(localStorage.getItem("journal-list") || "[]");
-}
-
-/**
- * Saves all journals into localStorage
- * 
- * @param {Array} journals - An array containing journals
- */
-function saveNotes(journals) {
-    localStorage.setItem("journal-list", JSON.stringify(journals));
-}
-
-/**
  * Creates save/cancel buttons that are held in an container
  * 
  * @param {HTMLElement} modalRef - Reference to "modal" element
@@ -287,6 +267,7 @@ function createSaveCancelButtons(modalRef) {
     cancelButton.innerText = 'Cancel';
     cancelButton.className = 'cancel-button';
 
+    // Event listener for cancel button
     cancelButton.addEventListener('click', closeJournalModal);
     
     // Create the 'Save' button
@@ -327,7 +308,7 @@ function saveContent(event) {
             return journal
         });
 
-        saveNotes(updatedJournalList);
+        saveJournals(updatedJournalList);
         alert("Saved!");
     }
 
@@ -346,4 +327,22 @@ function saveContent(event) {
 function getFirstHeader(content) {
     const headerMatch = content.match(/^#\s(.+)$/m);
     return headerMatch ? headerMatch[1] : null;
+}
+
+/**
+ * Get all journals from localStorage
+ * 
+ * @returns {Array} - An array containing journals from localStorage
+ */
+function getJournals() {
+    return JSON.parse(localStorage.getItem("journal-list") || "[]");
+}
+
+/**
+ * Saves all journals into localStorage
+ * 
+ * @param {Array} journals - An array containing journals
+ */
+function saveJournals(journals) {
+    localStorage.setItem("journal-list", JSON.stringify(journals));
 }

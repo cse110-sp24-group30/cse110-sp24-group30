@@ -5,6 +5,20 @@ body {
     background-color: #f0f0f0;
 }
 
+nav {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+    font-size: 18pt;
+}
+
+#team-logo>img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+}
+
 /* Grid outline */
 #journal-app {
     max-width: 14in;
@@ -73,34 +87,10 @@ body {
     gap: 5px;
 }
 
-/* The textarea for the journal's title, doc, reflect */
-/* .journal-entry textarea {
-    width: 14in;
-    height: 100px;
-} */
-
-/* Textarea of journal title section */
-/* .journal-entry textarea.journal-title {
-    height: 10%;
-    font-size: 40px;
-} */
-
-/* Textarea of journal documentation section */
-/* .journal-entry textarea.journal-documentation {
-    height: 50%;
-} */
-
-/* Textarea of journal reflection section */
-/* .journal-entry textarea.journal-reflection {
-    height: 37%;
-} */
-
-/* IMPLEMENT: */
+/* The input box to type markdown */
 .journal-entry textarea.journal-markdownInput {
     border: 1px solid red;
     background-color: #f0f0f0;
-    /* height: 5in;
-    width: 5in; */
     resize: none; /* Prevents textarea from being resized */
     font-family: Arial, Helvetica, sans-serif;
     font-size: 16px;
@@ -113,11 +103,10 @@ body {
     position: relative;
 }
 
+/* The live preview of the markdown to formatted html box*/
 .journal-entry div.journal-htmlOutput {
     border: 1px solid green;
     background-color: #f0f0f0;
-    /* height: 5in; */
-    /* width: 5in; */
     word-wrap: break-word;
 
     width: 40%;
@@ -128,6 +117,7 @@ body {
     position: relative;
 }
 
+/* Elements within the html box */
 .journal-htmlOutput * {
     margin-top: 0%;
     margin-bottom: 2%;
@@ -144,44 +134,35 @@ body {
     background-color: rgba(0, 0, 0, 0.5);
 }
 
+/* Container for edit/delete buttons */
 .button-container {
     position: absolute;
     top: 200px;
     right: 60px;
 }
 
+/* Edit button */
 .edit-button, .fa.fa-pencil {
     font-size: 12px;
     padding: 5px 10px;
     margin-right: 5px;  /* Space between buttons */
 }
 
+/* Delete button */
 .delete-button, .fa.fa-close {
     font-size: 12px;
     padding: 5px 10px;
 }
 
+/* Container for save/cancel buttons */
 .save-cancel-container {
     display: flex;
     justify-content: space-around;
     margin-top: 10px;
 }
 
+/* Save/Cancel Buttons */
 .save-button, .cancel-button {
     padding: 5px 10px;
     cursor: pointer;
-}
-
-nav {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    justify-content: space-between;
-    font-size: 18pt;
-}
-
-#team-logo>img {
-    width: 90px;
-    height: 90px;
-    border-radius: 50%;
 }
