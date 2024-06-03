@@ -162,7 +162,7 @@ describe("Journal Add Tests", () => {
         expect(num2).toBe(num1);
     });
 
-    it('Editing a single journal', async () => {
+    it('Editing a single journal using plain text', async () => {
         console.log('Clearing localStorage...');
         
         await page.evaluate(() => localStorage.removeItem('journal-list'));
@@ -192,10 +192,42 @@ describe("Journal Add Tests", () => {
         expect(htmlOutputHTML).toBe('<p>Hello world!</p>');
     });
 
+    it('Simulating backspace input on journal', async () => {
+        let markdownInputVal = await page.$eval('.journal-markdownInput', el => el.value);
+
+        await page.focus('.journal-markdownInput');
+        for (let i = 0; i < markdownInputVal.length; i++) {
+            await page.keyboard.press('Backspace');
+        }
+
+        markdownInputVal = await page.$eval('.journal-markdownInput', el => el.value);
+        expect(markdownInputVal).toBe('');
+
+        const htmlOutputText = await page.$eval('.journal-htmlOutput', el => el.innerText.trim());
+        expect(htmlOutputText).toBe('');
+
+        const htmlOutputHTML = await page.$eval('.journal-htmlOutput', el => el.innerHTML.trim());
+        expect(htmlOutputHTML).toBe('');
+    });
+
+    it('Editing a single journal using various markdown text', async () => {
+        await page.focus('.journal-markdownInput');
+        await page.keyboard.type('# Hello\n\n**Bold**\n\n*Italics*\n\n> Block Quotes\n\n1. First Item\n2. Second Item\n3. Third Item\n\n- First Item\n- Second Item\n- Third Item\n\n`code`\n\n---\n\n[Link]()\n\n![Alt Image]()');
+
+        const markdownInputVal = await page.$eval('.journal-markdownInput', el => el.value);
+        expect(markdownInputVal).toBe('# Hello\n\n**Bold**\n\n*Italics*\n\n> Block Quotes\n\n1. First Item\n2. Second Item\n3. Third Item\n\n- First Item\n- Second Item\n- Third Item\n\n`code`\n\n---\n\n[Link]()\n\n![Alt Image]()');
+
+        const htmlOutputText = await page.$eval('.journal-htmlOutput', el => el.innerText.trim());
+        expect(htmlOutputText).toBe('Hello\n\nBold\n\nItalics\n\nBlock Quotes\n\nFirst Item\nSecond Item\nThird Item\nFirst Item\nSecond Item\nThird Item\n\ncode\n\nLink');
+
+        const htmlOutputHTML = await page.$eval('.journal-htmlOutput', el => el.innerHTML.trim());
+        expect(htmlOutputHTML).toBe('<h1>Hello</h1>\n<p><strong>Bold</strong></p>\n<p><em>Italics</em></p>\n<blockquote>\n<p>Block Quotes</p>\n</blockquote>\n<ol>\n<li>First Item</li>\n<li>Second Item</li>\n<li>Third Item</li>\n</ol>\n<ul>\n<li>First Item</li>\n<li>Second Item</li>\n<li>Third Item</li>\n</ul>\n<p><code>code</code></p>\n<hr>\n<p><a href="">Link</a></p>\n<p><img src="" alt="Alt Image"></p>');
+    });
+
     /**
      *  TODO: Add more tests for:
      * 
-     *  (1) Modifying a journal by using markdown syntax
+     *  (1) Modifying a journal by using markdown syntax (DONE)
      *  (2) Saving a journal via its save button
      *  (3) Cancel changes to a journal via its cancel button
      *  (4) Close and open journal and check its contents
