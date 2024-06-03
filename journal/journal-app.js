@@ -46,14 +46,14 @@ function addJournalNew(journalContainer, existing) {
                 journal.content, modalRef);
 
             // Creating journal widget for existing journal
-            createJournalWidget(journalContainer, journalID);
+            createJournalWidget(journalContainer, journalID, journal.content);
         });
     } else {
         journalID = createJournalElement(journalTemplate.id, journalTemplate.title,
             journalTemplate.content, modalRef);
 
         // Creating journal widget for new journal
-        createJournalWidget(journalContainer, journalID);
+        createJournalWidget(journalContainer, journalID, journalTemplate.content);
 
         // Save new journal to localStorage
         journalList.push(journalTemplate);
@@ -76,13 +76,15 @@ function addJournalNew(journalContainer, existing) {
  * @param {HTMLElement} journalContainer - DOM element to display journals in
  * @param {Number} journalID - The journal's unique identifier
  */
-function createJournalWidget(journalContainer, journalID) {
+function createJournalWidget(journalContainer, journalID, content) {
     const journalWidget = document.createElement('div');
     journalWidget.classList.add('journal-widget');
-    // journalElementTest.textContent = 'Insert Title';
     const journalWidgetTitle = document.createElement('span')
     journalWidgetTitle.classList.add('journal-widget-title')
-    journalWidgetTitle.textContent = 'Insert Title';
+
+    // Extract the first header title from the content
+    const firstHeader = getFirstHeader(content);
+    journalWidgetTitle.textContent = firstHeader || 'Insert Title';
     journalWidget.append(journalWidgetTitle);
     journalWidget.setAttribute('widget-id', journalID);
 
@@ -202,11 +204,6 @@ function hideOtherJournalEntries(journalEntries, currentJournalID) {
  */
 function createJournalElement(id, title, content, modalRef) {
     const journalBody = document.createElement('div');
-    // const journalTitle = document.createElement('textarea');
-    // const journalDocumentation = document.createElement('textarea');
-    // const journalReflection = document.createElement('textarea');
-
-    // IMPLEMENT:
     const markdownInput = document.createElement('textarea');
     const htmlOutput = document.createElement('div');
 
@@ -223,6 +220,13 @@ function createJournalElement(id, title, content, modalRef) {
         let markdownText = markdownInput.value;
         let htmlContent = marked.parse(markdownText);
         htmlOutput.innerHTML = htmlContent;
+
+        // Update the title in the journal widget as the user types
+        const firstHeader = getFirstHeader(markdownText);
+        const journalWidgetTitle = document.querySelector(`.journal-widget[widget-id="${id}"] .journal-widget-title`);
+        if (journalWidgetTitle) {
+            journalWidgetTitle.textContent = firstHeader || 'Insert Title';
+        }
     });
 
     if (getJournals() != 0) {
@@ -237,40 +241,8 @@ function createJournalElement(id, title, content, modalRef) {
     
     
     // Add class names to elements
-    // journalBody.className = 'journal-body';
     journalBody.classList.add('journal-entry');
     journalBody.id = `${id}`;
-    // journalTitle.classList.add('journal-title');
-    // journalDocumentation.classList.add('journal-documentation');
-    // journalReflection.classList.add('journal-reflection');
-
-    // // Change journal title accordingly
-    // journalTitle.value = title;
-    // journalTitle.placeholder = 'Insert title here';
-
-    // // Change documentation accordingly
-    // journalDocumentation.value = documentation;
-    // journalDocumentation.placeholder = 'Insert documentation here';
-
-    // // Change reflection accordingly
-    // journalReflection.value = reflection;
-    // journalReflection.placeholder = 'Insert reflection here';
-
-    // Attach to journal element
-    // journalBody.append(journalTitle);
-    // journalBody.append(journalDocumentation);
-    // journalBody.append(journalReflection);
-    // journalBody.append(saveButton);
-
-    
-    // // Update the title in the journal widget as the user types
-    // journalTitle.addEventListener('input', function() {
-    //     var journalWidgetTitle = document.querySelector(`.journal-widget[widget-id="${id}"] .journal-widget-title`);
-    //     if (journalWidgetTitle) {
-    //         journalWidgetTitle.textContent = journalTitle.value || 'Insert Title';
-    //     }
-    // });
-
 
     // Attach to "pop-up" window
     modalRef.append(journalBody);
@@ -363,4 +335,15 @@ function saveContent(event) {
     overlay.style.display = 'none';
     modal.style.display = 'none';
     
+}
+
+/**
+ * Extracts the first header title from the markdown content
+ * 
+ * @param {String} content - The markdown content 
+ * @returns {String} - The first header title
+ */
+function getFirstHeader(content) {
+    const headerMatch = content.match(/^#\s(.+)$/m);
+    return headerMatch ? headerMatch[1] : null;
 }
