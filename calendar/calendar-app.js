@@ -41,6 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     renderTodaySection();
+    renderUpcomingSection();
   };
 
   const renderMonthView = (
@@ -217,6 +218,33 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
+  const renderUpcomingSection = () => {
+    const year = today.getFullYear();
+    const month = today.getMonth() + 1;
+    const day = today.getDate();
+    const todayDate = `${year}-${String(month).padStart(2, "0")}-${String(
+      day
+    ).padStart(2, "0")}`;
+    const events = getEvents();
+    const upcomingEvents = events.filter((event) => event.date > todayDate);
+    upcomingEventsContainer.innerHTML = "";
+    if (upcomingEvents.length > 0) {
+      upcomingEvents.forEach((event) => {
+        const eventElement = document.createElement("div");
+        eventElement.classList.add("event", event.category);
+        eventElement.innerHTML = `
+                        <strong>${event.title}</strong>
+                        <p>${event.description}</p>
+                        <button class="edit-button" data-id="${event.id}">Edit</button>
+                        <button class="delete-button" data-id="${event.id}">Delete</button>
+                    `;
+        upcomingEventsContainer.appendChild(eventElement);
+      });
+    } else {
+      upcomingEventsContainer.innerHTML = "<p>No upcoming events.</p>";
+    }
+  };
+
   prevMonth.addEventListener("click", () => {
     if (currentView === "month") {
       currentDate.setMonth(currentDate.getMonth() - 1);
@@ -293,6 +321,7 @@ document.addEventListener("DOMContentLoaded", () => {
     eventForm.reset();
     renderCalendar(currentDate);
     renderTodaySection();
+    renderUpcomingSection();
   });
 
   const saveEvent = (event) => {
@@ -320,6 +349,7 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem("events", JSON.stringify(events));
     renderCalendar(currentDate);
     renderTodaySection();
+    renderUpcomingSection();
   };
 
   document.addEventListener("click", (event) => {
@@ -361,12 +391,39 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   const renderFilteredEvents = (events) => {
-    calendarGrid.innerHTML = "";
+    calendarGrid.innerHTML = "Search results:";
     events.forEach((event) => {
       const eventElement = document.createElement("div");
       eventElement.classList.add("event", event.category);
       eventElement.textContent = event.title;
       calendarGrid.appendChild(eventElement);
+
+      eventElement.addEventListener("click", (event) => {
+        const events = getEvents();
+
+        const eventName = event.target.innerHTML;
+
+        const selectedEvent = events.find((event) => event.title === eventName);
+
+        const id = selectedEvent.id;
+
+        if (selectedEvent) {
+          document.getElementById("event-id").value = selectedEvent.id;
+          document.getElementById("event-title").value = selectedEvent.title;
+          document.getElementById("event-category").value =
+            selectedEvent.category;
+          document.getElementById("event-date").value = selectedEvent.date;
+          document.getElementById("event-time").value =
+            selectedEvent.time || "";
+          document.getElementById("event-recurrence").value =
+            selectedEvent.recurrence || "none";
+          document.getElementById("event-description").value =
+            selectedEvent.description;
+          document.getElementById("event-reminder").value =
+            selectedEvent.reminder || "";
+          eventModal.style.display = "flex";
+        }
+      });
     });
   };
 
