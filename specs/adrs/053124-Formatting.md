@@ -3,7 +3,7 @@ parent: Decisions
 nav_order: 4
 title: ADR 0004 - Maintaining Consistent Formatting
 status: proposed
-date: 2023-05-31
+date: 2024-05-31
 deciders: Project Team
 consulted: N/A
 informed: Entire Team

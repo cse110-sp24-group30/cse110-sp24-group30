@@ -4,7 +4,7 @@ parent: Decisions
 nav_order: 1
 title: ADR 0001 - Choosing the Database Technology
 status: proposed
-date: 2023-05-10
+date: 2024-05-10
 deciders: Project Team
 consulted: Professor, Dev (TA)
 informed: Entire Team
