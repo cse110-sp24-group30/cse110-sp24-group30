@@ -8,13 +8,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const eventForm = document.getElementById("event-form");
   const todayDateElement = document.getElementById("today-date");
   const todayEventsContainer = document.getElementById("today-events");
+  const upcomingEventsContainer = document.getElementById("upcoming-events");
   const viewSelector = document.getElementById("view-selector");
   const searchBar = document.getElementById("search-bar");
 
   let currentDate = new Date();
   const today = new Date();
   let currentView = "month";
-
+  
+  eventModal.style.display = "none";
+  
   const renderCalendar = (date) => {
     calendarGrid.innerHTML = "";
     const year = date.getFullYear();
