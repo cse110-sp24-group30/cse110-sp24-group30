@@ -3,7 +3,7 @@ parent: Decisions
 nav_order: 2
 title: ADR 0002 - Choosing the Journal Page design
 status: proposed
-date: 2023-05-16
+date: 2024-05-16
 deciders: Project Team
 consulted: N/A
 informed: Entire Team
