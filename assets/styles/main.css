@@ -1,19 +1,90 @@
-h1 {
-    text-align: center;
+body,
+html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  font-size: 18pt;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
 }
-  
-nav {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    justify-content: space-between;
-    font-size: 18pt;
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
-#team-logo>img {
-    width: 90px;
-    height: 90px;
-    border-radius: 50%;
+.background {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background-image: url("../images/blueWaveBackground.jpeg");
+  background-size: cover;
+  filter: blur(10px);
+  transform: scale(1.1); /* removes white frame*/
+  z-index: -1;
+}
 
+.dashboard {
+  width: 90%;
+  height: 90%;
+  margin: 2% 5% 0% 5%;
+  flex-wrap: wrap;
+  background-color: rgb(12, 26, 54, 0.5);
+}
 
+.main-navbar {
+  height: 15%;
+  width: 100%;
+  display: flex;
+  font-size: 18pt;
+}
+
+.widgets {
+  width: 70%;
+  height: 100%;
+  display: flex;
+  color: white;
+  align-items: center;
+  padding-left: 20px;
+  justify-content: space-around;
+}
+
+.nav-icon{
+  margin-right: 10px;
+}
+
+.logo {
+  width: 30%;
+}
+
+#team-logo > img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+}
+
+.main-canvas {
+  width: 100%;
+  height: 85%;
+  gap: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  padding-top: 5%;
+  justify-content: space-around;
+}
+
+.dashboard-widget {
+  display: flex;
+  width: calc(20% - 10px);
+  height: 20%;
+  padding: 20px;
+  text-align: center;
+  border: 2px solid #74cbdf;
+  background-color: rgb(116, 203, 223, 0.47);
+}
+
+.dashboard-widget:nth-child(n + 4) {
+  width: calc(30% - 10px);
+  height: 30%;
 }
