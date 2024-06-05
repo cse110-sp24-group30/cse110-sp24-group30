@@ -2,42 +2,96 @@ window.addEventListener("DOMContentLoaded", init);
 
 //Initialization which calls all the other functions
 function init() {
-  const toDoContainer = document.getElementById("list-container");
+
   const addButtonNotStarted = document.querySelector(
     ".new-task-button-not-started"
   );
+
   const addButtonInProgress = document.querySelector(
     ".new-task-button-in-progress"
   );
 
   addButtonNotStarted.addEventListener("click", () =>
-    addTask(toDoContainer, false, 1)
+    addTask(false, 1)
   );
-  console.log("clicked addbutton not started");
+
+  
   addButtonInProgress.addEventListener("click", () =>
-    addTask(toDoContainer, false, 2)
+    addTask(false, 2)
   );
-  console.log("clicked addbutton in progress");
 
   // Add saved tasks for Not Started and In Progress from localStorage
-  addTask(toDoContainer, true);
+  addTask(true);
 
+  //Updating the display count of tasks in the respective columns
   updateCount();
+
+  setupDragAndDrop();
 }
 
-function addTask(toDoContainer, existing, category) {
-  console.log("add task");
+function setupDragAndDrop() {
+    const taskColumns = document.querySelectorAll('.task-column');
+  
+    taskColumns.forEach(column => {
+      column.addEventListener('dragover', handleDragOver);
+      column.addEventListener('drop', handleDrop);
+    });
+  
+    const tasks = document.querySelectorAll('.task');
+    tasks.forEach(task => {
+      task.addEventListener('dragstart', handleDragStart);
+      task.addEventListener('dragend', handleDragEnd);
+    });
+}
+  
+function handleDragStart(event) {
+    event.dataTransfer.setData('text/plain', event.target.getAttribute('task-id'));
+    event.currentTarget.style.opacity = '0.4';
+}
+  
+function handleDragEnd(event) {
+    event.currentTarget.style.opacity = '1';
+}
+  
+function handleDragOver(event) {
+    event.preventDefault();
+}
+  
+function handleDrop(event) {
+    event.preventDefault();
+    const taskId = event.dataTransfer.getData('text/plain');
+    const taskElement = document.querySelector(`[task-id='${taskId}']`);
+    const newCategory = event.currentTarget.getAttribute('data-category');
+    const oldCategory = taskElement.parentElement.getAttribute('data-category');
+  
+    if (newCategory !== oldCategory) {
+      event.currentTarget.querySelector('list').appendChild(taskElement);
+      updateCount();
+    }
+}
+
+/**
+ * Adds tasks to the respective NotStarted and InProgress columns and
+ * loads them if they already exist in localStorage depending on the category flag.
+ * 
+ * @param {boolean} existing - If true, loads tasks from localStorage.
+ * @param {number} [category] - The column of the task (1 for Not Started, 2 for In Progress).
+ */
+function addTask(existing, category) {
+  
   const notStartedList = getNotStarted();
   const inProgressList = getInProgress();
-  let toDoID = 0;
 
+  //Getting today's date as a placeholder in the template for dueDate
   const date = new Date();
   let day = date.getDate();
   let month = date.getMonth() + 1;
   let year = date.getFullYear();
-
+  //storing the date in string format so it can be understood by the user
   let currentDate = `${month}-${day}-${year}`;
 
+  //TODO: Random word generation for the display title so that the user knows which task just created
+  //Template for a task created with default values for all fields
   const toDoTemplate = {
     id: Math.floor(Math.random() * 2000000),
     title: "Default Title",
@@ -45,10 +99,11 @@ function addTask(toDoContainer, existing, category) {
     label: "self",
   };
 
+  //if true, then loads the previously created tasks from localStorage for Not Started and In Progress column
+  //else it adds a new task to the DOM and updates localStorage accordingly by checking the category tag
   if (existing) {
-    console.log("existing");
     notStartedList.forEach((notStarted) => {
-      toDoID = createToDoElement(
+      createToDoElement(
         notStarted.id,
         notStarted.title,
         notStarted.dueDate,
@@ -58,7 +113,7 @@ function addTask(toDoContainer, existing, category) {
     });
 
     inProgressList.forEach((inProgress) => {
-      toDoID = createToDoElement(
+      createToDoElement(
         inProgress.id,
         inProgress.title,
         inProgress.dueDate,
@@ -67,8 +122,7 @@ function addTask(toDoContainer, existing, category) {
       );
     });
   } else {
-    console.log("not existing");
-    toDoID = createToDoElement(
+    createToDoElement(
       toDoTemplate.id,
       toDoTemplate.title,
       toDoTemplate.dueDate,
@@ -78,25 +132,36 @@ function addTask(toDoContainer, existing, category) {
 
     const toDoElement = document.createElement("div");
     if (category === 1) {
-      console.log("category 1");
       notStartedList.push(toDoTemplate);
       saveNotStarted(notStartedList);
       toDoElement.classList.add("not-started");
     } else if (category === 2) {
-      console.log("category 2");
       inProgressList.push(toDoTemplate);
       saveInProgress(inProgressList);
       toDoElement.classList.add("in-progress");
     }
 
+    //need to update count as we added new tasks
     updateCount();
   }
 }
 
+/**
+ * Creates a task element in the DOM.
+ * 
+ * @param {number} id - The ID of the task.
+ * @param {string} title - The title of the task.
+ * @param {string} dueDate - The due date of the task.
+ * @param {string} label - The label of the task like self/work/school/other.
+ * @param {number} category - The column of the task (1 for Not Started, 2 for In Progress).
+ * 
+ * @return {string} - The ID of the created task element.
+ */
 function createToDoElement(id, title, dueDate, label, category) {
   const taskDiv = document.createElement("div");
   taskDiv.classList.add("task");
   taskDiv.setAttribute("task-id", id);
+  taskDiv.setAttribute("draggable", "true");
 
   const checkbox = document.createElement("input");
   checkbox.type = "checkbox";
@@ -122,6 +187,7 @@ function createToDoElement(id, title, dueDate, label, category) {
     categorySelect.appendChild(option);
   });
 
+  //updating color so that it is consistent with the newly selected option
   updateCategoryColor(categorySelect);
 
   categorySelect.addEventListener("change", (event) => {
@@ -172,8 +238,14 @@ function createToDoElement(id, title, dueDate, label, category) {
   return taskDiv.id;
 }
 
+/**
+ * Updates the background color of the task based on the label selected.
+ * 
+ * @param {HTMLElement} selectElement - The select element whose background color is to be updated.
+ */
 function updateCategoryColor(selectElement) {
   const category = selectElement.value;
+  
   const categoryColors = {
     self: "orange",
     work: "blue",
@@ -181,9 +253,17 @@ function updateCategoryColor(selectElement) {
     other: "purple",
   };
 
+  //updates the color based on the specified array, otherwise goes to default to avoid error
   selectElement.style.backgroundColor = categoryColors[category] || "orange";
 }
 
+/**
+ * Updates the label of a task in localStorage.
+ * 
+ * @param {number} id - The ID of the task to update.
+ * @param {string} newLabel - The new label of the task.
+ * @param {number} category - The column of the task (1 for Not Started, 2 for In Progress).
+ */
 function updateTaskLabel(id, newLabel, category) {
   let taskList;
   if (category === 1) {
@@ -192,8 +272,10 @@ function updateTaskLabel(id, newLabel, category) {
     taskList = getInProgress();
   }
 
+  //finds index of the task based on the localStorage id
   const taskIndex = taskList.findIndex((task) => task.id === id);
 
+  //checks for valid index, if valid then updates the newly selected label in the localStorage for that element
   if (taskIndex > -1) {
     taskList[taskIndex].label = newLabel;
     if (category === 1) {
@@ -204,6 +286,12 @@ function updateTaskLabel(id, newLabel, category) {
   }
 }
 
+/**
+ * Removes a task from the specified column array in localStorage.
+ * 
+ * @param {number} id - The ID of the task to remove.
+ * @param {number} category - The column of the task (1 for Not Started, 2 for In Progress).
+ */
 function removeTask(id, category) {
   let taskList;
   if (category === 1) {
@@ -212,8 +300,10 @@ function removeTask(id, category) {
     taskList = getInProgress();
   }
 
+  //finds index of the task based on the localStorage id
   const taskIndex = taskList.findIndex((task) => task.id === id);
 
+  //check if we get a valid index, if its valid then removes that element from the specified localStorage array
   if (taskIndex > -1) {
     taskList.splice(taskIndex, 1);
     if (category === 1) {
@@ -222,9 +312,12 @@ function removeTask(id, category) {
       saveInProgress(taskList);
     }
   }
+
+  //updating count because remove from localStorage, need to update display
   updateCount();
 }
 
+//Updates the counts of tasks in the Not Started, In Progress, and Done categories.
 function updateCount() {
   const numNotStarted = document.getElementById("num-not-started");
   numNotStarted.innerText = getNotStarted().length;

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Developer Journal: To-Do List</title>
     <link rel="stylesheet" href="./to-do.css">
-    <script src="./to-do-app.js"></script> <!--Should we use defer keyword?-->
+    <script src="./to-do-app.js"></script>
 </head>
 <body>
     <div class="background"></div>
@@ -59,13 +59,12 @@
 
     <!-- To-Do Main Section -->
     <div id="list-container">
-        <div class="list-column">
-            <!-- Not Started Column -->
+        <div class="list-column" id="not-started-column">
             <div id="not-started-title">
                 <h2>Not Started</h2>
                 <h2 id="num-not-started">2</h2>
             </div>
-            <div id="not-started-content">
+            <div id="not-started-content" class="task-column" data-category="1">
                 <div id="not-started">
                     <list id = "not-started-list">
                         <div class="task">
@@ -99,12 +98,12 @@
         </div>
     
         <!-- In Progress Column -->
-        <div class="list-column">
+        <div class="list-column" id="in-progress-column">
             <div id="in-progress-title">
                 <h2>In Progress</h2>
                 <h2 id="num-in-progress">1</h2>
             </div>
-            <div id="in-progress-content">
+            <div id="in-progress-content" class="task-column" data-category="2">
                 <div id="in-progress">
                     <list id = "in-progress-list">
                         <div class="task">
@@ -126,12 +125,12 @@
         </div>
     
         <!-- Done Column -->
-        <div class="list-column">
+        <div class="list-column" id="done-column">
             <div id="done-title">
                 <h2>Done</h2>
                 <h2 id="num-done">1</h2>
             </div>
-            <div id="done-content">
+            <div id="done-content" class="task-column" data-category="3">
                 <div id="done-list">
                     <list>
                         <div class="task">
@@ -142,7 +141,6 @@
                             </div>
                             <span id="due-date">Due Date: 5/28</span>
                             <div class="buttons">
-                                <button id="edit-button">Edit Button</button>
                                 <button id="delete-button">Delete</button>
                             </div>
                         </div>
