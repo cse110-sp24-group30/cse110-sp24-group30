@@ -10,12 +10,12 @@
 <body>
     <h1 style="text-align: center;">To-Do Page</h1>
     <div id="list-container">
-        <div class="list-column">
+        <div class="list-column" id="not-started-column">
             <div id="not-started-title">
                 <h2>Not Started</h2>
                 <h2 id="num-not-started">2</h2>
             </div>
-            <div id="not-started-content">
+            <div id="not-started-content" class="task-column" data-category="1">
                 <div id="not-started">
                     <list id = "not-started-list">
                         <div class="task">
@@ -49,12 +49,12 @@
         </div>
     
         <!-- In Progress Column -->
-        <div class="list-column">
+        <div class="list-column" id="in-progress-column">
             <div id="in-progress-title">
                 <h2>In Progress</h2>
                 <h2 id="num-in-progress">1</h2>
             </div>
-            <div id="in-progress-content">
+            <div id="in-progress-content" class="task-column" data-category="2">
                 <div id="in-progress">
                     <list id = "in-progress-list">
                         <div class="task">
@@ -76,12 +76,12 @@
         </div>
     
         <!-- Done Column -->
-        <div class="list-column">
+        <div class="list-column" id="done-column">
             <div id="done-title">
                 <h2>Done</h2>
                 <h2 id="num-done">1</h2>
             </div>
-            <div id="done-content">
+            <div id="done-content" class="task-column" data-category="3">
                 <div id="done-list">
                     <list>
                         <div class="task">

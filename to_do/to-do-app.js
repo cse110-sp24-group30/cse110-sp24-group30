@@ -23,6 +23,49 @@ function init() {
   addTask(toDoContainer, true);
 
   updateCount();
+
+  setupDragAndDrop();
+}
+
+function setupDragAndDrop() {
+    const taskColumns = document.querySelectorAll('.task-column');
+  
+    taskColumns.forEach(column => {
+      column.addEventListener('dragover', handleDragOver);
+      column.addEventListener('drop', handleDrop);
+    });
+  
+    const tasks = document.querySelectorAll('.task');
+    tasks.forEach(task => {
+      task.addEventListener('dragstart', handleDragStart);
+      task.addEventListener('dragend', handleDragEnd);
+    });
+}
+  
+function handleDragStart(event) {
+    event.dataTransfer.setData('text/plain', event.target.getAttribute('task-id'));
+    event.currentTarget.style.opacity = '0.4';
+}
+  
+function handleDragEnd(event) {
+    event.currentTarget.style.opacity = '1';
+}
+  
+function handleDragOver(event) {
+    event.preventDefault();
+}
+  
+function handleDrop(event) {
+    event.preventDefault();
+    const taskId = event.dataTransfer.getData('text/plain');
+    const taskElement = document.querySelector(`[task-id='${taskId}']`);
+    const newCategory = event.currentTarget.getAttribute('data-category');
+    const oldCategory = taskElement.parentElement.getAttribute('data-category');
+  
+    if (newCategory !== oldCategory) {
+      event.currentTarget.querySelector('list').appendChild(taskElement);
+      updateCount();
+    }
 }
 
 function addTask(toDoContainer, existing, category) {
@@ -97,6 +140,7 @@ function createToDoElement(id, title, dueDate, label, category) {
   const taskDiv = document.createElement("div");
   taskDiv.classList.add("task");
   taskDiv.setAttribute("task-id", id);
+  taskDiv.setAttribute("draggable", "true");
 
   const checkbox = document.createElement("input");
   checkbox.type = "checkbox";
