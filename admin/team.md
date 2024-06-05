@@ -2,7 +2,7 @@
 
 ## Team logo
 
-<img src="Branding/110 Team 30.png" height=250>
+<img src="Branding/110Team30.png" height=250>
 
 Our team colors are: 27c6d9, 000000, ffffff
 
