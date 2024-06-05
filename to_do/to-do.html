@@ -8,9 +8,59 @@
     <script src="./to-do-app.js"></script> <!--Should we use defer keyword?-->
 </head>
 <body>
-    <h1 style="text-align: center;">To-Do Page</h1>
+    <div class="background"></div>
+    <!-- Nav Bar -->
+    <nav class="main-navbar">
+        <!-- Widgets -->
+        <section class="widgets">
+          <span class="nav-element"
+            ><a href="./index.html"
+              ><img
+                class="nav-icon"
+                src="../assets/icons/homeFillWhite.png"
+                alt="homeButton"
+              />Dashboard</a
+            ></span
+          >
+          <span class="nav-element"
+            ><a href="../journal/journal-page.html"
+              ><img
+                class="nav-icon"
+                src="../assets/icons/fileFillWhite.png"
+                alt="journalButton"
+              />Journal</a
+            ></span
+          >
+          <span class="nav-element"
+            ><a href=""
+              ><img
+                class="nav-icon"
+                src="../assets/icons/checkFillBlue.png"
+                alt="toDoButton"
+              />To Do List</a
+            ></span
+          >
+          <span class="nav-element"
+            ><a href=""
+              ><img
+                class="nav-icon"
+                src="../assets/icons/dateFillWhite.png"
+                alt="calendarButton"
+              />Calendar</a
+            ></span
+          >
+        </section>
+        <section class="logo">
+          <span id="team-logo"
+            ><img src="../assets/images/110Team30.png" />
+          </span>
+        </section>
+      </nav>
+
+    <!-- To-Do Main Section -->
     <div id="list-container">
         <div class="list-column">
+            <!-- Not Started Column -->
             <div id="not-started-title">
                 <h2>Not Started</h2>
                 <h2 id="num-not-started">2</h2>
@@ -43,8 +93,8 @@
                             </div>
                         </div>
                     </list>
+                    <button class="new-task-button-not-started">Add New Task</button>
                 </div>
-                <button class="new-task-button-not-started">Add New Task</button>
             </div>
         </div>
     
@@ -70,8 +120,8 @@
                             </div>
                         </div>
                     </list>
+                    <button class="new-task-button-in-progress">Add New Task</button>
                 </div>
-                <button class="new-task-button-in-progress">Add New Task</button>
             </div>
         </div>
     
@@ -91,10 +141,10 @@
                                 <p id="work-category">work</p>
                             </div>
                             <span id="due-date">Due Date: 5/28</span>
-                            <!-- <div class="buttons">
+                            <div class="buttons">
                                 <button id="edit-button">Edit Button</button>
                                 <button id="delete-button">Delete</button>
-                            </div> -->
+                            </div>
                         </div>
                     </list>
                 </div>
