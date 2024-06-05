@@ -62,11 +62,12 @@ function handleDrop(event) {
     const taskId = event.dataTransfer.getData('text/plain');
     const taskElement = document.querySelector(`[task-id='${taskId}']`);
     const newCategory = event.currentTarget.getAttribute('data-category');
-    const oldCategory = taskElement.parentElement.getAttribute('data-category');
+    const oldCategory = taskElement.parentElement.parentElement.parentElement.getAttribute('data-category');
   
     if (newCategory !== oldCategory) {
-      event.currentTarget.querySelector('list').appendChild(taskElement);
+      addTaskBetweenLists(taskId, parseInt(oldCategory), parseInt(newCategory));
       updateCount();
+      event.currentTarget.querySelector('list').appendChild(taskElement);
     }
 }
 
@@ -81,6 +82,7 @@ function addTask(existing, category) {
   
   const notStartedList = getNotStarted();
   const inProgressList = getInProgress();
+  const doneList = getDone();
 
   //Getting today's date as a placeholder in the template for dueDate
   const date = new Date();
@@ -119,6 +121,16 @@ function addTask(existing, category) {
         inProgress.dueDate,
         inProgress.label,
         2
+      );
+    });
+
+    doneList.forEach((done) => {
+      createToDoElement(
+        done.id,
+        done.title,
+        done.dueDate,
+        done.label,
+        3
       );
     });
   } else {
@@ -163,6 +175,9 @@ function createToDoElement(id, title, dueDate, label, category) {
   taskDiv.setAttribute("task-id", id);
   taskDiv.setAttribute("draggable", "true");
 
+  taskDiv.addEventListener('dragstart', handleDragStart);
+  taskDiv.addEventListener('dragend', handleDragEnd);
+
   const checkbox = document.createElement("input");
   checkbox.type = "checkbox";
   checkbox.id = "radio-button";
@@ -204,9 +219,12 @@ function createToDoElement(id, title, dueDate, label, category) {
   const buttonsDiv = document.createElement("div");
   buttonsDiv.classList.add("buttons");
 
-  const editButton = document.createElement("button");
-  editButton.id = "edit-button";
-  editButton.textContent = "Edit Button";
+  let editButton;
+  if(category === 1 || category === 2){
+    editButton = document.createElement("button");
+    editButton.id = "edit-button";
+    editButton.textContent = "Edit Button";
+  }
 
   const deleteButton = document.createElement("button");
   deleteButton.id = "delete-button";
@@ -217,7 +235,9 @@ function createToDoElement(id, title, dueDate, label, category) {
     removeTask(id, category);
   });
 
-  buttonsDiv.appendChild(editButton);
+  if(category === 1 || category === 2){
+    buttonsDiv.appendChild(editButton);
+  }
   buttonsDiv.appendChild(deleteButton);
 
   taskDiv.appendChild(checkbox);
@@ -228,11 +248,14 @@ function createToDoElement(id, title, dueDate, label, category) {
 
   const notStarted = document.getElementById("not-started-list");
   const inProgress = document.getElementById("in-progress-list");
+  const done = document.getElementById("done-list");
 
   if (category === 1) {
     notStarted.appendChild(taskDiv);
   } else if (category === 2) {
     inProgress.appendChild(taskDiv);
+  } else {
+    done.appendChild(taskDiv);
   }
 
   return taskDiv.id;
@@ -296,8 +319,10 @@ function removeTask(id, category) {
   let taskList;
   if (category === 1) {
     taskList = getNotStarted();
-  } else {
+  } else if (category === 2){
     taskList = getInProgress();
+  } else {
+    taskList = getDone();
   }
 
   //finds index of the task based on the localStorage id
@@ -308,13 +333,49 @@ function removeTask(id, category) {
     taskList.splice(taskIndex, 1);
     if (category === 1) {
       saveNotStarted(taskList);
-    } else {
+    } else if (category === 2) {
       saveInProgress(taskList);
+    } else {
+      saveDone(taskList);
     }
   }
 
   //updating count because remove from localStorage, need to update display
   updateCount();
+}
+
+
+function addTaskBetweenLists(id, fromCategory, toCategory){
+  
+  let fromList;
+  let toList;
+  if (fromCategory === 1) {
+    fromList = getNotStarted();
+  } else if (fromCategory === 2) {
+    fromList = getInProgress();
+  } else {
+    fromList = getDone();
+  }
+
+  //finds index of the task based on the localStorage id
+  const taskIndex = fromList.findIndex((task) => task.id === parseInt(id));
+  
+  if (taskIndex > -1){
+    if (toCategory === 1) {
+      toList = getNotStarted();
+      toList.push(fromList[taskIndex]);
+      saveNotStarted(toList);
+    } else if (toCategory === 2) {
+      toList = getInProgress();
+      toList.push(fromList[taskIndex]);
+      saveInProgress(toList);
+    } else {
+      toList = getDone();
+      toList.push(fromList[taskIndex]);
+      saveDone(toList);
+    }
+    removeTask(parseInt(id), parseInt(fromCategory));
+  }
 }
 
 //Updates the counts of tasks in the Not Started, In Progress, and Done categories.
