@@ -241,3 +241,14 @@ body {
   background-color: #dc3545;
   right: 70px;
 }
+
+/* Added styles for category filter dropdown */
+.category-filter {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 1em;
+}

@@ -429,3 +429,47 @@ document.addEventListener("DOMContentLoaded", () => {
 
   renderCalendar(currentDate);
 });
+
+// Added event listener for category filter
+categoryFilter.addEventListener("change", (event) => {
+  const category = event.target.value;
+  const events = getEvents();
+  const filteredEvents = category === "all" ? events : events.filter((event) => event.category === category);
+  renderFilteredEvents(filteredEvents);
+});
+
+// Modified renderFilteredEvents function to display search results
+const renderFilteredEvents = (events) => {
+  calendarGrid.innerHTML = "Search results:";
+  events.forEach((event) => {
+      const eventElement = document.createElement("div");
+      eventElement.classList.add("event", event.category);
+      eventElement.textContent = event.title;
+      calendarGrid.appendChild(eventElement);
+
+      eventElement.addEventListener("click", (event) => {
+          const events = getEvents();
+
+          const eventName = event.target.innerHTML;
+
+          const selectedEvent = events.find((event) => event.title === eventName);
+
+          const id = selectedEvent.id;
+
+          if (selectedEvent) {
+              document.getElementById("event-id").value = selectedEvent.id;
+              document.getElementById("event-title").value = selectedEvent.title;
+              document.getElementById("event-category").value = selectedEvent.category;
+              document.getElementById("event-date").value = selectedEvent.date;
+              document.getElementById("event-time").value = selectedEvent.time || "";
+              document.getElementById("event-recurrence").value = selectedEvent.recurrence || "none";
+              document.getElementById("event-description").value = selectedEvent.description;
+              document.getElementById("event-reminder").value = selectedEvent.reminder || "";
+              eventModal.style.display = "flex";
+          }
+      });
+  });
+};
+
+// Added variable for category filter
+const categoryFilter = document.getElementById("category-filter");

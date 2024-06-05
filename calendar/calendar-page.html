@@ -22,6 +22,12 @@
           <option value="day">Day</option>
         </select>
         <input type="text" id="search-bar" placeholder="Search events..." />
+        <select id="category-filter" class="category-filter">
+          <option value="all">All Categories</option>
+          <option value="work">Work</option>
+          <option value="personal">Personal</option>
+          <option value="urgent">Urgent</option>
+        </select>
       </div>
       <div id="calendar-days" class="calendar-header">
         <div class="day-header">Sun</div>
@@ -39,8 +45,8 @@
       <div id="today-events"></div>
     </section>
     <section id="upcoming-tasks">
-        <h2>Upcoming Tasks: <span id="upcoming-date"></span></h2>
-        <div id="upcoming-events"></div>
+      <h2>Upcoming Tasks: <span id="upcoming-date"></span></h2>
+      <div id="upcoming-events"></div>
     </section>
     <div id="event-modal" class="modal">
       <div class="modal-content">
