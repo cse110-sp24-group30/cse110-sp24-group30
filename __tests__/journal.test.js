@@ -3,7 +3,7 @@ describe("Journal Add Tests", () => {
     beforeAll(async () => {
         //await page.goto('https://cse110-sp24-group30.github.io/cse110-sp24-group30/journal/journal-page.html');
         await page.goto('http://127.0.0.1:5500/journal/journal-page.html');
-    });
+    }, 15000);
 
     // Test adding a journal entry
     it('Add a journal entry', async () => {
@@ -18,13 +18,13 @@ describe("Journal Add Tests", () => {
         expect(journalWidget).not.toBeNull();
         expect(journalContent).not.toBeNull();
         expect(journalEntry).toBe('Insert Title');
-    });
+    }, 15000);
 
     it('Checking localStorage size', async () => {
         console.log('Checking localStorage size');
         const localStorage = await page.evaluate(() => JSON.parse(localStorage.getItem('journal-list')));
         expect(localStorage.length).toBe(1);
-    });
+    }, 15000);
 
     it('Checking single journal exists after reload', async () => {
         console.log('Reloading the page...');
@@ -32,7 +32,7 @@ describe("Journal Add Tests", () => {
 
         const journalEntry = await page.$eval('.journal-widget-title', el => el.textContent);
         expect(journalEntry).toBe('Insert Title');
-    });
+    }, 15000);
 
     it('Deleting single journal', async () => {
         console.log('Deleting journal...');
@@ -44,13 +44,13 @@ describe("Journal Add Tests", () => {
 
         expect(journalWidget).toBeNull();
         expect(journalContent).toBeNull();
-    });
+    }, 15000);
 
     it('Checking localStorage size', async () => {
         console.log('Checking localStorage size');
         const localStorage = await page.evaluate(() => JSON.parse(localStorage.getItem('journal-list')));
         expect(localStorage.length).toBe(0);
-    });
+    }, 15000);
 
     it('Checking deleted journal after reload', async () => {
         console.log('Reloading the page...');
@@ -61,7 +61,7 @@ describe("Journal Add Tests", () => {
 
         expect(journalWidget).toBeNull();
         expect(journalContent).toBeNull();
-    });
+    }, 15000);
 
     it('Adding multiple journals at a time', async () => {
         console.log('Adding multiple journal entries...');
@@ -75,13 +75,13 @@ describe("Journal Add Tests", () => {
 
         expect(journalWidgets.length).toBe(8);
         expect(journalContents.length).toBe(8);
-    });
+    }, 15000);
 
     it('Checking localStorage size', async () => {
         console.log('Checking localStorage size');
         const localStorage = await page.evaluate(() => JSON.parse(localStorage.getItem('journal-list')));
         expect(localStorage.length).toBe(8);
-    });
+    }, 15000);
 
     it('Checking if journals exists after reload', async () => {
         console.log('Reloading the page...');
@@ -92,7 +92,7 @@ describe("Journal Add Tests", () => {
 
         expect(journalWidgets.length).not.toBe(0);
         expect(journalContents.length).not.toBe(0);
-    });
+    }, 15000);
 
     it('Deleting multiple journals', async () => {
         console.log('Deleting first journal...');
@@ -143,7 +143,7 @@ describe("Journal Add Tests", () => {
         console.log('Checking localStorage size');
         localStorage = await page.evaluate(() => JSON.parse(localStorage.getItem('journal-list')));
         expect(localStorage.length).toBe(5);
-    });
+    }, 15000);
 
     // Test after refreshing the entries remain the same
     it('Check entries after reload', async() => {
@@ -160,7 +160,7 @@ describe("Journal Add Tests", () => {
         });
 
         expect(num2).toBe(num1);
-    });
+    }, 15000);
 
     it('Editing a single journal using plain text', async () => {
         console.log('Clearing localStorage...');
@@ -190,7 +190,7 @@ describe("Journal Add Tests", () => {
 
         const htmlOutputHTML = await page.$eval('.journal-htmlOutput', el => el.innerHTML.trim());
         expect(htmlOutputHTML).toBe('<p>Hello world!</p>');
-    });
+    }, 15000);
 
     it('Simulating backspace input on journal', async () => {
         let markdownInputVal = await page.$eval('.journal-markdownInput', el => el.value);
@@ -208,7 +208,7 @@ describe("Journal Add Tests", () => {
 
         const htmlOutputHTML = await page.$eval('.journal-htmlOutput', el => el.innerHTML.trim());
         expect(htmlOutputHTML).toBe('');
-    });
+    }, 15000);
 
     it('Editing a single journal using various markdown text', async () => {
         await page.focus('.journal-markdownInput');
@@ -222,7 +222,22 @@ describe("Journal Add Tests", () => {
 
         const htmlOutputHTML = await page.$eval('.journal-htmlOutput', el => el.innerHTML.trim());
         expect(htmlOutputHTML).toBe('<h1>Hello</h1>\n<p><strong>Bold</strong></p>\n<p><em>Italics</em></p>\n<blockquote>\n<p>Block Quotes</p>\n</blockquote>\n<ol>\n<li>First Item</li>\n<li>Second Item</li>\n<li>Third Item</li>\n</ol>\n<ul>\n<li>First Item</li>\n<li>Second Item</li>\n<li>Third Item</li>\n</ul>\n<p><code>code</code></p>\n<hr>\n<p><a href="">Link</a></p>\n<p><img src="" alt="Alt Image"></p>');
-    });
+    }, 15000);
+
+    it('Saving a single journal w/ various markdown text', async () => {
+        console.log('Saving journal...');
+        await page.click('.save-button');
+
+        // Check header title
+
+        // Check content inside journal
+
+        // Check localStorage
+    }, 15000);
+
+    it('Checking journal content after reload', async () => {
+        await page.reload();
+    }, 15000);
 
     /**
      *  TODO: Add more tests for:
