@@ -3,55 +3,62 @@ parent: Decisions
 nav_order: 2
 title: ADR 0002 - Choosing the Journal Page design
 status: proposed
-date: 2023-05-16
+date: 2024-05-16
 deciders: Project Team
 consulted: N/A
 informed: Entire Team
 ---
 
-# Choosing Between SQL Lite, MongoDB, and NoSQL for Local Data Storage
+# Choosing Our Content for the Journal Page
 
 ## Context and Problem Statement
-In our recent project lead meeting, concerns were raised about using PostgreSQL due to its complexity and the professor's preference for simplicity. The professor advised starting with local data storage solutions that are simpler and more aligned with the goals of the project. We are considering SQL Lite, MongoDB, and NoSQL options to find a balance between simplicity and functionality.
+
+In our recent sprint meeting, we started talking about what components we want on the journal page. The team brought up multiple ideas, and we evaluated all choices as a team. We would like to implement a journal page that provides a good user experience with the features that are given without overwhelming the user with too many confusing components.
 
 ## Decision Drivers
-* **Simplicity**: The solution must be easy to implement and maintain.
-* **Local Storage Capability**: Ability to run and store data locally without complex setup.
-* **Performance**: The database should handle our project's data needs efficiently.
 
-## Considered Options
-* **SQL Lite**
-  - Lightweight and easy to integrate.
-  - Uses familiar SQL syntax, which is educational and widely applicable.
-* **MongoDB**
-  - Flexible schema and document-oriented, which could be advantageous for our varied data types.
-  - Known for scalability and powerful querying capabilities.
-* **NoSQL (generic)**
-  - Offers flexibility in data storage models.
-  - Typically easy to scale and manage.
+- **Simplicity**: The page should not have too many components
+- **Features**: The page should contain all features we want a journal page to have
+- **Performance**: The page should have a good user experience
+
+## Proposed ideas
+
+- widget for creating journals
+  - direct to new page on click
+- create journal pop up on same page
+  - clicking on the newly created widget will direct to new page
+- have a side folder of all the available journals (kind of like VS code files)
+  - user can click into side journal options and go to journal
+- add a search bar to the journal
+  - can search up journals
 
 ## Decision Outcome
-Chosen option: "SQL Lite", because it meets the simplicity criterion and provides sufficient functionality for our local storage needs without adding unnecessary complexity. It also uses SQL, which is educational and familiar to most team members.
+
+We decided the following system for the page
+
+1. The page will take the form of google docs
+   1. load first 25 available journals and display
+   2. create journal option in top left corner
+2. On create journal click, a menu bar will pop up to specify details for the journal
+   1. user can edit and confirm to create journal
+3. On clicking existing journals, we will be able to edit the journal
+   1. we also have the option to delete the journal
+4. We will implement a search bar to be able to search through journals by title
+   1. when user types out the string, we only display the journals that match the results
 
 ### Consequences
-* Good, because it allows for easy setup and integration with our existing technologies.
-* Good, because it supports our learning objectives by using widely understood SQL.
-* Bad, because it may not offer as much flexibility in handling unstructured data as MongoDB or generic NoSQL solutions.
 
-## Pros and Cons of the Options
+- Good, because we support all the simple features of a journal page: add, edit, and delete
+- Good, because we are supporting search functions so it's easier for the user to find docs
+- Bad, because we are not supporting many other features so what the user can add to journal is very limited
 
-### SQL Lite
-* Good, because it requires minimal setup and is lightweight.
-* Bad, because it may not scale as well as MongoDB if project requirements grow.
+## Reach features
 
-### MongoDB
-* Good, because of its flexibility with document-oriented data structures.
-* Bad, because it might introduce complexity that goes against the professor's advice.
+If the team has more time, we will work on additional features listed below
 
-### NoSQL (generic)
-* Good, because it offers scalability and flexibility.
-* Bad, because the learning curve might detract from other project goals.
+1. Support uploading images to journal
+2. Support search content for searchbar. not just search title
 
 ## More Information
-This decision will be revisited if project requirements change significantly or if we find SQL Lite to be inadequate for our needs during development.
 
+This decision will be revisited if project requirements change significantly.
