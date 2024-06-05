@@ -8,14 +8,63 @@
     <script src="./to-do-app.js"></script>
 </head>
 <body>
-    <h1 style="text-align: center;">To-Do Page</h1>
+    <div class="background"></div>
+    <!-- Nav Bar -->
+    <nav class="main-navbar">
+        <!-- Widgets -->
+        <section class="widgets">
+          <span class="nav-element"
+            ><a href="./index.html"
+              ><img
+                class="nav-icon"
+                src="../assets/icons/homeFillWhite.png"
+                alt="homeButton"
+              />Dashboard</a
+            ></span
+          >
+          <span class="nav-element"
+            ><a href="../journal/journal-page.html"
+              ><img
+                class="nav-icon"
+                src="../assets/icons/fileFillWhite.png"
+                alt="journalButton"
+              />Journal</a
+            ></span
+          >
+          <span class="nav-element"
+            ><a href=""
+              ><img
+                class="nav-icon"
+                src="../assets/icons/checkFillBlue.png"
+                alt="toDoButton"
+              />To Do List</a
+            ></span
+          >
+          <span class="nav-element"
+            ><a href=""
+              ><img
+                class="nav-icon"
+                src="../assets/icons/dateFillWhite.png"
+                alt="calendarButton"
+              />Calendar</a
+            ></span
+          >
+        </section>
+        <section class="logo">
+          <span id="team-logo"
+            ><img src="../assets/images/110Team30.png" />
+          </span>
+        </section>
+      </nav>
+
+    <!-- To-Do Main Section -->
     <div id="list-container">
-        <div class="list-column">
+        <div class="list-column" id="not-started-column">
             <div id="not-started-title">
                 <h2>Not Started</h2>
                 <h2 id="num-not-started">2</h2>
             </div>
-            <div id="not-started-content">
+            <div id="not-started-content" class="task-column" data-category="1">
                 <div id="not-started">
                     <list id = "not-started-list">
                         <div class="task">
@@ -43,18 +92,18 @@
                             </div>
                         </div>
                     </list>
+                    <button class="new-task-button-not-started">Add New Task</button>
                 </div>
-                <button class="new-task-button-not-started">Add New Task</button>
             </div>
         </div>
     
         <!-- In Progress Column -->
-        <div class="list-column">
+        <div class="list-column" id="in-progress-column">
             <div id="in-progress-title">
                 <h2>In Progress</h2>
                 <h2 id="num-in-progress">1</h2>
             </div>
-            <div id="in-progress-content">
+            <div id="in-progress-content" class="task-column" data-category="2">
                 <div id="in-progress">
                     <list id = "in-progress-list">
                         <div class="task">
@@ -70,18 +119,18 @@
                             </div>
                         </div>
                     </list>
+                    <button class="new-task-button-in-progress">Add New Task</button>
                 </div>
-                <button class="new-task-button-in-progress">Add New Task</button>
             </div>
         </div>
     
         <!-- Done Column -->
-        <div class="list-column">
+        <div class="list-column" id="done-column">
             <div id="done-title">
                 <h2>Done</h2>
                 <h2 id="num-done">1</h2>
             </div>
-            <div id="done-content">
+            <div id="done-content" class="task-column" data-category="3">
                 <div id="done-list">
                     <list>
                         <div class="task">
