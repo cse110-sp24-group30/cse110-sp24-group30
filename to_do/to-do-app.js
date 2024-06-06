@@ -411,8 +411,8 @@ function removeTask(id, category) {
  * Adds the task from the old column to new column after drop
  *
  * @param {number} id - The ID of the task.
- * @param {number} oldCategory - The current category of the task.
- * @param {number} newCategory - The new category of the task.
+ * @param {number} fromCategory - The current category of the task.
+ * @param {number} toCategory - The new category of the task.
  */
 function addTaskBetweenLists(id, fromCategory, toCategory) {
   let fromList;
