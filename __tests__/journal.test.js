@@ -228,11 +228,11 @@ describe("Journal Add Tests", () => {
         console.log('Saving journal...');
         await page.click('.save-button');
 
-        // Check header title
+        // TODO: Check header title
 
-        // Check content inside journal
+        // TODO: Check content inside journal
 
-        // Check localStorage
+        // TODO: Check localStorage
     }, 15000);
 
     it('Checking journal content after reload', async () => {
