@@ -235,6 +235,7 @@ describe("Journal Add Tests", () => {
         // TODO: Check localStorage
     }, 15000);
 
+    // TODO: Add test for checking reload of page
     it('Checking journal content after reload', async () => {
         await page.reload();
     }, 15000);
