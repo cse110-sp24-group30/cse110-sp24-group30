@@ -2,6 +2,15 @@ window.addEventListener("DOMContentLoaded", init);
 
 //TODO: add comments for jsdocs and inline comments
 //TODO: adjust css to align with changes made
+
+/**
+ * Initializes the application.
+ * Sets up task, journal, and calendar elements, populates the mood chart,
+ * and adds event listeners for mood selection buttons.
+ *
+ * @async
+ * @returns {Promise<void>} A promise that resolves when initialization is complete.
+ */
 async function init() {
   try {
     const tasksData = 116; //TODO: update acc to todo
@@ -41,6 +50,10 @@ async function init() {
   }
 }
 
+/**
+ * Populates the mood chart with days of the current month.
+ * Colors the days based on saved moods from local storage.
+ */
 function populateMoodChart() {
   const moodChart = document.getElementById("mood-chart");
   const date = new Date();
@@ -85,6 +98,7 @@ function populateMoodChart() {
     dayCell.textContent = day;
     weekRow.appendChild(dayCell);
 
+    //Formatting the string to be correctly stored in the array
     const dateString = `${year}-${String(month + 1).padStart(2, "0")}-${String(
       day
     ).padStart(2, "0")}`;
@@ -99,12 +113,19 @@ function populateMoodChart() {
   }
 }
 
+/**
+ * Updates the mood chart with the selected mood for the current day.
+ * Saves the updated mood to local storage.
+ *
+ * @param {string} mood - The mood selected (sad, neutral, or happy).
+ */
 function updateMoodChart(mood) {
   const date = new Date();
   const day = date.getDate();
   const month = date.getMonth() + 1;
   const year = date.getFullYear();
 
+  //Formatting this way to align with the format in localStorage
   const currentDate = `${year}-${String(month).padStart(2, "0")}-${String(
     day
   ).padStart(2, "0")}`;
