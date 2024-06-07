@@ -8,7 +8,8 @@ window.addEventListener("DOMContentLoaded", init);
  * and adds event listeners for mood selection buttons.
  *
  * @async
- * @returns {Promise<void>} A promise that resolves when initialization is complete.
+ * @function init
+ * @return {Promise<void>} A promise that resolves when initialization is complete.
  */
 async function init() {
   try {
