@@ -364,8 +364,6 @@ function generateRandomTitle() {
     const titles = [
         "A Day in the Life",
         "Reflections and Musings",
-        "A Day in the Life",
-        "Reflections and Musings",
         "The Journey Begins",
         "Thoughts and Ideas",
         "Memories of Yesterday",
