@@ -5,16 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Calendar</title>
     <link rel="stylesheet" href="./calendar-style.css" />
-    <link rel="Stylesheet" href="../assets/styles/main.css" />
+    <link rel="stylesheet" href="../assets/styles/main.css" />
     <script src="./calendar-app.js" defer></script>
   </head>
   <body>
     <div class="background"></div>
-    <!-- <header>
-      <h1 class="header-title">Welcome back!</h1>
-    </header> -->
     <nav class="main-navbar">
-      <!-- Widgets -->
       <section class="widgets">
         <span class="nav-element"
           ><a href="../source/index.html"
@@ -98,6 +94,11 @@
           <div class="day-header">Sat</div>
         </div>
         <div id="calendar-grid"></div>
+        <!-- Day view container -->
+        <div id="day-view" class="day-view-container" style="display: none;">
+          <div class="hours-column"></div>
+          <div class="tasks-column"></div>
+        </div>
       </main>
     </div>
 
