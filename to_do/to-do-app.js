@@ -209,6 +209,8 @@ function addTask(existing, category) {
 
     //need to update count as we added new tasks
     updateCount();
+
+    addEventToCalendar(toDoTemplate);
   }
 }
 
@@ -262,6 +264,7 @@ function createToDoElement(id, title, dueDate, label, category) {
   categorySelect.addEventListener("change", (event) => {
     updateCategoryColor(event.target);
     updateTaskLabel(id, event.target.value, category);
+    updateCalendarEvent(id, title, dueDate, event.target.value);
   });
 
   categoryDiv.appendChild(categorySelect);
@@ -407,6 +410,8 @@ function removeTask(id, category) {
 
   //updating count because remove from localStorage, need to update display
   updateCount();
+
+  removeFromCalendar(id);
 }
 
 /**
@@ -593,6 +598,8 @@ function updateTaskDetails(id, title, dueDate, label, category) {
     const categorySelect = taskElement.querySelector("#category-select");
     categorySelect.value = label;
     updateCategoryColor(categorySelect);
+
+    updateCalendarEvent(id, title, dueDate, label);
   }
 }
 
@@ -602,4 +609,53 @@ function updateTaskDetails(id, title, dueDate, label, category) {
 function closeEditModal() {
   const editTaskModal = document.getElementById("edit-task-modal");
   editTaskModal.style.display = "none";
+}
+
+//TODO: Add jsdoc comments
+function getEvents() {
+  return JSON.parse(localStorage.getItem("events") || "[]");
+}
+
+function saveEvents(events){
+  localStorage.setItem("events", JSON.stringify(events));
+}
+
+function addEventToCalendar(eventAdd) {
+  const eventTemplate = {
+    "id" : eventAdd.id,
+    "title" : `${eventAdd.title}`,
+    "category" : `${eventAdd.label}`,
+    "date" : `${eventAdd.dueDate}`,
+    "time": "",
+    "recurrence": "",
+    "description": "",
+    "reminder": ""
+  }
+
+  const events = getEvents();
+  const eventIndex = events.findIndex((event) => event.id === eventAdd.id);
+
+  if (eventIndex <= -1) {
+    events.push(eventTemplate);
+  }
+
+  saveEvents(events);
+}
+
+function updateCalendarEvent(id, title, dueDate, label) {
+  let events = getEvents();
+  const eventIndex = events.findIndex((event) => event.id === id);
+
+  if (eventIndex > -1) {
+    events[eventIndex].title = title;
+    events[eventIndex].date = dueDate;
+    events[eventIndex].category = label;
+    saveEvents(events);
+  }
+}
+
+function removeFromCalendar(id) {
+  let events = getEvents();
+  events = events.filter((event) => event.id !== id);
+  saveEvents(events);
 }
