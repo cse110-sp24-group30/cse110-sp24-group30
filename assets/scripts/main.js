@@ -57,10 +57,13 @@ async function init() {
 function populateMoodChart() {
   const moodChart = document.getElementById("mood-chart");
   const date = new Date();
-  const month = date.getMonth();
+  const month = date.getMonth(); // Get the current month (0-11)
   const year = date.getFullYear();
+
+  // Get the number of days in the current month
   const daysInMonth = new Date(year, month + 1, 0).getDate();
 
+  // Calculate the day of the week the first day of the month falls on (0-6, starting with Monday)
   const firstDay = (new Date(year, month, 1).getDay() + 6) % 7;
   moodChart.innerHTML =
     "<h3>Mood Chart - " +
@@ -69,7 +72,11 @@ function populateMoodChart() {
 
   let boxes = 1;
   let weekRow;
+
+  // Create empty cells for the days before the first day of the month
   for (let i = 0; i < firstDay; i++) {
+    
+    // Create a new row for the week if it is the first cell
     if (i == 0) {
       weekRow = document.createElement("div");
       weekRow.classList.add("week-row");
@@ -84,7 +91,10 @@ function populateMoodChart() {
 
   const savedMoods = JSON.parse(localStorage.getItem("moods") || "{}");
 
+  // Create cells for each day of the month
   for (let day = 1; day <= daysInMonth; day++) {
+    
+    // Start a new row for each week
     if ((boxes - 1) % 7 == 0) {
       weekRow = document.createElement("div");
       weekRow.classList.add("week-row");
@@ -98,10 +108,12 @@ function populateMoodChart() {
     dayCell.textContent = day;
     weekRow.appendChild(dayCell);
 
-    //Formatting the string to be correctly stored in the array
+    // Format the date string as YYYY-MM-DD
     const dateString = `${year}-${String(month + 1).padStart(2, "0")}-${String(
       day
     ).padStart(2, "0")}`;
+    
+    // Set the background color of the cell if a mood is saved for this date
     if (savedMoods[dateString]) {
       const moodColors = {
         sad: "#063970",
@@ -122,7 +134,7 @@ function populateMoodChart() {
 function updateMoodChart(mood) {
   const date = new Date();
   const day = date.getDate();
-  const month = date.getMonth() + 1;
+  const month = date.getMonth() + 1; 
   const year = date.getFullYear();
 
   //Formatting this way to align with the format in localStorage
