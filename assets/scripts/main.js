@@ -1,6 +1,5 @@
 window.addEventListener("DOMContentLoaded", init);
 
-//TODO: add comments for jsdocs and inline comments
 //TODO: adjust css to align with changes made
 
 /**
@@ -75,7 +74,6 @@ function populateMoodChart() {
 
   // Create empty cells for the days before the first day of the month
   for (let i = 0; i < firstDay; i++) {
-    
     // Create a new row for the week if it is the first cell
     if (i == 0) {
       weekRow = document.createElement("div");
@@ -93,7 +91,6 @@ function populateMoodChart() {
 
   // Create cells for each day of the month
   for (let day = 1; day <= daysInMonth; day++) {
-    
     // Start a new row for each week
     if ((boxes - 1) % 7 == 0) {
       weekRow = document.createElement("div");
@@ -112,7 +109,7 @@ function populateMoodChart() {
     const dateString = `${year}-${String(month + 1).padStart(2, "0")}-${String(
       day
     ).padStart(2, "0")}`;
-    
+
     // Set the background color of the cell if a mood is saved for this date
     if (savedMoods[dateString]) {
       const moodColors = {
@@ -134,7 +131,7 @@ function populateMoodChart() {
 function updateMoodChart(mood) {
   const date = new Date();
   const day = date.getDate();
-  const month = date.getMonth() + 1; 
+  const month = date.getMonth() + 1;
   const year = date.getFullYear();
 
   //Formatting this way to align with the format in localStorage
