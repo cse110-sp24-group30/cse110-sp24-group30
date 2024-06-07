@@ -13,9 +13,9 @@ window.addEventListener("DOMContentLoaded", init);
  */
 async function init() {
   try {
-    const tasksData = 116; //TODO: update acc to todo
-    const journalEntries = 30; //TODO: update acc to journal
-    const calEntries = 11; //TODO: update acc to calendar
+    const tasksData = getDoneTasks().length;
+    const journalEntries = getJournals().length;
+    const calEntries = getEvents().length;
     const taskElements = document.createElement("div");
     const journalElements = document.createElement("div");
     const calendarElements = document.createElement("div");
@@ -33,9 +33,17 @@ async function init() {
     const moodSelection = document.getElementById("mood-today");
     moodSelection.innerHTML = `
           <h2>How are you feeling today?</h2>
-          <button class="mood-button" data-mood="sad">😞</button>
-          <button class="mood-button" data-mood="neutral">😐</button>
-          <button class="mood-button" data-mood="happy">😄</button>
+          <button class="mood-button" data-mood="sad"> 
+          <img src = "../assets/images/sad.png" alt = "sad"> 
+          </button>
+
+          <button class="mood-button" data-mood="neutral">
+          <img src = "../assets/images/confused.png" alt = "neutral">
+          </button>
+
+          <button class="mood-button" data-mood="happy">
+          <img src = "../assets/images/happy-face.png" alt = "happy">
+          </button>
       `;
 
     document.querySelectorAll(".mood-button").forEach((button) => {
@@ -154,4 +162,16 @@ function updateMoodChart(mood) {
   const moods = JSON.parse(localStorage.getItem("moods") || "{}");
   moods[currentDate] = mood;
   localStorage.setItem("moods", JSON.stringify(moods));
+}
+
+function getJournals() {
+  return JSON.parse(localStorage.getItem("journal-list") || "[]");
+}
+
+function getEvents() {
+  return JSON.parse(localStorage.getItem("events") || "[]");
+}
+
+function getDoneTasks() {
+  return JSON.parse(localStorage.getItem("done") || "[]");
 }

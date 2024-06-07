@@ -79,6 +79,9 @@ a {
 
 .dashboard-widget {
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: calc(20% - 10px);
   height: 20%;
   padding: 20px;
@@ -111,23 +114,37 @@ a {
   margin-bottom: 10px;
 }
 
-#mood-chart,
-#mood-today {
-  display: inline-block;
-  margin-right: 30px;
+.widget-mood {
+  display: flex;
 }
 
-#mood-chart {
-  margin-top: 10px;
+#mood-chart, #mood-today {
+  /* margin-top: 1%; */
   max-width: 100%;
   max-height: 100%;
   overflow: auto;
   box-sizing: border-box;
+
+  align-items: center;
+  margin-left: 10%;
+  height: 70%;
+  padding: 20px;
+  text-align: center;
+  border: 2px solid #74cbdf;
+  background-color: rgb(116, 203, 223, 0.47);
 }
 
 #mood-chart h3 {
   margin: 0 0 10px 0;
   text-align: center;
+}
+
+#mood-chart {
+  width: 120%;
+}
+
+#mood-today {
+  width: 120%;
 }
 
 #mood-chart .week-row {
@@ -137,7 +154,14 @@ a {
 }
 
 button {
-  height: 50px;
-  width: 50px;
+  height: 60px;
+  width: 60px;
   margin-right: 10%;
+}
+
+#mood-today > button > img {
+  height: 40px;
+  width: 40px;
+  object-fit: contain;
+  object-position: center
 }
