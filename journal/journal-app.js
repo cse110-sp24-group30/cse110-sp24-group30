@@ -348,3 +348,19 @@ function getJournals() {
 function saveJournals(journals) {
     localStorage.setItem("journal-list", JSON.stringify(journals));
 }
+
+/**
+ * Filters the journals based on the search input.
+ */
+function searchJournals() {
+    const searchValue = document.getElementById('search-bar').value.toLowerCase();
+    const journalWidgets = document.querySelectorAll('.journal-widget');
+    journalWidgets.forEach(widget => {
+        const title = widget.querySelector('.journal-widget-title').textContent.toLowerCase();
+        if (title.includes(searchValue)) {
+            widget.style.display = '';
+        } else {
+            widget.style.display = 'none';
+        }
+    });
+}
