@@ -92,8 +92,8 @@ function createJournalElement(id, title, content, modalRef) {
     markdownInput.rows = 25;
     markdownInput.cols = 50;
     markdownInput.value = `# ${title}`;
-    // let htmlContent = marked.parse(markdownInput.value);
-    // htmlOutput.innerHTML = htmlContent;
+    let htmlContent = marked.parse(markdownInput.value);
+    htmlOutput.innerHTML = htmlContent;
 
     // Live preview of markdown text to formatted html
     markdownInput.addEventListener('input', () => {
@@ -309,6 +309,7 @@ function saveContent(event) {
             if (journal.id == activeJournal.id) {
                 return {
                     ...journal,
+                    "title": getFirstHeader(markdownInput.value),
                     "content": markdownInput.value
                 };
             }
