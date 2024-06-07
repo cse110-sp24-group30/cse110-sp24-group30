@@ -145,10 +145,12 @@ function addTask(existing, category) {
   //Getting today's date as a placeholder in the template for dueDate
   const date = new Date();
   let day = date.getDate();
-  let month = date.getMonth() + 1;
+  let month = date.getMonth();
   let year = date.getFullYear();
   //storing the date in string format so it can be understood by the user
-  let currentDate = `${year}-${month}-${day}`;
+  let currentDate =  `${year}-${String(month + 1).padStart(2, "0")}-${String(
+    day
+  ).padStart(2, "0")}`;
 
   //TODO: Random word generation for the display title so that the user knows which task just created
   //Template for a task created with default values for all fields
