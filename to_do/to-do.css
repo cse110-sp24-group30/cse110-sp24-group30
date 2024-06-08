@@ -1,3 +1,7 @@
+* {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+}
+
 html {
   overflow: auto;
   height: 100%;
@@ -171,7 +175,20 @@ a {
         box-shadow: none; 
     }
     
-    .buttons img {
+    #edit-button, #delete-button {
+        display: flex;
+        align-items: center;
+        justify-content: center; 
+        border: none; 
+        background: none; 
+        padding: 0;
+        margin-right: 10px;
+        cursor: pointer; 
+        outline: none; 
+        box-shadow: none; 
+    }
+
+    #edit-button img, #delete-button img {
         width: 20px; 
         height: 20px; 
         border: none; 
@@ -179,10 +196,6 @@ a {
         outline: none; 
         box-shadow: none; 
         pointer-events: none; 
-    }
-
-    .buttons:hover {
-        color: #315D6D;
     }
     
     #due-date {
