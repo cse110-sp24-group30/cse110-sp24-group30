@@ -153,7 +153,6 @@ function addTask(existing, category) {
     day
   ).padStart(2, "0")}`;
 
-  //TODO: Random word generation for the display title so that the user knows which task just created
   //Template for a task created with default values for all fields
   const toDoTemplate = {
     id: Math.floor(Math.random() * 2000000),
@@ -211,6 +210,7 @@ function addTask(existing, category) {
     //need to update count as we added new tasks
     updateCount();
 
+    //keeping the calendar in sync with task generation
     addEventToCalendar(toDoTemplate);
   }
 }
@@ -423,6 +423,7 @@ function removeTask(id, category) {
   //updating count because remove from localStorage, need to update display
   updateCount();
 
+  //need to update calendar on task deletion as well
   removeFromCalendar(id);
 }
 
@@ -611,6 +612,7 @@ function updateTaskDetails(id, title, dueDate, label, category) {
     categorySelect.value = label;
     updateCategoryColor(categorySelect);
 
+    //Need to keep calendar in sync with the latest changes from todo
     updateCalendarEvent(id, title, dueDate, label);
   }
 }
@@ -623,15 +625,30 @@ function closeEditModal() {
   editTaskModal.style.display = "none";
 }
 
-//TODO: Add jsdoc comments
+/**
+ * Retrieves events from localStorage.
+ * @returns {Array} The list of events stored in localStorage.
+ */
 function getEvents() {
   return JSON.parse(localStorage.getItem("events") || "[]");
 }
 
+/**
+ * Saves events to localStorage.
+ * @param {Array} events - The list of events to be saved.
+ */
 function saveEvents(events) {
   localStorage.setItem("events", JSON.stringify(events));
 }
 
+/**
+ * Adds a task from todo widget to the calendar.
+ * @param {Object} eventAdd - The task to be added. Parameter is named eventAdd because calendar has events
+ * @param {string} eventAdd.id - The ID of the event.
+ * @param {string} eventAdd.title - The title of the event.
+ * @param {string} eventAdd.label - The category label of the event.
+ * @param {string} eventAdd.dueDate - The due date of the event.
+ */
 function addEventToCalendar(eventAdd) {
   const eventTemplate = {
     id: eventAdd.id,
@@ -652,6 +669,13 @@ function addEventToCalendar(eventAdd) {
   saveEvents(events);
 }
 
+/**
+ * Updates an existing event(task) in the calendar.
+ * @param {string} id - The ID of the event to update.
+ * @param {string} title - The new title of the event.
+ * @param {string} dueDate - The new due date of the event.
+ * @param {string} label - The new category label of the event.
+ */
 function updateCalendarEvent(id, title, dueDate, label) {
   let events = getEvents();
   const eventIndex = events.findIndex((event) => event.id === id);
@@ -664,12 +688,20 @@ function updateCalendarEvent(id, title, dueDate, label) {
   }
 }
 
+/**
+ * Removes an event from the calendar.
+ * @param {string} id - The ID of the event to remove.
+ */
 function removeFromCalendar(id) {
   let events = getEvents();
   events = events.filter((event) => event.id !== id);
   saveEvents(events);
 }
 
+/**
+ * Generates a random title from a predefined list of titles.
+ * @returns {string} A randomly selected title.
+ */
 function generateRandomTitle() {
   const todoListTitles = [
     "Grocery Shopping",
@@ -711,9 +743,9 @@ function generateRandomTitle() {
     "Recycle Old Electronics",
     "Host Dinner Party",
     "Volunteer at Local Shelter",
-    "Attend Networking Event"
+    "Attend Networking Event",
   ];
-  
+
   const randomIndex = Math.floor(Math.random() * todoListTitles.length);
   return todoListTitles[randomIndex];
 }
