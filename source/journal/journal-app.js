@@ -1,6 +1,8 @@
 window.addEventListener('DOMContentLoaded', init);
 
-// Main function that initializes every other function
+/**
+ * Main function that initializes the journal page
+ */
 function init() {
     const journalContainer = document.getElementById('journal-app');
     const addButton = journalContainer.querySelector('.add-journal');
@@ -10,7 +12,6 @@ function init() {
     addButton.addEventListener('click', () => addJournalNew(journalContainer, false));
 
     // When a user clicks "out" of the journal content/popup, it closes it
-    
     overlayRef.addEventListener('click', () => {
         overlayRef.style.display = 'none';
         modalRef.style.display = 'none';
@@ -20,7 +21,12 @@ function init() {
     addJournalNew(journalContainer, true);
 }
 
-// Display the new journal element to the page
+/**
+ * Creates and displays journal(s) onto the page
+ * 
+ * @param {HTMLElement} journalContainer - DOM element to display journals in
+ * @param {Boolean} existing - Displays existing journal(s) from localStorage if true
+ */
 function addJournalNew(journalContainer, existing) {
     const journalList = getJournals();
     let journalID = 0;
@@ -28,8 +34,7 @@ function addJournalNew(journalContainer, existing) {
     const journalTemplate = {
         id: Math.floor(Math.random() * 2000000),
         title: "",
-        documentation: "",
-        reflection: ""
+        content: ""
     };
 
     const modalRef = document.getElementById('modal');
@@ -37,82 +42,154 @@ function addJournalNew(journalContainer, existing) {
     if (existing) {
         journalList.forEach(journal => {
             journalID = createJournalElement(journal.id, journal.title,
-                journal.documentation, journal.reflection, modalRef);
+                journal.content, modalRef);
 
             // Creating journal widget for existing journal
-            createJournalWidget(journalContainer, journalID);
+            createJournalWidget(journalContainer, journalID, journal.content);
         });
     } else {
         journalID = createJournalElement(journalTemplate.id, journalTemplate.title,
-            journalTemplate.documentation, journalTemplate.reflection, modalRef);
+            journalTemplate.content, modalRef);
 
         // Creating journal widget for new journal
-        createJournalWidget(journalContainer, journalID);
+        createJournalWidget(journalContainer, journalID, journalTemplate.content);
 
         // Save new journal to localStorage
         journalList.push(journalTemplate);
-        saveNotes(journalList);
+        saveJournals(journalList);
+    }
+
+    // Ensures save/cancel buttons always at the bottom
+    if (!modalRef.querySelector('.save-cancel-container')) {
+        createSaveCancelButtons(modalRef);
+    } else {
+        // Move save/cancel container to the end
+        const buttonContainer = modalRef.querySelector('.save-cancel-container');
+        modalRef.appendChild(buttonContainer);
     }
 }
 
-// Extracted function to create and append the journal widget
-function createJournalWidget(journalContainer, journalID) {
-    const journalElementTest = document.createElement('div');
-    journalElementTest.classList.add('journal-widget');
-    // journalElementTest.textContent = 'Insert Title';
+/**
+ * Creates the "pop-up" that will contain each journal's content
+ * 
+ * @param {Number} id - The journal's unique ID
+ * @param {String} title - The journal's title
+ * @param {String} content - Existing journal content if any
+ * @param {HTMLElement} modalRef - Reference to the modal element
+ * @returns {Number} - The journal's unique ID
+ */
+function createJournalElement(id, title, content, modalRef) {
+    const journalBody = document.createElement('div');
+    const markdownInput = document.createElement('textarea');
+    const htmlOutput = document.createElement('div');
+
+    markdownInput.classList.add('journal-markdownInput');
+    htmlOutput.classList.add('journal-htmlOutput');
+
+    markdownInput.placeholder = 'Input Markdown here';
+    markdownInput.name = "markdownInput";
+    markdownInput.rows = 25;
+    markdownInput.cols = 50;
+
+    // Live preview of markdown text to formatted html
+    markdownInput.addEventListener('input', () => {
+        let markdownText = markdownInput.value;
+        let htmlContent = marked.parse(markdownText);
+        htmlOutput.innerHTML = htmlContent;
+
+        // Update the title in the journal widget as the user types
+        const firstHeader = getFirstHeader(markdownText);
+        const journalWidgetTitle = document.querySelector(`.journal-widget[widget-id="${id}"] .journal-widget-title`);
+        if (journalWidgetTitle) {
+            journalWidgetTitle.textContent = firstHeader || 'Insert Title';
+        }
+    });
+
+    // If existing journals, also update htmlOutput based from journal's markdownInput
+    if (getJournals() != 0) {
+        markdownInput.value = content;
+        let htmlContent = marked.parse(content);
+        htmlOutput.innerHTML = htmlContent;
+    }
+
+    journalBody.append(markdownInput);
+    journalBody.append(htmlOutput);
+
+    // Add class names to elements
+    journalBody.classList.add('journal-entry');
+    journalBody.id = `${id}`;
+
+    // Attach to "pop-up" window
+    modalRef.append(journalBody);
+
+    // Initially create Save/Cancel Button
+    if (!modalRef.querySelector('.save-cancel-container')) {
+        createSaveCancelButtons(modalRef);
+    }
+
+    return journalBody.id;
+}
+
+/**
+ * Creates a "journal widget" to be displayed on the page
+ * 
+ * @param {HTMLElement} journalContainer - DOM element to display journals in
+ * @param {Number} journalID - The journal's unique identifier
+ * @param {String} content - Existing journal content if any
+ */
+function createJournalWidget(journalContainer, journalID, content) {
+    const journalWidget = document.createElement('div');
+    journalWidget.classList.add('journal-widget');
     const journalWidgetTitle = document.createElement('span')
     journalWidgetTitle.classList.add('journal-widget-title')
-    journalWidgetTitle.textContent = 'Insert Title';
-    journalElementTest.append(journalWidgetTitle);
-    journalElementTest.setAttribute('widget-id', journalID);
+
+    // Extract the first header title from the content
+    const firstHeader = getFirstHeader(content);
+    journalWidgetTitle.textContent = firstHeader || 'Insert Title';
+    journalWidget.append(journalWidgetTitle);
+    journalWidget.setAttribute('widget-id', journalID);
 
     // Create a container for the buttons
-    var buttonContainer = document.createElement('div');
+    const buttonContainer = document.createElement('div');
     buttonContainer.className = 'button-container';
-    // buttonContainer.style.position = 'absolute';
-    // buttonContainer.style.top = '5px';
-    // buttonContainer.style.right = '5px';
 
     // Create the 'Edit' button
-    var editButton = document.createElement('button');
+    const editButton = document.createElement('button');
     editButton.innerText = 'Edit';
-    editButton.className = 'edit-button';
-    // editButton.style.fontSize = '12px';
-    // editButton.style.padding = '5px 10px';
-    // editButton.style.marginRight = '5px';  // Space between buttons
+    editButton.className = 'fa fa-pencil';
 
     // Create the 'Delete' button
-    var deleteButton = document.createElement('button');
+    const deleteButton = document.createElement('button');
     deleteButton.innerText = 'Delete';
-    deleteButton.className = 'delete-button';
-    // deleteButton.style.fontSize = '12px';
-    // deleteButton.style.padding = '5px 10px';
+    deleteButton.className = 'fa fa-close';
 
     // Append buttons to the container
     buttonContainer.appendChild(editButton);
     buttonContainer.appendChild(deleteButton);
 
     // Ensure the parent div has relative positioning
-    journalElementTest.style.position = 'relative';
+    journalWidget.style.position = 'relative';
 
     // Append the button container to the div
-    journalElementTest.append(buttonContainer);
+    journalWidget.append(buttonContainer);
 
     // Add event listener for double-click
-    journalElementTest.addEventListener('dblclick', openJournalModal);
+    journalWidget.addEventListener('dblclick', openJournalModal);
 
     // Add event listener for edit button click
     editButton.addEventListener('click', openJournalModal);
 
-
     // Add event listener for delete button click
     deleteButton.addEventListener('click', deleteJournal);
 
-
-    journalContainer.append(journalElementTest);
+    journalContainer.append(journalWidget);
 }
 
-// Function to open the journal modal
+/**
+ * Opens the "pop-up" when accessing a journal
+ * 
+ * @param {*} event - Event listener target
+ */
 function openJournalModal(event) {
     let overlay = document.getElementById('overlay');
     overlay.style.display = 'block';
@@ -127,21 +204,45 @@ function openJournalModal(event) {
     modal.style.display = 'block';
 }
 
-// Function to delete the journal
+/**
+ * Closes the "pop-up" when accessing a journal
+ * 
+ * @param {*} event - Event listener target
+ */
+function closeJournalModal(event) {
+    let overlay = document.getElementById('overlay');
+    overlay.style.display = 'none';
+    
+    let modal = document.getElementById('modal');
+    modal.style.display = 'none';
+}
+
+/**
+ * Deletes a journal (removes its content from localStorage and from the page)
+ * 
+ * @param {*} event - Event listener target
+ */
 function deleteJournal(event) {
     const widget = event.target.closest('.journal-widget');
     const currentJournalID = widget.getAttribute('widget-id');
+    const entry = document.querySelector(`.journal-entry[id="${currentJournalID}"]`);
 
     // Remove the journal element from the DOM
     widget.remove();
+    entry.remove()
 
     // Remove the journal entry from localStorage
     const journalList = getJournals();
     const updatedJournalList = journalList.filter(journal => journal.id != currentJournalID);
-    saveNotes(updatedJournalList);
+    saveJournals(updatedJournalList);
 }
 
-// Hides other journals' contents when focusing on a particular journal
+/**
+ * Hides other journals' contents when focusing on a particular journal
+ * 
+ * @param {NodeList} journalEntries - NodeList of all journals
+ * @param {Number} currentJournalID - Unique identifier to display only the particular journal
+ */
 function hideOtherJournalEntries(journalEntries, currentJournalID) {
     // Convert nodeList to array & loop through each journal entry
     let journalArray = [...journalEntries];
@@ -149,87 +250,101 @@ function hideOtherJournalEntries(journalEntries, currentJournalID) {
         if (journal.id != currentJournalID) {
             journal.style.display = 'none';
         } else {
-            journal.style.display = 'block';
+            journal.style.display = 'flex';
         }
     });
 }
 
-// Creates a "sub-div" that will contain each journal's content
-function createJournalElement(id, title, documentation, reflection, modalRef) {
-    const journalBody = document.createElement('div'); // sub div per journal
-    const journalTitle = document.createElement('textarea');
-    const journalDocumentation = document.createElement('textarea');
-    const journalReflection = document.createElement('textarea');
+/**
+ * Creates save/cancel buttons that are held in an container
+ * 
+ * @param {HTMLElement} modalRef - Reference to "modal" element
+ */
+function createSaveCancelButtons(modalRef) {
+    let buttonContainer = document.createElement('div');
+    buttonContainer.className = 'save-cancel-container';
+    
+    // Create 'Cancel' Button
+    let cancelButton = document.createElement('button');
+    cancelButton.innerText = 'Cancel';
+    cancelButton.className = 'cancel-button';
 
+    // Event listener for cancel button
+    cancelButton.addEventListener('click', closeJournalModal);
+    
     // Create the 'Save' button
-    var saveButton = document.createElement('button');
+    let saveButton = document.createElement('button');
     saveButton.innerText = 'Save';
     saveButton.className = 'save-button';
 
-    journalBody.className = 'journal-body';
+    // Event listener for save button
+    saveButton.addEventListener('click', saveContent);
 
-    // // Apply styles to the 'Save' button
-    // saveButton.style.position = 'absolute';
-    // saveButton.style.top = '5px';
-    // saveButton.style.right = '5px';
-    // saveButton.style.fontSize = '12px';
-    // saveButton.style.padding = '5px 10px';
-
-    // journalBody.style.position = 'relative';
-
-    //journalEntry.appendChild(saveButton);
-
-    journalBody.classList.add('journal-entry');
-    journalBody.id = `${id}`;
-    journalTitle.classList.add('journal-title');
-    journalDocumentation.classList.add('journal-documentation');
-    journalReflection.classList.add('journal-reflection');
-
-    journalTitle.value = title;
-    journalTitle.placeholder = 'Insert title here';
-
-    journalDocumentation.value = documentation;
-    journalDocumentation.placeholder = 'Insert documentation here';
-
-    journalReflection.value = reflection;
-    journalReflection.placeholder = 'Insert reflection here';
-
-    journalBody.append(journalTitle);
-    journalBody.append(journalDocumentation);
-    journalBody.append(journalReflection);
-    journalBody.append(saveButton);
-
-    saveButton.addEventListener('click', () => {
-        let overlay = document.getElementById('overlay');
-        let modal = document.getElementById('modal');
-        overlay.style.display = 'none';
-        modal.style.display = 'none';
-    });
-
-    // Update the title in the journal widget as the user types
-    journalTitle.addEventListener('input', function() {
-        var journalWidgetTitle = document.querySelector(`.journal-widget[widget-id="${id}"] .journal-widget-title`);
-        if (journalWidgetTitle) {
-            journalWidgetTitle.textContent = journalTitle.value || 'Insert Title';
-        }
-    });
-
-    modalRef.append(journalBody);
-
-    return journalBody.id;
+    buttonContainer.append(saveButton);
+    buttonContainer.append(cancelButton);
+    modalRef.append(buttonContainer);
 }
 
-// Get all the journal entries from localStorage
+/**
+ * When the save button is pressed, the active journal's content is saved into
+ * localStorage
+ * 
+ * @param {*} event 
+ */
+function saveContent(event) {
+
+    let modal = document.getElementById('modal');
+    const activeJournal = modal.querySelector('.journal-entry:not([style*="display: none"])');
+
+    if (activeJournal) {
+        const markdownInput = activeJournal.querySelector('.journal-markdownInput');
+        const journalList = getJournals();
+
+        const updatedJournalList = journalList.map(journal => {
+            if (journal.id == activeJournal.id) {
+                return {
+                    ...journal,
+                    "content": markdownInput.value
+                };
+            }
+            return journal
+        });
+
+        saveJournals(updatedJournalList);
+        alert("Saved!");
+    }
+
+    let overlay = document.getElementById('overlay');
+    overlay.style.display = 'none';
+    modal.style.display = 'none';
+    
+}
+
+/**
+ * Extracts the first header title from the markdown content
+ * 
+ * @param {String} content - The markdown content 
+ * @returns {String} - The first header title
+ */
+function getFirstHeader(content) {
+    const headerMatch = content.match(/^#\s(.+)$/m);
+    return headerMatch ? headerMatch[1] : null;
+}
+
+/**
+ * Get all journals from localStorage
+ * 
+ * @returns {Array} - An array containing journals from localStorage
+ */
 function getJournals() {
     return JSON.parse(localStorage.getItem("journal-list") || "[]");
 }
 
-// Get a certain journal based on id
-// function getJournal(journals, id) {
-//     return journals.filter(journal => journal.id == id)[0];
-// }
-
-// Saves all journal array to localStorage
-function saveNotes(journals) {
+/**
+ * Saves all journals into localStorage
+ * 
+ * @param {Array} journals - An array containing journals
+ */
+function saveJournals(journals) {
     localStorage.setItem("journal-list", JSON.stringify(journals));
 }
