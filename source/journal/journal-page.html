@@ -16,23 +16,35 @@
             <!-- Widgets -->
             <div class="widgets">
                 <span class="dashboard"><a href="../dashboard/index.html">Dashboard</a></span>
-                <span class="journal"><a href="../journal/">Journal</a></span>
+                <span class="journal"><a href="../journal/journal-page.html">Journal</a></span>
                 <span class="todo"><a href="../to_do/to-do.html">To Do List</a></span>
                 <span class="calendar"><a href="../calendar/calendar-page.html">Calendar</a></span>
             </div>
             <div class="logo">
-                <span id="team-logo"><img src="/assets/images/110 Team 30.png"> </span>
+                <span id="team-logo"><img src="../assets/images/110Team30.png"> </span>
             </div>
         </nav>
     </header>
     
     <h1 style="text-align: center;">Journal Page</h1>
+    <div style="text-align: center;">
+        <input type="text" id="search-bar" placeholder="What are you looking for?" oninput="searchJournals()">
+    </div>
     <div id="journal-app">
         <button class="add-journal" type="button">Add Journal</button>
         <!--Below, journal widgets will dynamically be added-->
     </div>
     <div id="overlay"></div>
     <div id="modal">
+        <div id="date-display"></div>
+        <div id="subtitles">
+            <div id="markdown-title">
+                Markdown
+            </div>
+            <div id="preview-title">
+                Preview
+            </div>
+        </div>
         <!--Below, journal contents will dynamically be added-->
     </div>
 </body>
