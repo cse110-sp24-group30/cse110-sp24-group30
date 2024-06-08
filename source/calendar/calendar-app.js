@@ -372,7 +372,7 @@ document.addEventListener("DOMContentLoaded", () => {
         category,
         date,
         time,
-        description,
+        description
       });
     } else {
       saveEvent({
@@ -381,7 +381,7 @@ document.addEventListener("DOMContentLoaded", () => {
         category,
         date,
         time,
-        description,
+        description
       });
     }
 
