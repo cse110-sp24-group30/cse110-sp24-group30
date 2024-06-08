@@ -34,15 +34,15 @@ async function init() {
     moodSelection.innerHTML = `
           <h2>How are you feeling today?</h2>
           <button class="mood-button" data-mood="sad"> 
-          <img src = "../assets/images/sad.png" alt = "sad"> 
+          <img src = "../source/assets/images/sad.png" alt = "sad"> 
           </button>
 
           <button class="mood-button" data-mood="neutral">
-          <img src = "../assets/images/confused.png" alt = "neutral">
+          <img src = "../source/assets/images/confused.png" alt = "neutral">
           </button>
 
           <button class="mood-button" data-mood="happy">
-          <img src = "../assets/images/happy-face.png" alt = "happy">
+          <img src = "../source/assets/images/happy-face.png" alt = "happy">
           </button>
       `;
 
@@ -165,21 +165,21 @@ function updateMoodChart(mood) {
 }
 
 // JavaScript to handle the click event and redirection
-document.querySelectorAll('.nav-element').forEach(link => {
-  link.addEventListener('click', function(event) {
-      event.preventDefault(); // Prevent the default link behavior
-      
-      // Set a timeout to show the loading screen if the page takes too long
-      const loadingTimeout = setTimeout(() => {
-        document.getElementById('loadingScreen').style.display = 'flex';
+document.querySelectorAll(".nav-element").forEach((link) => {
+  link.addEventListener("click", function (event) {
+    event.preventDefault(); // Prevent the default link behavior
+
+    // Set a timeout to show the loading screen if the page takes too long
+    const loadingTimeout = setTimeout(() => {
+      document.getElementById("loadingScreen").style.display = "flex";
     }, 500); // Show loading screen if the page doesn't start loading within 500ms
 
     // Store the href attribute
-    const targetUrl = this.querySelector('a').getAttribute('href');  
+    const targetUrl = this.querySelector("a").getAttribute("href");
 
     // Create a hidden iframe to detect when the page starts loading
-    const iframe = document.createElement('iframe');
-    iframe.style.display = 'none';
+    const iframe = document.createElement("iframe");
+    iframe.style.display = "none";
     iframe.src = targetUrl;
     document.body.appendChild(iframe);
 
