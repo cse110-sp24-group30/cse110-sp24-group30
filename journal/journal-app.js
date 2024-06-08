@@ -356,6 +356,21 @@ function saveJournals(journals) {
 }
 
 /**
+ * Filters the journals based on the search input.
+ */
+function searchJournals() {
+    const searchValue = document.getElementById('search-bar').value.toLowerCase();
+    const journalWidgets = document.querySelectorAll('.journal-widget');
+    journalWidgets.forEach(widget => {
+        const title = widget.querySelector('.journal-widget-title').textContent.toLowerCase();
+        if (title.includes(searchValue)) {
+            widget.style.display = '';
+        } else {
+            widget.style.display = 'none';
+        }
+    });
+
+/**
  * Generates a random title from a predefined list of titles
  * 
  * @returns {String} - A randomly selected title
