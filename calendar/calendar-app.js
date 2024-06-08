@@ -220,7 +220,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       document.getElementById("day-view").style.display = "none";
       document.getElementById("calendar-grid").style.display = "grid";
-      document.getElementById("calendar-days").style.display = "flex"; // Show the week headers
+      document.getElementById("calendar-days").style.display = ""; // Show the week headers
       renderCalendar(currentDate);
     }
   });
@@ -258,7 +258,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       document.getElementById("day-view").style.display = "none";
       document.getElementById("calendar-grid").style.display = "grid";
-      document.getElementById("calendar-days").style.display = "flex"; // Show the week headers
+      document.getElementById("calendar-days").style.display = "grid"; // Show the week headers
       renderCalendar(currentDate);
     }
   });
