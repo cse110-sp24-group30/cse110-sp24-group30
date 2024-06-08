@@ -59,6 +59,32 @@ function init() {
   });
 }
 
+// JavaScript to handle the click event and redirection
+document.querySelectorAll('.nav-element').forEach(link => {
+  link.addEventListener('click', function(event) {
+      event.preventDefault(); // Prevent the default link behavior
+      
+      // Set a timeout to show the loading screen if the page takes too long
+      const loadingTimeout = setTimeout(() => {
+        document.getElementById('loadingScreen').style.display = 'flex';
+    }, 500); // Show loading screen if the page doesn't start loading within 500ms
+
+    // Store the href attribute
+    const targetUrl = this.querySelector('a').getAttribute('href');  
+
+    // Create a hidden iframe to detect when the page starts loading
+    const iframe = document.createElement('iframe');
+    iframe.style.display = 'none';
+    iframe.src = targetUrl;
+    document.body.appendChild(iframe);
+
+    iframe.onload = () => {
+      clearTimeout(loadingTimeout); // Clear the timeout if the page loads quickly
+      window.location.href = targetUrl; // Proceed to the target URL
+    };
+  });
+});
+
 /**
  * Sets up the drag and drop functionality for the task columns and tasks.
  */

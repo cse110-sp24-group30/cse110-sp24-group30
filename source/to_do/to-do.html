@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Developer Journal: To-Do List</title>
     <link rel="stylesheet" href="./to-do.css" />
-    <script src="./to-do-app.js"></script>
+    <script src="./to-do-app.js"> type="module"</script>
     <script src="../assets/scripts/main.js"></script>
   </head>
   <body>
     <div class="background"></div>
-    <!-- Nav Bar -->
-    <nav class="main-navbar" id="protected-content">
+    <div class="to-do" id="protected-content">
+      <!-- Nav Bar -->
+    <nav class="main-navbar">
       <!-- Widgets -->
       <section class="widgets">
         <span class="nav-element"
@@ -33,7 +34,7 @@
           ></span
         >
         <span class="nav-element"
-          ><a href=""
+          ><a href="./to-do.html"
             ><img
               class="nav-icon"
               src="../assets/icons/checkFillBlue.png"
@@ -150,5 +151,10 @@
         </div>
       </div>
     </div>
+    </div>
+    <div class="loading-screen" id="loadingScreen">
+      <div class="spinner"></div>
+      <p>Loading, please wait...</p>
+  </div>
   </body>
 </html>
