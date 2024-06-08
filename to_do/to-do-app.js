@@ -158,7 +158,7 @@ function addTask(existing, category) {
     id: Math.floor(Math.random() * 2000000),
     title: "Default Title",
     dueDate: `${currentDate}`,
-    label: "self",
+    label: "personal",
   };
 
   //if true, then loads the previously created tasks from localStorage for Not Started and In Progress column
@@ -220,7 +220,7 @@ function addTask(existing, category) {
  * @param {number} id - The ID of the task.
  * @param {string} title - The title of the task.
  * @param {string} dueDate - The due date of the task.
- * @param {string} label - The label of the task like self/work/school/other.
+ * @param {string} label - The label of the task like personal/work/school/other.
  * @param {number} category - The column of the task (1 for Not Started, 2 for In Progress).
  *
  * @return {string} - The ID of the created task element.
@@ -241,9 +241,10 @@ function createToDoElement(id, title, dueDate, label, category) {
   categoryDiv.classList.add("category");
 
   const categorySelect = document.createElement("select");
-  categorySelect.id = "category-select";
+  categorySelect.classList.add("category-select");
+  categorySelect.id = `category-select-${id}`;
 
-  const categories = ["self", "work", "school", "other"];
+  const categories = ["personal", "work", "school", "other"];
   categories.forEach((cat) => {
     const option = document.createElement("option");
     option.value = cat;
@@ -348,7 +349,7 @@ function updateCategoryColor(selectElement) {
   const category = selectElement.value;
 
   const categoryColors = {
-    self: "orange",
+    personal: "orange",
     work: "blue",
     school: "green",
     other: "purple",
@@ -605,7 +606,7 @@ function updateTaskDetails(id, title, dueDate, label, category) {
     const taskElement = document.querySelector(`.task[task-id='${id}']`);
     taskElement.querySelector("p").textContent = title;
     taskElement.querySelector("#due-date").textContent = `Due Date: ${dueDate}`;
-    const categorySelect = taskElement.querySelector("#category-select");
+    const categorySelect = taskElement.querySelector(`#category-select-${id}`);
     categorySelect.value = label;
     updateCategoryColor(categorySelect);
 

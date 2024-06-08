@@ -243,7 +243,7 @@ a {
   font-size: 16px;
 }
 
-#category-select {
+.category-select {
   background-color: orange;
   border: none;
   border-radius: 25px;
@@ -259,7 +259,7 @@ a {
   outline: none;
 }
 
-#category-select option {
+.category-select option {
   background-color: white;
   color: black;
 }
