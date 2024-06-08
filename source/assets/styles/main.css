@@ -32,40 +32,40 @@ html {
 
 /* dashboard CSS */
 a {
-    text-decoration: none;
-    color: inherit;
-  }
-  
+  text-decoration: none;
+  color: inherit;
+}
+
 .main-navbar {
-    height: 15%;
-    width: 100%;
-    display: flex;
-    font-size: 18pt;
-  }
-  
-  .widgets {
-    width: 70%;
-    height: 100%;
-    display: flex;
-    color: white;
-    align-items: center;
-    padding-left: 20px;
-    justify-content: space-around;
-  }
-  
-  .nav-icon{
-    margin-right: 10px;
-  }
-  
-  .logo {
-    width: 30%;
-    display: flex;
-    justify-content: end;
-    align-items: center;
-  }
-  
-  #team-logo > img {
-    width: 90px;
-    height: 90px;
-    border-radius: 50%;
-  }
+  height: 15%;
+  width: 100%;
+  display: flex;
+  font-size: 18pt;
+}
+
+.widgets {
+  width: 70%;
+  height: 100%;
+  display: flex;
+  color: white;
+  align-items: center;
+  padding-left: 20px;
+  justify-content: space-around;
+}
+
+.nav-icon {
+  margin-right: 10px;
+}
+
+.logo {
+  width: 30%;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
+#team-logo > img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+}

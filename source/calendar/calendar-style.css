@@ -15,36 +15,37 @@ body {
   color: #333;
 }
 
-#main-container {
+.main-canvas {
+  margin-left: 5%;
+  width: 90%;
+  height: 85%;
+  gap: 3%;
   display: flex;
-  width: 100%;
-  max-width: 1200px;
-  margin: 20px;
-  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }
 
 #left-column {
   flex: 1;
   display: flex;
-  width: 15%;
+  width: 10%;
+  max-height: 90%;
   flex-direction: column;
   gap: 20px;
-
-  /* border: #007bff, solid, 1px; */
 }
 
 #calendar-app {
   flex: 2;
   max-width: 800px;
+  max-height: 85%;
+  overflow: scroll;
   width: 80%;
   margin: 20px auto;
   padding: 20px;
-  background-color: rgb(116, 203, 223, 0.80);
+  background-color: rgb(116, 203, 223, 0.8);
   border: 2px solid #74cbdf;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-
-  /* border: #007bff, solid, 1px; */
 }
 
 #calendar-header {
@@ -96,7 +97,7 @@ body {
 
 .day-header {
   padding: 10px;
-  background-color: rgb(116, 203, 223, 0.80);
+  background-color: rgb(116, 203, 223, 0.8);
   border: 2px solid #3e8d9f;
   color: black;
   border-radius: 5px;
@@ -208,32 +209,15 @@ body {
 
 #today-section {
   margin-top: 20px;
+  overflow: scroll;
   padding: 20px;
-  background-color: rgb(116, 203, 223, 0.60);
+  background-color: rgb(116, 203, 223, 0.6);
   border: 2px solid #74cbdf;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 #today-events .event {
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  background-color: #f9f9f9;
-  margin-bottom: 10px;
-  position: relative;
-}
-
-#upcoming-tasks {
-  margin-top: 20px;
-  padding: 20px;
-  background-color: rgb(116, 203, 223, 0.60);
-  border: 2px solid #74cbdf;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-#upcoming-events .event {
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
