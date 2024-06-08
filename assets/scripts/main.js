@@ -169,18 +169,29 @@ document.querySelectorAll('.nav-element').forEach(link => {
   link.addEventListener('click', function(event) {
       event.preventDefault(); // Prevent the default link behavior
       
-      // Show the loading screen
-      document.getElementById('loadingScreen').style.display = 'flex';
-      
-      // Store the href attribute
-      const targetUrl = this.querySelector('a').getAttribute('href');  
+      // Set a timeout to show the loading screen if the page takes too long
+      const loadingTimeout = setTimeout(() => {
+        document.getElementById('loadingScreen').style.display = 'flex';
+    }, 500); // Show loading screen if the page doesn't start loading within 500ms
 
-      console.log(targetUrl);
+    // Store the href attribute
+    const targetUrl = this.querySelector('a').getAttribute('href');  
+
+    // Create a hidden iframe to detect when the page starts loading
+    const iframe = document.createElement('iframe');
+    iframe.style.display = 'none';
+    iframe.src = targetUrl;
+    document.body.appendChild(iframe);
+
+    iframe.onload = () => {
+      clearTimeout(loadingTimeout); // Clear the timeout if the page loads quickly
+      window.location.href = targetUrl; // Proceed to the target URL
+  };
       
-      // Redirect after a short delay (e.g., 3 seconds)
-      setTimeout(function() {
-          window.location.href = targetUrl;
-      }, 1000); // 3000 milliseconds = 3 seconds
+      // // Redirect after a short delay (e.g., 3 seconds)
+      // setTimeout(function() {
+      //     window.location.href = targetUrl;
+      // }, 1000); // 3000 milliseconds = 3 seconds
   });
 });
 
