@@ -1,8 +1,10 @@
 window.addEventListener("DOMContentLoaded", init);
 
-//Initialization which calls all the other functions
+/**
+ * Initializes the application by setting up event listeners, loading saved tasks,
+ * and configuring the drag and drop functionality.
+ */
 function init() {
-
   const addButtonNotStarted = document.querySelector(
     ".new-task-button-not-started"
   );
@@ -11,14 +13,9 @@ function init() {
     ".new-task-button-in-progress"
   );
 
-  addButtonNotStarted.addEventListener("click", () =>
-    addTask(false, 1)
-  );
+  addButtonNotStarted.addEventListener("click", () => addTask(false, 1));
 
-  
-  addButtonInProgress.addEventListener("click", () =>
-    addTask(false, 2)
-  );
+  addButtonInProgress.addEventListener("click", () => addTask(false, 2));
 
   // Add saved tasks for Not Started and In Progress from localStorage
   addTask(true);
@@ -27,59 +24,120 @@ function init() {
   updateCount();
 
   setupDragAndDrop();
+
+  // Edit task modal elements
+  const editTaskModal = document.getElementById("edit-task-modal");
+  const closeBtn = document.querySelector(".close-button");
+  const editTaskForm = document.getElementById("edit-task-form");
+
+  // Event listener for closing the modal
+  closeBtn.addEventListener("click", closeEditModal);
+  window.addEventListener("click", function (event) {
+    if (event.target === editTaskModal) {
+      closeEditModal();
+    }
+  });
+
+  // Handle form submission for editing a task
+  editTaskForm.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    // Getting the new values to be updated
+    const id = parseInt(document.getElementById("edit-task-id").value);
+    const title = document.getElementById("edit-task-title").value;
+    const dueDate = document.getElementById("edit-task-due-date").value;
+    const label = document.getElementById("edit-task-label").value;
+    //getting the correct column category using the id of task
+    const category = parseInt(
+      document
+        .querySelector(`[task-id='${id}']`)
+        .parentElement.parentElement.parentElement.getAttribute("data-category")
+    );
+
+    updateTaskDetails(id, title, dueDate, label, category);
+    closeEditModal();
+  });
 }
 
+/**
+ * Sets up the drag and drop functionality for the task columns and tasks.
+ */
 function setupDragAndDrop() {
-    const taskColumns = document.querySelectorAll('.task-column');
-  
-    taskColumns.forEach(column => {
-      column.addEventListener('dragover', handleDragOver);
-      column.addEventListener('drop', handleDrop);
-    });
-  
-    const tasks = document.querySelectorAll('.task');
-    tasks.forEach(task => {
-      task.addEventListener('dragstart', handleDragStart);
-      task.addEventListener('dragend', handleDragEnd);
-    });
+  const taskColumns = document.querySelectorAll(".task-column");
+
+  taskColumns.forEach((column) => {
+    column.addEventListener("dragover", handleDragOver);
+    column.addEventListener("drop", handleDrop);
+  });
+
+  const tasks = document.querySelectorAll(".task");
+  tasks.forEach((task) => {
+    task.addEventListener("dragstart", handleDragStart);
+    task.addEventListener("dragend", handleDragEnd);
+  });
 }
-  
+
+/**
+ * Handles the drag start event for a task.
+ *
+ * @param {DragEvent} event - The drag event.
+ */
 function handleDragStart(event) {
-    event.dataTransfer.setData('text/plain', event.target.getAttribute('task-id'));
-    event.currentTarget.style.opacity = '0.4';
+  event.dataTransfer.setData(
+    "text/plain",
+    event.target.getAttribute("task-id")
+  );
+  event.currentTarget.style.opacity = "0.4";
 }
-  
+
+/**
+ * Handles the drag end event for a task.
+ *
+ * @param {DragEvent} event - The drag event.
+ */
 function handleDragEnd(event) {
-    event.currentTarget.style.opacity = '1';
+  event.currentTarget.style.opacity = "1";
 }
-  
+
+/**
+ * Handles the drag over event for a task column.
+ *
+ * @param {DragEvent} event - The drag event.
+ */
 function handleDragOver(event) {
-    event.preventDefault();
+  event.preventDefault();
 }
-  
+
+/**
+ * Handles the drop event for a task column.
+ *
+ * @param {DragEvent} event - The drag event.
+ */
 function handleDrop(event) {
-    event.preventDefault();
-    const taskId = event.dataTransfer.getData('text/plain');
-    const taskElement = document.querySelector(`[task-id='${taskId}']`);
-    const newCategory = event.currentTarget.getAttribute('data-category');
-    const oldCategory = taskElement.parentElement.parentElement.parentElement.getAttribute('data-category');
-  
-    if (newCategory !== oldCategory) {
-      addTaskBetweenLists(taskId, parseInt(oldCategory), parseInt(newCategory));
-      updateCount();
-      event.currentTarget.querySelector('list').appendChild(taskElement);
-    }
+  event.preventDefault();
+  const taskId = event.dataTransfer.getData("text/plain");
+  const taskElement = document.querySelector(`[task-id='${taskId}']`);
+  const newCategory = event.currentTarget.getAttribute("data-category");
+  const oldCategory =
+    taskElement.parentElement.parentElement.parentElement.getAttribute(
+      "data-category"
+    );
+
+  if (newCategory !== oldCategory) {
+    addTaskBetweenLists(taskId, parseInt(oldCategory), parseInt(newCategory));
+    updateCount();
+    event.currentTarget.querySelector("list").appendChild(taskElement);
+  }
 }
 
 /**
  * Adds tasks to the respective NotStarted and InProgress columns and
  * loads them if they already exist in localStorage depending on the category flag.
- * 
+ *
  * @param {boolean} existing - If true, loads tasks from localStorage.
  * @param {number} [category] - The column of the task (1 for Not Started, 2 for In Progress).
  */
 function addTask(existing, category) {
-  
   const notStartedList = getNotStarted();
   const inProgressList = getInProgress();
   const doneList = getDone();
@@ -90,7 +148,7 @@ function addTask(existing, category) {
   let month = date.getMonth() + 1;
   let year = date.getFullYear();
   //storing the date in string format so it can be understood by the user
-  let currentDate = `${month}-${day}-${year}`;
+  let currentDate = `${year}-${month}-${day}`;
 
   //TODO: Random word generation for the display title so that the user knows which task just created
   //Template for a task created with default values for all fields
@@ -125,13 +183,7 @@ function addTask(existing, category) {
     });
 
     doneList.forEach((done) => {
-      createToDoElement(
-        done.id,
-        done.title,
-        done.dueDate,
-        done.label,
-        3
-      );
+      createToDoElement(done.id, done.title, done.dueDate, done.label, 3);
     });
   } else {
     createToDoElement(
@@ -160,13 +212,13 @@ function addTask(existing, category) {
 
 /**
  * Creates a task element in the DOM.
- * 
+ *
  * @param {number} id - The ID of the task.
  * @param {string} title - The title of the task.
  * @param {string} dueDate - The due date of the task.
  * @param {string} label - The label of the task like self/work/school/other.
  * @param {number} category - The column of the task (1 for Not Started, 2 for In Progress).
- * 
+ *
  * @return {string} - The ID of the created task element.
  */
 function createToDoElement(id, title, dueDate, label, category) {
@@ -175,8 +227,8 @@ function createToDoElement(id, title, dueDate, label, category) {
   taskDiv.setAttribute("task-id", id);
   taskDiv.setAttribute("draggable", "true");
 
-  taskDiv.addEventListener('dragstart', handleDragStart);
-  taskDiv.addEventListener('dragend', handleDragEnd);
+  taskDiv.addEventListener("dragstart", handleDragStart);
+  taskDiv.addEventListener("dragend", handleDragEnd);
 
   const checkbox = document.createElement("input");
   checkbox.type = "checkbox";
@@ -220,10 +272,21 @@ function createToDoElement(id, title, dueDate, label, category) {
   buttonsDiv.classList.add("buttons");
 
   let editButton;
-  if(category === 1 || category === 2){
+  if (category === 1 || category === 2) {
     editButton = document.createElement("button");
     editButton.id = "edit-button";
     editButton.textContent = "Edit Button";
+
+    editButton.addEventListener("click", function (event) {
+      const taskDiv = event.target.closest(".task");
+      const taskId = taskDiv.getAttribute("task-id");
+      const taskCategory = parseInt(
+        taskDiv.closest(".task-column").getAttribute("data-category")
+      );
+
+      const task = getTaskById(taskId, taskCategory);
+      openEditModal(task);
+    });
   }
 
   const deleteButton = document.createElement("button");
@@ -235,7 +298,7 @@ function createToDoElement(id, title, dueDate, label, category) {
     removeTask(id, category);
   });
 
-  if(category === 1 || category === 2){
+  if (category === 1 || category === 2) {
     buttonsDiv.appendChild(editButton);
   }
   buttonsDiv.appendChild(deleteButton);
@@ -263,12 +326,12 @@ function createToDoElement(id, title, dueDate, label, category) {
 
 /**
  * Updates the background color of the task based on the label selected.
- * 
+ *
  * @param {HTMLElement} selectElement - The select element whose background color is to be updated.
  */
 function updateCategoryColor(selectElement) {
   const category = selectElement.value;
-  
+
   const categoryColors = {
     self: "orange",
     work: "blue",
@@ -282,7 +345,7 @@ function updateCategoryColor(selectElement) {
 
 /**
  * Updates the label of a task in localStorage.
- * 
+ *
  * @param {number} id - The ID of the task to update.
  * @param {string} newLabel - The new label of the task.
  * @param {number} category - The column of the task (1 for Not Started, 2 for In Progress).
@@ -311,7 +374,7 @@ function updateTaskLabel(id, newLabel, category) {
 
 /**
  * Removes a task from the specified column array in localStorage.
- * 
+ *
  * @param {number} id - The ID of the task to remove.
  * @param {number} category - The column of the task (1 for Not Started, 2 for In Progress).
  */
@@ -319,7 +382,7 @@ function removeTask(id, category) {
   let taskList;
   if (category === 1) {
     taskList = getNotStarted();
-  } else if (category === 2){
+  } else if (category === 2) {
     taskList = getInProgress();
   } else {
     taskList = getDone();
@@ -344,9 +407,14 @@ function removeTask(id, category) {
   updateCount();
 }
 
-
-function addTaskBetweenLists(id, fromCategory, toCategory){
-  
+/**
+ * Adds the task from the old column to new column after drop
+ *
+ * @param {number} id - The ID of the task.
+ * @param {number} fromCategory - The current category of the task.
+ * @param {number} toCategory - The new category of the task.
+ */
+function addTaskBetweenLists(id, fromCategory, toCategory) {
   let fromList;
   let toList;
   if (fromCategory === 1) {
@@ -359,8 +427,8 @@ function addTaskBetweenLists(id, fromCategory, toCategory){
 
   //finds index of the task based on the localStorage id
   const taskIndex = fromList.findIndex((task) => task.id === parseInt(id));
-  
-  if (taskIndex > -1){
+
+  if (taskIndex > -1) {
     if (toCategory === 1) {
       toList = getNotStarted();
       toList.push(fromList[taskIndex]);
@@ -378,7 +446,9 @@ function addTaskBetweenLists(id, fromCategory, toCategory){
   }
 }
 
-//Updates the counts of tasks in the Not Started, In Progress, and Done categories.
+/**
+ * Updates the count of tasks in each column.
+ */
 function updateCount() {
   const numNotStarted = document.getElementById("num-not-started");
   numNotStarted.innerText = getNotStarted().length;
@@ -390,32 +460,144 @@ function updateCount() {
   numDone.innerText = getDone().length;
 }
 
-//Get all the notStarted entries from localStorage
+/**
+ * Retrieves all the "not started" tasks from localStorage.
+ *
+ * @return {Object[]} An array of "not started" tasks.
+ */
 function getNotStarted() {
   return JSON.parse(localStorage.getItem("not-started") || "[]");
 }
 
-// Saves all notStarted array to localStorage
+/**
+ * Saves the "not started" tasks array to localStorage.
+ *
+ * @param {Object[]} notStarted - An array of "not started" tasks to be saved.
+ */
 function saveNotStarted(notStarted) {
   localStorage.setItem("not-started", JSON.stringify(notStarted));
 }
 
-// Get all the inProgress entries from localStorage
+/**
+ * Retrieves all the "in progress" tasks from localStorage.
+ *
+ * @return {Object[]} An array of "in progress" tasks.
+ */
 function getInProgress() {
   return JSON.parse(localStorage.getItem("in-progress") || "[]");
 }
 
-// Saves all inProgress array to localStorage
+/**
+ * Saves the "in progress" tasks array to localStorage.
+ *
+ * @param {Object[]} inProgress - An array of "in progress" tasks to be saved.
+ */
 function saveInProgress(inProgress) {
   localStorage.setItem("in-progress", JSON.stringify(inProgress));
 }
 
-// Get all the done entries from localStorage
+/**
+ * Retrieves all the "done" tasks from localStorage.
+ *
+ * @return {Object[]} An array of "done" tasks.
+ */
 function getDone() {
   return JSON.parse(localStorage.getItem("done") || "[]");
 }
 
-// Saves all done array to localStorage
+/**
+ * Saves the "done" tasks array to localStorage.
+ *
+ * @param {Object[]} done - An array of "done" tasks to be saved.
+ */
 function saveDone(done) {
   localStorage.setItem("done", JSON.stringify(done));
+}
+
+/**
+ * Retrieves a task by its ID and category.
+ *
+ * @param {number} id - The ID of the task.
+ * @param {number} category - The category of the task (1 for "Not Started", 2 for "In Progress", 3 for "Done").
+ * @return {Object} The task with the specified ID and category.
+ */
+function getTaskById(id, category) {
+  let taskList;
+  if (category === 1) {
+    taskList = getNotStarted();
+  } else if (category === 2) {
+    taskList = getInProgress();
+  } else {
+    taskList = getDone();
+  }
+
+  return taskList.find((task) => task.id === parseInt(id));
+}
+
+/**
+ * Opens the edit modal and populates it with the details of the specified task.
+ *
+ * @param {Object} task - The task to be edited.
+ */
+function openEditModal(task) {
+  const editTaskModal = document.getElementById("edit-task-modal");
+  document.getElementById("edit-task-title").value = task.title;
+  document.getElementById("edit-task-due-date").value = task.dueDate;
+  document.getElementById("edit-task-label").value = task.label;
+  document.getElementById("edit-task-id").value = task.id;
+  document.getElementById("edit-task-category").value = task.category;
+
+  editTaskModal.style.display = "block";
+}
+
+/**
+ * Updates the details of a task.
+ *
+ * @param {number} id - The ID of the task to update.
+ * @param {string} title - The new title of the task.
+ * @param {string} dueDate - The new due date of the task.
+ * @param {string} label - The new label of the task.
+ * @param {number} category - The category of the task (1 for "Not Started", 2 for "In Progress", 3 for "Done").
+ */
+function updateTaskDetails(id, title, dueDate, label, category) {
+  let taskList;
+  if (category === 1) {
+    taskList = getNotStarted();
+  } else if (category === 2) {
+    taskList = getInProgress();
+  } else {
+    taskList = getDone();
+  }
+
+  // Updating the localStorage with new values
+  const taskIndex = taskList.findIndex((task) => task.id === id);
+  if (taskIndex > -1) {
+    taskList[taskIndex].title = title;
+    taskList[taskIndex].dueDate = dueDate;
+    taskList[taskIndex].label = label;
+
+    if (category === 1) {
+      saveNotStarted(taskList);
+    } else if (category === 2) {
+      saveInProgress(taskList);
+    } else {
+      saveDone(taskList);
+    }
+
+    // Updating the display
+    const taskElement = document.querySelector(`.task[task-id='${id}']`);
+    taskElement.querySelector("p").textContent = title;
+    taskElement.querySelector("#due-date").textContent = `Due Date: ${dueDate}`;
+    const categorySelect = taskElement.querySelector("#category-select");
+    categorySelect.value = label;
+    updateCategoryColor(categorySelect);
+  }
+}
+
+/**
+ * Closes the edit modal.
+ */
+function closeEditModal() {
+  const editTaskModal = document.getElementById("edit-task-modal");
+  editTaskModal.style.display = "none";
 }
