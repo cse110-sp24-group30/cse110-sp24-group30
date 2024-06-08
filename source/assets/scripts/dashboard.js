@@ -186,12 +186,7 @@ document.querySelectorAll('.nav-element').forEach(link => {
     iframe.onload = () => {
       clearTimeout(loadingTimeout); // Clear the timeout if the page loads quickly
       window.location.href = targetUrl; // Proceed to the target URL
-  };
-      
-      // // Redirect after a short delay (e.g., 3 seconds)
-      // setTimeout(function() {
-      //     window.location.href = targetUrl;
-      // }, 1000); // 3000 milliseconds = 3 seconds
+    };
   });
 });
 
