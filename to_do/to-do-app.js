@@ -127,6 +127,7 @@ function handleDrop(event) {
     addTaskBetweenLists(taskId, parseInt(oldCategory), parseInt(newCategory));
     updateCount();
     event.currentTarget.querySelector("list").appendChild(taskElement);
+    location.reload();
   }
 }
 
@@ -148,7 +149,7 @@ function addTask(existing, category) {
   let month = date.getMonth();
   let year = date.getFullYear();
   //storing the date in string format so it can be understood by the user
-  let currentDate =  `${year}-${String(month + 1).padStart(2, "0")}-${String(
+  let currentDate = `${year}-${String(month + 1).padStart(2, "0")}-${String(
     day
   ).padStart(2, "0")}`;
 
@@ -156,7 +157,7 @@ function addTask(existing, category) {
   //Template for a task created with default values for all fields
   const toDoTemplate = {
     id: Math.floor(Math.random() * 2000000),
-    title: "Default Title",
+    title: generateRandomTitle(),
     dueDate: `${currentDate}`,
     label: "personal",
   };
@@ -311,7 +312,7 @@ function createToDoElement(id, title, dueDate, label, category) {
   }
   buttonsDiv.appendChild(deleteButton);
 
-  // to help organize the layout of tasks 
+  // to help organize the layout of tasks
   const firstRowDiv = document.createElement("div");
   firstRowDiv.classList = "first-row";
   firstRowDiv.appendChild(taskTitle);
@@ -627,21 +628,19 @@ function getEvents() {
   return JSON.parse(localStorage.getItem("events") || "[]");
 }
 
-function saveEvents(events){
+function saveEvents(events) {
   localStorage.setItem("events", JSON.stringify(events));
 }
 
 function addEventToCalendar(eventAdd) {
   const eventTemplate = {
-    "id" : eventAdd.id,
-    "title" : `${eventAdd.title}`,
-    "category" : `${eventAdd.label}`,
-    "date" : `${eventAdd.dueDate}`,
-    "time": "",
-    "recurrence": "",
-    "description": "",
-    "reminder": ""
-  }
+    id: eventAdd.id,
+    title: `${eventAdd.title}`,
+    category: `${eventAdd.label}`,
+    date: `${eventAdd.dueDate}`,
+    time: "",
+    description: "",
+  };
 
   const events = getEvents();
   const eventIndex = events.findIndex((event) => event.id === eventAdd.id);
@@ -669,4 +668,52 @@ function removeFromCalendar(id) {
   let events = getEvents();
   events = events.filter((event) => event.id !== id);
   saveEvents(events);
+}
+
+function generateRandomTitle() {
+  const todoListTitles = [
+    "Grocery Shopping",
+    "Finish Project Report",
+    "Schedule Doctor Appointment",
+    "Clean the Garage",
+    "Prepare Presentation Slides",
+    "Call the Electrician",
+    "Update Resume",
+    "Plan Weekend Getaway",
+    "Pay Utility Bills",
+    "Water the Plants",
+    "Organize Closet",
+    "Write Blog Post",
+    "Renew Library Books",
+    "Send Birthday Card",
+    "Backup Computer Files",
+    "Attend Yoga Class",
+    "Review Monthly Budget",
+    "Wash the Car",
+    "Buy Office Supplies",
+    "Meal Prep for the Week",
+    "Respond to Emails",
+    "Walk the Dog",
+    "Finish Reading Book",
+    "Order Prescription Refill",
+    "Make Dentist Appointment",
+    "Prepare Tax Documents",
+    "Fix Leaky Faucet",
+    "Update Software",
+    "Create Fitness Plan",
+    "Visit the Post Office",
+    "Plan Family Dinner",
+    "Research Investment Options",
+    "Book Hotel for Vacation",
+    "Write Thank You Notes",
+    "Declutter Desk",
+    "Complete Online Course",
+    "Recycle Old Electronics",
+    "Host Dinner Party",
+    "Volunteer at Local Shelter",
+    "Attend Networking Event"
+  ];
+  
+  const randomIndex = Math.floor(Math.random() * todoListTitles.length);
+  return todoListTitles[randomIndex];
 }
