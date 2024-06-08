@@ -234,10 +234,6 @@ function createToDoElement(id, title, dueDate, label, category) {
   taskDiv.addEventListener("dragstart", handleDragStart);
   taskDiv.addEventListener("dragend", handleDragEnd);
 
-  const checkbox = document.createElement("input");
-  checkbox.type = "checkbox";
-  checkbox.id = "radio-button";
-
   const taskTitle = document.createElement("p");
   taskTitle.textContent = `${title}`;
 
@@ -280,7 +276,10 @@ function createToDoElement(id, title, dueDate, label, category) {
   if (category === 1 || category === 2) {
     editButton = document.createElement("button");
     editButton.id = "edit-button";
-    editButton.textContent = "Edit Button";
+    let editIcon = document.createElement("img");
+    editIcon.src = "../assets/icons/editDarkBlue.png";
+    editIcon.alt = "Edit Button";
+    editButton.appendChild(editIcon);
 
     editButton.addEventListener("click", function (event) {
       const taskDiv = event.target.closest(".task");
@@ -296,7 +295,10 @@ function createToDoElement(id, title, dueDate, label, category) {
 
   const deleteButton = document.createElement("button");
   deleteButton.id = "delete-button";
-  deleteButton.textContent = "Delete";
+  const deleteIcon = document.createElement("img");
+  deleteIcon.src = "../assets/icons/trashDarkBlue.png";
+  deleteIcon.alt = "Delete Button";
+  deleteButton.appendChild(deleteIcon);
 
   deleteButton.addEventListener("click", () => {
     taskDiv.remove();
@@ -308,11 +310,19 @@ function createToDoElement(id, title, dueDate, label, category) {
   }
   buttonsDiv.appendChild(deleteButton);
 
-  taskDiv.appendChild(checkbox);
-  taskDiv.appendChild(taskTitle);
-  taskDiv.appendChild(categoryDiv);
-  taskDiv.appendChild(dueDateSpan);
-  taskDiv.appendChild(buttonsDiv);
+  // to help organize the layout of tasks 
+  const firstRowDiv = document.createElement("div");
+  firstRowDiv.classList = "first-row";
+  firstRowDiv.appendChild(taskTitle);
+  firstRowDiv.appendChild(categoryDiv);
+
+  const secondRowDiv = document.createElement("div");
+  secondRowDiv.classList = "second-row";
+  secondRowDiv.appendChild(dueDateSpan);
+  secondRowDiv.appendChild(buttonsDiv);
+
+  taskDiv.appendChild(firstRowDiv);
+  taskDiv.appendChild(secondRowDiv);
 
   const notStarted = document.getElementById("not-started-list");
   const inProgress = document.getElementById("in-progress-list");
