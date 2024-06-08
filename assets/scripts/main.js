@@ -164,6 +164,26 @@ function updateMoodChart(mood) {
   localStorage.setItem("moods", JSON.stringify(moods));
 }
 
+// JavaScript to handle the click event and redirection
+document.querySelectorAll('.nav-element').forEach(link => {
+  link.addEventListener('click', function(event) {
+      event.preventDefault(); // Prevent the default link behavior
+      
+      // Show the loading screen
+      document.getElementById('loadingScreen').style.display = 'flex';
+      
+      // Store the href attribute
+      const targetUrl = this.querySelector('a').getAttribute('href');  
+
+      console.log(targetUrl);
+      
+      // Redirect after a short delay (e.g., 3 seconds)
+      setTimeout(function() {
+          window.location.href = targetUrl;
+      }, 1000); // 3000 milliseconds = 3 seconds
+  });
+});
+
 function getJournals() {
   return JSON.parse(localStorage.getItem("journal-list") || "[]");
 }
