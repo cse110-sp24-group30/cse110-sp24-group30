@@ -77,12 +77,6 @@
             <option value="day">Day</option>
           </select>
           <input type="text" id="search-bar" placeholder="Search events..." />
-          <select id="category-filter" class="category-filter">
-            <option value="all">All Categories</option>
-            <option value="work">Work</option>
-            <option value="personal">Personal</option>
-            <option value="urgent">Urgent</option>
-          </select>
         </div>
         <div id="calendar-days" class="calendar-header">
           <div class="day-header">Sun</div>
@@ -104,20 +98,20 @@
 
     <div id="event-modal" class="modal">
       <div class="modal-content">
-        <span class="close-button">&times;</span>
         <form id="event-form">
           <input type="hidden" id="event-id" name="event-id" />
           <div class="form-group">
             <label for="event-title">Event Title:</label>
-            <input type="text" id="event-title" name="event-title" required />
+            <input type="text" id="event-title" name="event-title" placeholder="Enter event title" required />
           </div>
           <div class="form-group">
-            <label for="event-category">Category:</label>
-            <select id="event-category" name="event-category" required>
-              <option value="work">Work</option>
-              <option value="personal">Personal</option>
-              <option value="urgent">Urgent</option>
-            </select>
+            <label for="event-description">Event Description:</label>
+            <textarea
+              id="event-description"
+              name="event-description"
+              placeholder="Enter event description"
+
+              ></textarea>
           </div>
           <div class="form-group">
             <label for="event-date">Event Date:</label>
@@ -128,31 +122,15 @@
             <input type="time" id="event-time" name="event-time" />
           </div>
           <div class="form-group">
-            <label for="event-recurrence">Recurrence:</label>
-            <select id="event-recurrence" name="event-recurrence">
-              <option value="none">None</option>
-              <option value="daily">Daily</option>
-              <option value="weekly">Weekly</option>
-              <option value="monthly">Monthly</option>
+            <label for="event-category">Category:</label>
+            <select id="event-category" name="event-category" required>
+              <option value="work">Work</option>
+              <option value="personal">Personal</option>
+              <option value="urgent">Urgent</option>
             </select>
           </div>
-          <div class="form-group">
-            <label for="event-description">Event Description:</label>
-            <textarea
-              id="event-description"
-              name="event-description"
-              required
-            ></textarea>
-          </div>
-          <div class="form-group">
-            <label for="event-reminder">Reminder:</label>
-            <input
-              type="datetime-local"
-              id="event-reminder"
-              name="event-reminder"
-            />
-          </div>
           <button type="submit" class="save-button">Save Event</button>
+          <button type="submit" class="cancel-button">Cancel</button>
         </form>
       </div>
     </div>

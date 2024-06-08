@@ -188,17 +188,7 @@ body {
   width: 90%;
   max-width: 500px;
   display: flex;
-  
-}
-
-.close-button {
-  float: right;
-  font-size: 1.5em;
-  cursor: pointer;
-  position: relative;
-  margin-left: 2%;
-  margin-right: 6%;
-  box-sizing: border-box;
+  justify-content: center;
 }
 
 .form-group {
@@ -232,6 +222,26 @@ body {
   padding: 10px 15px;
   cursor: pointer;
   font-size: 1em;
+}
+
+.cancel-button {
+  float: right;
+  background-color: #727573;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  cursor: pointer;
+  
+  font-size: 1em;
+}
+
+.save-button:hover {
+  background-color: #166027; 
+}
+
+.cancel-button:hover {
+  background-color: #3c3e3c; 
 }
 
 #today-section {
