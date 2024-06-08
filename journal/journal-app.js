@@ -30,11 +30,12 @@ function init() {
 function addJournalNew(journalContainer, existing) {
     const journalList = getJournals();
     let journalID = 0;
+    let randomTitle = generateRandomTitle();
 
     const journalTemplate = {
         id: Math.floor(Math.random() * 2000000),
-        title: "",
-        content: ""
+        title: randomTitle,
+        content: `# ${randomTitle}`
     };
 
     const modalRef = document.getElementById('modal');
@@ -45,14 +46,14 @@ function addJournalNew(journalContainer, existing) {
                 journal.content, modalRef);
 
             // Creating journal widget for existing journal
-            createJournalWidget(journalContainer, journalID, journal.content);
+            createJournalWidget(journalContainer, journalID, journal.title, journal.content);
         });
     } else {
         journalID = createJournalElement(journalTemplate.id, journalTemplate.title,
             journalTemplate.content, modalRef);
 
         // Creating journal widget for new journal
-        createJournalWidget(journalContainer, journalID, journalTemplate.content);
+        createJournalWidget(journalContainer, journalID, journalTemplate.title, journalTemplate.content);
 
         // Save new journal to localStorage
         journalList.push(journalTemplate);
@@ -90,6 +91,9 @@ function createJournalElement(id, title, content, modalRef) {
     markdownInput.name = "markdownInput";
     markdownInput.rows = 25;
     markdownInput.cols = 50;
+    markdownInput.value = `# ${title}`;
+    let htmlContent = marked.parse(markdownInput.value);
+    htmlOutput.innerHTML = htmlContent;
 
     // Live preview of markdown text to formatted html
     markdownInput.addEventListener('input', () => {
@@ -101,7 +105,7 @@ function createJournalElement(id, title, content, modalRef) {
         const firstHeader = getFirstHeader(markdownText);
         const journalWidgetTitle = document.querySelector(`.journal-widget[widget-id="${id}"] .journal-widget-title`);
         if (journalWidgetTitle) {
-            journalWidgetTitle.textContent = firstHeader || 'Insert Title';
+            journalWidgetTitle.textContent = firstHeader || title;
         }
     });
 
@@ -135,9 +139,10 @@ function createJournalElement(id, title, content, modalRef) {
  * 
  * @param {HTMLElement} journalContainer - DOM element to display journals in
  * @param {Number} journalID - The journal's unique identifier
+ * @param {String} title - The journal's title
  * @param {String} content - Existing journal content if any
  */
-function createJournalWidget(journalContainer, journalID, content) {
+function createJournalWidget(journalContainer, journalID, title, content) {
     const journalWidget = document.createElement('div');
     journalWidget.classList.add('journal-widget');
     const journalWidgetTitle = document.createElement('span')
@@ -145,7 +150,7 @@ function createJournalWidget(journalContainer, journalID, content) {
 
     // Extract the first header title from the content
     const firstHeader = getFirstHeader(content);
-    journalWidgetTitle.textContent = firstHeader || 'Insert Title';
+    journalWidgetTitle.textContent = firstHeader || title;
     journalWidget.append(journalWidgetTitle);
     journalWidget.setAttribute('widget-id', journalID);
 
@@ -304,6 +309,7 @@ function saveContent(event) {
             if (journal.id == activeJournal.id) {
                 return {
                     ...journal,
+                    "title": getFirstHeader(markdownInput.value),
                     "content": markdownInput.value
                 };
             }
@@ -347,4 +353,65 @@ function getJournals() {
  */
 function saveJournals(journals) {
     localStorage.setItem("journal-list", JSON.stringify(journals));
+}
+
+/**
+ * Generates a random title from a predefined list of titles
+ * 
+ * @returns {String} - A randomly selected title
+ */
+function generateRandomTitle() {
+    const titles = [
+        "A Day in the Life",
+        "Reflections and Musings",
+        "The Journey Begins",
+        "Thoughts and Ideas",
+        "Memories of Yesterday",
+        "Random Ramblings",
+        "Adventures Await",
+        "Personal Journal",
+        "Daily Diary",
+        "Notes and Notions",
+        "Life's Little Moments",
+        "Mindful Musings",
+        "Journey Through Time",
+        "Captured Moments",
+        "Whispers of the Heart",
+        "Silent Reflections",
+        "Dreams and Realities",
+        "Echoes of the Past",
+        "Future Visions",
+        "Diary of Dreams",
+        "Moments in Time",
+        "Heartfelt Chronicles",
+        "Inspiration and Imagination",
+        "Soulful Scribbles",
+        "The Writer's Corner",
+        "Words from Within",
+        "Tales Untold",
+        "Life's Journey",
+        "Thoughts Unveiled",
+        "Pages of My Life",
+        "Moments of Solitude",
+        "Chronicles of Change",
+        "Wandering Words",
+        "Midnight Musings",
+        "Reflections in Time",
+        "Journey of Thoughts",
+        "Silent Contemplations",
+        "Ephemeral Moments",
+        "Life's Reflections",
+        "The Path Unseen",
+        "Soulful Wanderings",
+        "Fragments of Time",
+        "Whispers of Wisdom",
+        "Fleeting Thoughts",
+        "Diary of Reflections",
+        "Journeys in Words",
+        "Timeless Thoughts",
+        "Eternal Echoes",
+        "Inner Reflections"
+    ];
+    const randomIndex = Math.floor(Math.random() * titles.length);
+    return titles[randomIndex];
 }
