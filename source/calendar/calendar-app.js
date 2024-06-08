@@ -4,14 +4,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const prevMonth = document.getElementById("prev-month");
   const nextMonth = document.getElementById("next-month");
   const eventModal = document.getElementById("event-modal");
-  const closeButton = document.querySelector(".close-button");
+  const cancelButton = document.querySelector(".cancel-button");
   const eventForm = document.getElementById("event-form");
   const todayDateElement = document.getElementById("today-date");
   const todayEventsContainer = document.getElementById("today-events");
   const upcomingEventsContainer = document.getElementById("upcoming-events");
   const viewSelector = document.getElementById("view-selector");
   const searchBar = document.getElementById("search-bar");
-  const categoryFilter = document.getElementById("category-filter");
 
   let currentDate = new Date();
   const today = new Date();
@@ -96,9 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
           month + 1
         ).padStart(2, "0")}-${String(i).padStart(2, "0")}`;
         document.getElementById("event-time").value = "";
-        document.getElementById("event-recurrence").value = "none";
         document.getElementById("event-description").value = "";
-        document.getElementById("event-reminder").value = "";
         eventModal.style.display = "flex";
       });
 
@@ -348,14 +345,15 @@ document.addEventListener("DOMContentLoaded", () => {
     renderCalendar(currentDate);
   });
 
-  closeButton.addEventListener("click", () => {
-    eventModal.style.display = "none";
-  });
-
   window.addEventListener("click", (event) => {
     if (event.target == eventModal) {
       eventModal.style.display = "none";
     }
+  });
+
+  cancelButton.addEventListener("click", (event) => {
+    event.preventDefault();
+    eventModal.style.display = "none";
   });
 
   eventForm.addEventListener("submit", (event) => {
@@ -365,9 +363,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const category = event.target["event-category"].value;
     const date = event.target["event-date"].value;
     const time = event.target["event-time"].value;
-    const recurrence = event.target["event-recurrence"].value;
     const description = event.target["event-description"].value;
-    const reminder = event.target["event-reminder"].value;
 
     if (id) {
       updateEvent({
@@ -376,9 +372,7 @@ document.addEventListener("DOMContentLoaded", () => {
         category,
         date,
         time,
-        recurrence,
         description,
-        reminder,
       });
     } else {
       saveEvent({
@@ -387,9 +381,7 @@ document.addEventListener("DOMContentLoaded", () => {
         category,
         date,
         time,
-        recurrence,
         description,
-        reminder,
       });
     }
 
@@ -502,16 +494,6 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
   };
-
-  categoryFilter.addEventListener("change", (event) => {
-    const category = event.target.value;
-    const events = getEvents();
-    const filteredEvents =
-      category === "all"
-        ? events
-        : events.filter((event) => event.category === category);
-    renderFilteredEvents(filteredEvents);
-  });
 
   renderCalendar(currentDate);
 });
