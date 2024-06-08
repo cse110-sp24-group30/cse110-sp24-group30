@@ -234,10 +234,6 @@ function createToDoElement(id, title, dueDate, label, category) {
   taskDiv.addEventListener("dragstart", handleDragStart);
   taskDiv.addEventListener("dragend", handleDragEnd);
 
-  const checkbox = document.createElement("input");
-  checkbox.type = "checkbox";
-  checkbox.id = "radio-button";
-
   const taskTitle = document.createElement("p");
   taskTitle.textContent = `${title}`;
 
@@ -308,7 +304,6 @@ function createToDoElement(id, title, dueDate, label, category) {
   }
   buttonsDiv.appendChild(deleteButton);
 
-  taskDiv.appendChild(checkbox);
   taskDiv.appendChild(taskTitle);
   taskDiv.appendChild(categoryDiv);
   taskDiv.appendChild(dueDateSpan);

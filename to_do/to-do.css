@@ -139,18 +139,56 @@ a {
 }
 
 .task {
-  background-color: #54959f;
-  border-radius: 5px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  overflow: auto;
+    background-color: #54959F;
+    border-radius: 5px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow: auto;
+    
+    .first-row, .second-row {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+    }
 
-  #due-date {
-    padding: 15px;
-  }
+    .category {
+        margin-top: 10px; 
+        margin-left: 7px;
+    }
+
+    .buttons {
+        display: flex;
+        align-items: center;
+        justify-content: center; 
+        gap: 10px;
+        border: none; 
+        background: none; 
+        padding: 0;
+        cursor: pointer; 
+        outline: none; 
+        box-shadow: none; 
+    }
+    
+    .buttons img {
+        width: 20px; 
+        height: 20px; 
+        border: none; 
+        background: none; 
+        outline: none; 
+        box-shadow: none; 
+        pointer-events: none; 
+    }
+
+    .buttons:hover {
+        color: #315D6D;
+    }
+    
+    #due-date {
+        margin-top: 3px;
+        margin-right: 10px; 
+    }
 }
 
 #num-not-started {
