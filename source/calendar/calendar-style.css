@@ -1,3 +1,5 @@
+/* Add this section to the existing CSS */
+
 body {
   font-family: "Helvetica Neue", Arial, sans-serif;
   margin: 0;
@@ -8,6 +10,17 @@ body {
   height: 100vh;
 }
 
+.background {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background-image: url("../assets/images/blueWaveBackground.jpeg");
+  background-size: cover;
+  filter: blur(10px);
+  transform: scale(1.1); /* removes white frame*/
+  z-index: -1;
+}
+
 .header-title {
   text-align: center;
   margin: 20px 0;
@@ -15,37 +28,37 @@ body {
   color: #333;
 }
 
-.main-canvas {
-  margin-left: 5%;
-  width: 90%;
-  height: 85%;
-  gap: 3%;
+#main-container {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
+  width: 100%;
+  max-width: 1200px;
+  margin: 20px;
+  gap: 20px;
 }
 
 #left-column {
   flex: 1;
   display: flex;
-  width: 10%;
-  max-height: 90%;
+  width: 15%;
   flex-direction: column;
   gap: 20px;
+
+  /* border: #007bff, solid, 1px; */
 }
 
 #calendar-app {
   flex: 2;
-  max-width: 800px;
-  max-height: 85%;
-  overflow: scroll;
-  width: 80%;
+  max-width: 60%;
+  height: 65%;
+  max-height: 100%;
   margin: 20px auto;
   padding: 20px;
-  background-color: rgb(116, 203, 223, 0.8);
+  background-color: rgb(116, 203, 223, 0.80);
   border: 2px solid #74cbdf;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: scroll;
+  /* border: #007bff, solid, 1px; */
 }
 
 #calendar-header {
@@ -58,7 +71,7 @@ body {
 
 #calendar-header h2 {
   margin: 0;
-  font-size: 1.5em;
+  font-size: 1em;
   color: #333;
 }
 
@@ -97,7 +110,7 @@ body {
 
 .day-header {
   padding: 10px;
-  background-color: rgb(116, 203, 223, 0.8);
+  background-color: rgb(116, 203, 223, 0.80);
   border: 2px solid #3e8d9f;
   color: black;
   border-radius: 5px;
@@ -112,11 +125,12 @@ body {
 
 .day {
   border: 1px solid #ddd;
-  padding: 15px;
+  padding: 10px;
   border-radius: 5px;
   background-color: #f9f9f9;
   cursor: pointer;
   transition: background-color 0.3s;
+  overflow: hidden;
 }
 
 .day:hover {
@@ -134,7 +148,11 @@ body {
   background-color: #ffefc1;
   padding: 5px;
   border-radius: 3px;
-  margin-top: 5px;
+  margin: 5px 5px 5px 5px;
+  font-size: 0.8em;
+  word-wrap: break-word; 
+  word-break: break-word; 
+  white-space: pre-wrap;
 }
 
 .event.work {
@@ -164,27 +182,35 @@ body {
 
 .modal-content {
   background-color: #fff;
-  padding: 20px;
+  padding: 30px 20px 30px 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 90%;
   max-width: 500px;
+  display: flex;
+  
 }
 
 .close-button {
   float: right;
   font-size: 1.5em;
   cursor: pointer;
+  position: relative;
+  margin-left: 2%;
+  margin-right: 6%;
+  box-sizing: border-box;
 }
 
 .form-group {
   margin-bottom: 15px;
+
 }
 
 .form-group label {
   display: block;
   margin-bottom: 5px;
   font-weight: bold;
+  width: 100%;
 }
 
 .form-group input,
@@ -195,6 +221,7 @@ body {
   border: 1px solid #ddd;
   border-radius: 5px;
   font-size: 1em;
+  box-sizing: border-box;
 }
 
 .save-button {
@@ -209,15 +236,37 @@ body {
 
 #today-section {
   margin-top: 20px;
-  overflow: scroll;
   padding: 20px;
-  background-color: rgb(116, 203, 223, 0.6);
+  background-color: rgb(116, 203, 223, 0.60);
   border: 2px solid #74cbdf;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+#today-events {
+  max-height: 28vh;
+  overflow-y: auto;
+}
+
 #today-events .event {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+#upcoming-tasks {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: rgb(116, 203, 223, 0.60);
+  border: 2px solid #74cbdf;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#upcoming-events .event {
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
@@ -256,3 +305,58 @@ body {
   cursor: pointer;
   font-size: 1em;
 }
+
+/* Styles for enlarged days in week view */
+.week-view .day {
+  padding: 10px;
+  transition: all 0.3s ease;
+  height: 45vh;
+}
+
+.day .event-time {
+  display: block;
+  margin-top: 5px; 
+  font-size: 0.8em; 
+  color: #666; 
+}
+
+#day-view {
+  display: none; 
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.hours-column {
+  width: 50px;
+  border-right: 1px solid #ddd;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.task-block {
+  border-bottom: 1px solid #ddd;
+  height: 40px;
+  position: relative;
+}
+
+.tasks-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.hour-block {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid #ddd;
+  font-size: 0.6em;
+}
+
+
