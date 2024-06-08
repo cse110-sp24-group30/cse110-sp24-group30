@@ -350,14 +350,15 @@ function updateCategoryColor(selectElement) {
   const category = selectElement.value;
 
   const categoryColors = {
-    personal: "orange",
-    work: "blue",
-    school: "green",
+    personal: "darkorange",
+    work: "brown",
+    school: "crimson",
     other: "purple",
   };
 
   //updates the color based on the specified array, otherwise goes to default to avoid error
-  selectElement.style.backgroundColor = categoryColors[category] || "orange";
+  selectElement.style.backgroundColor =
+    categoryColors[category] || "darkorange";
 }
 
 /**
