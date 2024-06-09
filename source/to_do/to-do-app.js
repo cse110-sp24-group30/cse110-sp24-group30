@@ -682,7 +682,7 @@ function addEventToCalendar(eventAdd) {
     title: `${eventAdd.title}`,
     category: `${eventAdd.label}`,
     date: `${eventAdd.dueDate}`,
-    time: "",
+    time: "23:59",
     description: "",
   };
 
