@@ -36,6 +36,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const events = getEvents();
 
+    if (currentView != "day") {
+      document.getElementById("day-view").style.display = "none";
+      document.querySelector(".add-button").style.display = "none";
+    } else {
+      document.getElementById("day-view").style.display = "flex";
+      document.querySelector(".add-button").style.display = "block";
+    }
+
     if (currentView === "month") {
       renderMonthView(firstDayOfMonth, daysInMonth, month, year, events);
     } else if (currentView === "week") {
@@ -548,14 +556,31 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   searchBar.addEventListener("input", (event) => {
+    //Hide the day view, make the calendar-grid visible, and hide the week headers
+    document.getElementById("day-view").style.display = "none";
+    document.querySelector(".add-button").style.display = "none";
+    document.getElementById("calendar-grid").style.display = "grid";
+    document.getElementById("calendar-days").style.display = "none";
+
     const query = event.target.value.toLowerCase();
     const events = getEvents();
-    const filteredEvents = events.filter(
-      (event) =>
-        event.title.toLowerCase().includes(query) ||
-        event.description.toLowerCase().includes(query)
-    );
-    renderFilteredEvents(filteredEvents);
+
+    if (query == "") {
+      if (currentView === "day") {
+        document.getElementById("day-view").style.display = "flex";
+        document.querySelector(".add-button").style.display = "block";
+      }
+
+      renderCalendar(currentDate);
+    } else {
+      const filteredEvents = events.filter(
+        (event) =>
+          event.title.toLowerCase().includes(query) ||
+          event.description.toLowerCase().includes(query)
+      );
+
+      renderFilteredEvents(filteredEvents);
+    }
   });
 
   /**
@@ -568,6 +593,7 @@ document.addEventListener("DOMContentLoaded", () => {
     events.forEach((event) => {
       const eventElement = document.createElement("div");
       eventElement.classList.add("event", event.category);
+      eventElement.classList.add("results");
       eventElement.textContent = event.title;
       calendarGrid.appendChild(eventElement);
 
