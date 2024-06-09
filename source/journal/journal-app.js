@@ -106,7 +106,7 @@ function createJournalElement(id, title, content, modalRef) {
         const firstHeader = getFirstHeader(markdownText);
         const journalWidgetTitle = document.querySelector(`.journal-widget[widget-id="${id}"] .journal-widget-title`);
         if (journalWidgetTitle) {
-            journalWidgetTitle.textContent = firstHeader || title;
+            widgetTitleLimit(firstHeader, journalWidgetTitle);
         }
     });
 
@@ -151,7 +151,7 @@ function createJournalWidget(journalContainer, journalID, title, content) {
 
     // Extract the first header title from the content
     const firstHeader = getFirstHeader(content);
-    journalWidgetTitle.textContent = firstHeader || title;
+    widgetTitleLimit(firstHeader, journalWidgetTitle);
     journalWidget.append(journalWidgetTitle);
     journalWidget.setAttribute('widget-id', journalID);
 
@@ -470,6 +470,23 @@ function updateWidgetDate(journalID) {
     // Find the journal with the matching ID
     const journal = journalList.find(journal => journal.id == journalID);
     dateDisplay.innerText = journal.date;
+}
+
+/**
+ * Prevents widget title from overflowing through the widget. Limits the displayed
+ * title to be up to 27 characters long before adding a "..." at the end.
+ * 
+ * @param {String} firstHeader - The first header of the journal or the widget title
+ * @param {HTMLElement} journalWidgetTitle - The HTML element of the widget title
+ */
+function widgetTitleLimit(firstHeader, journalWidgetTitle) {
+    if (firstHeader.length >= 28) {
+        let stringOverflow = firstHeader.substring(0, 28);
+        stringOverflow += "...";
+        journalWidgetTitle.textContent = stringOverflow;
+    } else {
+        journalWidgetTitle.textContent = firstHeader;
+    }
 }
 
 /**
