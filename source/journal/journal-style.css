@@ -9,7 +9,6 @@ body, html {
     font-family: Arial, sans-serif;
     overflow: hidden;
     flex-direction: column;
-    overflow: auto;
 }
 
 .background {
@@ -100,6 +99,7 @@ body, html {
     grid-gap: 20px;
     justify-items: center;
     align-items: center;
+    overflow-y: scroll;
 }
 
 /* Add Journal Button */
