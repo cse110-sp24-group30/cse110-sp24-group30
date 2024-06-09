@@ -9,7 +9,7 @@ consulted: Professor
 informed: Entire Team
 ---
 
-# Changing from SQLite to browser's for data storage
+# Changing from SQLite to browser's localStorage for data storage
 
 ## Context and Problem Statement
 
