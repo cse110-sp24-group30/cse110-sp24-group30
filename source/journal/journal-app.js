@@ -21,32 +21,6 @@ function init() {
     addJournalNew(journalContainer, true);
 }
 
-// JavaScript to handle the click event and redirection
-document.querySelectorAll('.nav-element').forEach(link => {
-    link.addEventListener('click', function(event) {
-        event.preventDefault(); // Prevent the default link behavior
-        
-        // Set a timeout to show the loading screen if the page takes too long
-        const loadingTimeout = setTimeout(() => {
-          document.getElementById('loadingScreen').style.display = 'flex';
-      }, 500); // Show loading screen if the page doesn't start loading within 500ms
-  
-      // Store the href attribute
-      const targetUrl = this.querySelector('a').getAttribute('href');  
-  
-      // Create a hidden iframe to detect when the page starts loading
-      const iframe = document.createElement('iframe');
-      iframe.style.display = 'none';
-      iframe.src = targetUrl;
-      document.body.appendChild(iframe);
-  
-      iframe.onload = () => {
-        clearTimeout(loadingTimeout); // Clear the timeout if the page loads quickly
-        window.location.href = targetUrl; // Proceed to the target URL
-      };
-    });
-});
-
 /**
  * Creates and displays journal(s) onto the page
  * 
@@ -56,11 +30,13 @@ document.querySelectorAll('.nav-element').forEach(link => {
 function addJournalNew(journalContainer, existing) {
     const journalList = getJournals();
     let journalID = 0;
+    let randomTitle = generateRandomTitle();
 
     const journalTemplate = {
         id: Math.floor(Math.random() * 2000000),
-        title: "",
-        content: ""
+        title: randomTitle,
+        content: `# ${randomTitle}`,
+        date: getCurrentDate()
     };
 
     const modalRef = document.getElementById('modal');
@@ -116,6 +92,9 @@ function createJournalElement(id, title, content, modalRef) {
     markdownInput.name = "markdownInput";
     markdownInput.rows = 25;
     markdownInput.cols = 50;
+    markdownInput.value = `# ${title}`;
+    let htmlContent = marked.parse(markdownInput.value);
+    htmlOutput.innerHTML = htmlContent;
 
     // Live preview of markdown text to formatted html
     markdownInput.addEventListener('input', () => {
@@ -224,7 +203,8 @@ function openJournalModal(event) {
     // Use closest to find the parent element with the journal-widget class
     const widget = event.target.closest('.journal-widget');
     const currentJournalID = widget.getAttribute('widget-id'); // Correctly get the widget-id
-    
+    updateWidgetDate(currentJournalID);
+
     const journalEntries = document.querySelectorAll('.journal-entry');
     hideOtherJournalEntries(journalEntries, currentJournalID);
     let modal = document.getElementById('modal');
@@ -256,7 +236,7 @@ function deleteJournal(event) {
 
     // Remove the journal element from the DOM
     widget.remove();
-    entry.remove()
+    entry.remove();
 
     // Remove the journal entry from localStorage
     const journalList = getJournals();
@@ -307,7 +287,16 @@ function createSaveCancelButtons(modalRef) {
     // Event listener for save button
     saveButton.addEventListener('click', saveContent);
 
+    // Create the 'Link to Calendar' button
+    let linkCalendarButton = document.createElement('button');
+    linkCalendarButton.innerText = 'Link to Calendar';
+    linkCalendarButton.className = 'link-calendar-button';
+
+    // Event listener for link button
+    linkCalendarButton.addEventListener('click', linkCalendar);
+
     buttonContainer.append(saveButton);
+    buttonContainer.append(linkCalendarButton);
     buttonContainer.append(cancelButton);
     modalRef.append(buttonContainer);
 }
@@ -331,6 +320,7 @@ function saveContent(event) {
             if (journal.id == activeJournal.id) {
                 return {
                     ...journal,
+                    "title": getFirstHeader(markdownInput.value),
                     "content": markdownInput.value
                 };
             }
