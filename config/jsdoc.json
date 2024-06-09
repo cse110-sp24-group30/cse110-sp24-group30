@@ -2,6 +2,7 @@
     "plugins": [],
     "recurseDepth": 10,
     "source": {
+        "include": ["../source/calendar", "../source/journal", "../source/to_do"],
         "includePattern": ".+\\.js(doc|x)?$",
         "excludePattern": "(^|\\/|\\\\)_"
     },
@@ -10,6 +11,9 @@
         "allowUnknownTags": true,
         "dictionaries": ["jsdoc","closure"]
     },
+    "opts": {
+        "destination": "../docs"
+      },
     "templates": {
         "cleverLinks": false,
         "monospaceLinks": false
