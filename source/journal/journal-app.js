@@ -313,16 +313,21 @@ function createSaveCancelButtons(modalRef) {
     // Event listener for save button
     saveButton.addEventListener('click', saveContent);
 
-    // Create the 'Link to Calendar' button
-    let linkCalendarButton = document.createElement('button');
-    linkCalendarButton.innerText = 'Link to Calendar';
-    linkCalendarButton.className = 'link-calendar-button';
-
-    // Event listener for link button
-    linkCalendarButton.addEventListener('click', linkCalendar);
+    /**
+     * Note: Due to time constraints, this function is unfinished.
+     * 
+     * Create the 'Link to Calendar' button
+     * 
+     * let linkCalendarButton = document.createElement('button');
+     * linkCalendarButton.innerText = 'Link to Calendar';
+     * linkCalendarButton.className = 'link-calendar-button';
+     * 
+     * Event listener for link button
+     * linkCalendarButton.addEventListener('click', linkCalendar);
+     */
 
     buttonContainer.append(saveButton);
-    buttonContainer.append(linkCalendarButton);
+    // buttonContainer.append(linkCalendarButton);
     buttonContainer.append(cancelButton);
     modalRef.append(buttonContainer);
 }
@@ -357,8 +362,8 @@ function saveContent(event) {
         Swal.fire({
             title: 'Success!',
             text: 'Journal has been saved.',
-            icon: 'success',
-          })
+            icon: 'success'
+        });
     }
 
     let overlay = document.getElementById('overlay');
@@ -521,15 +526,14 @@ function widgetTitleLimit(firstHeader, journalWidgetTitle) {
 /**
  * Links a journal to the calendar upon button press
  * 
- * TODO: link current journal to calendar day
+ * Note: Due to time constraints, this function is unfinished.
  */
 function linkCalendar() {
-    
     Swal.fire({
         title: 'Error!',
         text: 'Function is not implemented yet.',
         icon: 'error',
-    })
+    });
 }
 
 function deletingConfirm(event) {
