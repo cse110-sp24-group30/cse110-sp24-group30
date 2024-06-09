@@ -155,9 +155,6 @@ body, html {
     width: 14in;
     height: 6in;
     
-    overflow-y: scroll;
-    overflow-x: hidden;
-    
     display: flex;
     justify-content: center;
     align-items: center;
@@ -245,13 +242,41 @@ button {
 .save-cancel-container {
     display: flex;
     justify-content: space-around;
-    margin-top: 10px;
+
+    position: relative;
+    bottom: 2.5vh
 }
 
 /* Save/Cancel Buttons */
 .save-button, .cancel-button {
     padding: 5px 10px;
     cursor: pointer;
+}
+
+#subtitles {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    width: 100%;
+
+    position: relative;
+    top: 6vh;
+    font-size: 4vh;
+}
+
+#markdown-title {
+    position: relative;
+    left: 2vw;
+}
+
+#preview-title {
+    position: relative;
+    right: 3vw;
+}
+
+#date-display {
+    position: relative;
+    text-align: end;
 }
 
 /* Style for the loading screen */
@@ -269,8 +294,9 @@ button {
     justify-content: center;
     align-items: center;
     z-index: 1000;
-  }
-  .spinner {
+}
+
+.spinner {
     border: 16px solid #f3f3f3;
     border-radius: 50%;
     border-top: 16px solid #3498db;
@@ -278,8 +304,9 @@ button {
     height: 120px;
     animation: spin 2s linear infinite;
     margin-bottom: 20px;
-  }
-  @keyframes spin {
+}
+
+@keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
-  }
+}

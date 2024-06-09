@@ -56,11 +56,13 @@ document.querySelectorAll('.nav-element').forEach(link => {
 function addJournalNew(journalContainer, existing) {
     const journalList = getJournals();
     let journalID = 0;
+    let randomTitle = generateRandomTitle();
 
     const journalTemplate = {
         id: Math.floor(Math.random() * 2000000),
-        title: "",
-        content: ""
+        title: randomTitle,
+        content: `# ${randomTitle}`,
+        date: getCurrentDate()
     };
 
     const modalRef = document.getElementById('modal');
@@ -116,6 +118,9 @@ function createJournalElement(id, title, content, modalRef) {
     markdownInput.name = "markdownInput";
     markdownInput.rows = 25;
     markdownInput.cols = 50;
+    markdownInput.value = `# ${title}`;
+    let htmlContent = marked.parse(markdownInput.value);
+    htmlOutput.innerHTML = htmlContent;
 
     // Live preview of markdown text to formatted html
     markdownInput.addEventListener('input', () => {
@@ -224,7 +229,8 @@ function openJournalModal(event) {
     // Use closest to find the parent element with the journal-widget class
     const widget = event.target.closest('.journal-widget');
     const currentJournalID = widget.getAttribute('widget-id'); // Correctly get the widget-id
-    
+    updateWidgetDate(currentJournalID);
+
     const journalEntries = document.querySelectorAll('.journal-entry');
     hideOtherJournalEntries(journalEntries, currentJournalID);
     let modal = document.getElementById('modal');
@@ -256,7 +262,7 @@ function deleteJournal(event) {
 
     // Remove the journal element from the DOM
     widget.remove();
-    entry.remove()
+    entry.remove();
 
     // Remove the journal entry from localStorage
     const journalList = getJournals();
@@ -307,7 +313,16 @@ function createSaveCancelButtons(modalRef) {
     // Event listener for save button
     saveButton.addEventListener('click', saveContent);
 
+    // Create the 'Link to Calendar' button
+    let linkCalendarButton = document.createElement('button');
+    linkCalendarButton.innerText = 'Link to Calendar';
+    linkCalendarButton.className = 'link-calendar-button';
+
+    // Event listener for link button
+    linkCalendarButton.addEventListener('click', linkCalendar);
+
     buttonContainer.append(saveButton);
+    buttonContainer.append(linkCalendarButton);
     buttonContainer.append(cancelButton);
     modalRef.append(buttonContainer);
 }
@@ -331,6 +346,7 @@ function saveContent(event) {
             if (journal.id == activeJournal.id) {
                 return {
                     ...journal,
+                    "title": getFirstHeader(markdownInput.value),
                     "content": markdownInput.value
                 };
             }
