@@ -17,12 +17,12 @@
   },
   "type": "module",
   "jest": {
+    "preset": "jest-puppeteer",
     "testMatch": [
       "**/__tests__/**/*.js?(x)",
       "**/?(*.)+(spec|test).js?(x)"
     ],
     "transform": {},
-    "verbose": true,
-    "preset": "jest-puppeteer"
+    "verbose": true
   }
 }
