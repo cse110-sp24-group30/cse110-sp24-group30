@@ -1,7 +1,7 @@
 ---
 parent: Decisions
-nav_order: 3
-title: ADR 0003 - Changing Platform for Tracking Issues
+nav_order: 4
+title: ADR 0004 - Changing Platform for Tracking Issues
 status: proposed
 date: 2024-05-30
 deciders: Project Team
