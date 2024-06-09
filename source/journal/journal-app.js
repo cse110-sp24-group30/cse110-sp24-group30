@@ -212,7 +212,7 @@ function createJournalWidget(journalContainer, journalID, content) {
     editButton.addEventListener('click', openJournalModal);
 
     // Add event listener for delete button click
-    deleteButton.addEventListener('click', deleteJournal);
+    deleteButton.addEventListener('click', deletingConfirm);
 
     journalContainer.append(journalWidget);
 }
@@ -313,16 +313,7 @@ function createSaveCancelButtons(modalRef) {
     // Event listener for save button
     saveButton.addEventListener('click', saveContent);
 
-    // Create the 'Link to Calendar' button
-    let linkCalendarButton = document.createElement('button');
-    linkCalendarButton.innerText = 'Link to Calendar';
-    linkCalendarButton.className = 'link-calendar-button';
-
-    // Event listener for link button
-    linkCalendarButton.addEventListener('click', linkCalendar);
-
     buttonContainer.append(saveButton);
-    buttonContainer.append(linkCalendarButton);
     buttonContainer.append(cancelButton);
     modalRef.append(buttonContainer);
 }
@@ -354,7 +345,11 @@ function saveContent(event) {
         });
 
         saveJournals(updatedJournalList);
-        alert("Saved!");
+        Swal.fire({
+            title: 'Success!',
+            text: 'Journal has been saved.',
+            icon: 'success'
+        });
     }
 
     let overlay = document.getElementById('overlay');
@@ -514,14 +509,39 @@ function widgetTitleLimit(firstHeader, journalWidgetTitle) {
     }
 }
 
-/**
- * Links a journal to the calendar upon button press
- * 
- * TODO: link current journal to calendar day
- */
-function linkCalendar() {
-    
-    // TODO:
-
-    alert('Journal linked to calendar!');
+function deletingConfirm(event) {
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: "btn btn-success",
+            cancelButton: "btn btn-danger"
+        },
+        buttonsStyling: false
+        });
+        swalWithBootstrapButtons.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "No, cancel!",
+        reverseButtons: true
+        }).then((result) => {
+        if (result.isConfirmed) {
+            swalWithBootstrapButtons.fire({
+            title: "Deleted!",
+            text: "Your journal has been deleted.",
+            icon: "success"
+            });
+            deleteJournal(event);
+        } else if (
+            /* Read more about handling dismissals below */
+            result.dismiss === Swal.DismissReason.cancel
+        ) {
+            swalWithBootstrapButtons.fire({
+            title: "Cancelled",
+            text: "Your journal is safe :)",
+            icon: "error"
+            });
+        }
+        });
 }
