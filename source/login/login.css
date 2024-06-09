@@ -1,71 +1,116 @@
 .background {
-    background-image: url("../assets/images/blurredBackground.avif");
-    background-size: cover;
-    background-position: center;
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    z-index: -1;
-  }
+  background-image: url("../assets/images/blurredBackground.avif");
+  background-size: cover;
+  background-position: center;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
 
-  .dashboard {
-    display: flex;
-    border-radius: 25px;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  #login-container,
-  #protected-content {
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    width: 300px;
-  }
-  
-  #login-container h2,
-  #protected-content h1 {
-    margin-bottom: 20px;
-  }
-  
-  #login-container label {
-    display: block;
-    text-align: left;
-    margin-bottom: 5px;
-  }
-  
-  #login-container input {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  #login-container button,
-  #protected-content a {
-    width: 100%;
-    padding: 10px;
-    background-color: #28a745;
-    color: #ffffff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    display: block;
-    margin-top: 10px;
-    text-decoration: none;
-    text-align: center;
-  }
-  
-  #login-container button:hover,
-  #protected-content a:hover {
-    background-color: #218838;
-  }
-  /* Error message styling */
+.dashboard {
+  display: flex;
+  border-radius: 25px;
+  align-items: center;
+  justify-content: center;
+  gap: 100px; /* Added gap between login and meme containers */
+}
+
+#login-container,
+#protected-content {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 300px;
+  animation: fadeIn 0.5s ease;
+}
+
+#login-container h2,
+#protected-content h1 {
+  margin-bottom: 20px;
+}
+
+#login-container label {
+  display: block;
+  text-align: left;
+  margin-bottom: 5px;
+}
+
+#login-container input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.pin-input {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative; 
+}
+/* Styling for the PIN input field and show/hide button */
+#login-container input[type="password"],
+#login-container input[type="text"] {
+  width: calc(100% - 40px); /* Adjusted width */
+  padding: 10px;
+  margin-bottom: 0; /* Remove bottom margin to align with button */
+  border: 1px solid #ccc;
+  border-radius: 5px 0 0 5px;
+  box-sizing: border-box;
+  transition: border-color 0.3s;
+  padding-right: 40px; /* Space for the icon */
+
+}
+
+#toggle-pin-visibility {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-left: none;
+  border-radius: 0 5px 5px 0;
+  background-color: transparent; /* Make background transparent */
+  color: #fff;
+  cursor: pointer;
+  height: 40px; /* Ensure the height matches the input field */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent; /* Make background transparent */
+  background-image: url("../assets/icons/viewFill.png"); /* Default to show icon */
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 20px;
+}
+
+#toggle-pin-visibility.hide {
+  background-image: url("../assets/icons/viewHideFill.png"); /* Hide icon */
+}
+
+#login-container input:focus {
+  border-color: #28a745;
+  outline: none;
+}
+#login-container button,
+#protected-content a {
+  width: 100%;
+  padding: 10px;
+  background-color: #28a745;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: block;
+  margin-top: 10px;
+  text-decoration: none;
+  text-align: center;
+}
+
+/* Error message styling */
 #error-message {
   display: none;
   color: red;
@@ -75,6 +120,98 @@
 
 #error-message.show {
   display: block;
+}
+
+/* Checkbox and label styling */
+#remember-me-container {
+  justify-content: center; /* Center the content */
+  font-size: 0.9em; /* Adjust font size */
+}
+#remember-me-container label {
+  margin-left: 5px;
+}
+#remember-me {
+  
+  margin-right: 5px;
+}
+
+/* Spinner styling */
+.spinner {
+  /* Added */
+  display: none;
+  margin: 20px auto;
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-top: 4px solid #28a745;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  /* Added */
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+/* Feedback message styling */
+#feedback-message {
+  display: none;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+#feedback-message.success {
+  color: green;
+  display: block;
+}
+
+#feedback-message.error {
+  color: red;
+  display: block;
+}
+/* Meme container styling */
+#meme-container {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 300px;
+  animation: fadeIn 0.5s ease; /* Added animation */
+}
+
+#meme-container h3 {
+  margin-bottom: 20px;
+}
+
+#meme-container img {
+  width: 100%;
+  max-width: 280px; /* Restrict the size of the meme */
+  max-height: 300px; /* Restrict the size of the meme */
+  border-radius: 8px;
+  margin-bottom: 15px;
+  object-fit: contain; /* Ensure the image scales proportionally */
+}
+
+#meme-container button {
+  width: 100%;
+  padding: 10px;
+  background-color: #28a745;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  margin-top: 10px;
+}
+
+#meme-container button:hover {
+  background-color: #218838;
 }
 
 /* Animation for fade-in effect */
@@ -89,7 +226,13 @@
 
 /* Ensure responsiveness */
 @media (max-width: 600px) {
-  #login-container {
+  #login-container,
+  #meme-container {
     width: 80%;
+  }
+
+  .dashboard {
+    flex-direction: column;
+    align-items: center;
   }
 }
