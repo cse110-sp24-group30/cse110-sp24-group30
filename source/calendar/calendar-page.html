@@ -5,18 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Calendar</title>
     <link rel="stylesheet" href="./calendar-style.css" />
-    <link rel="stylesheet" href="../assets/styles/main.css" />
+    <link rel="Stylesheet" href="../assets/styles/main.css" />
     <script src="./calendar-app.js" defer></script>
+    <script src="../assets/scripts/main.js"></script>
   </head>
   <body>
     <div class="background"></div>
     <nav class="main-navbar">
+      <!-- Widgets -->
       <section class="widgets">
         <span class="nav-element"
-          ><a href="../source/index.html"
+          ><a href="../index.html"
             ><img
               class="nav-icon"
-              src="../assets/icons/homeFillBlue.png"
+              src="../assets/icons/homeFillWhite.png"
               alt="homeButton"
             />Dashboard</a
           ></span
@@ -85,9 +87,12 @@
         </div>
         <div id="calendar-grid"></div>
         <!-- Day view container -->
-        <div id="day-view" class="day-view-container" style="display: none;">
-          <div class="hours-column"></div>
-          <div class="tasks-column"></div>
+        <div id = "day-view-button-container" class="day-view-button">
+          <button class="add-button" style="display: none;">Add Task</button>
+          <div id="day-view" class="day-view-container" style="display: none;">
+            <div class="hours-column"></div>
+            <div class="tasks-column"></div>
+          </div>
         </div>
       </main>
     </div>
@@ -114,7 +119,7 @@
           </div>
           <div class="form-group">
             <label for="event-time">Event Time:</label>
-            <input type="time" id="event-time" name="event-time" />
+            <input type="time" id="event-time" name="event-time" required />
           </div>
           <div class="form-group">
             <label for="event-category">Category:</label>
@@ -129,5 +134,9 @@
         </form>
       </div>
     </div>
+    <div class="loading-screen" id="loadingScreen">
+      <div class="spinner"></div>
+      <p>Loading, please wait...</p>
+  </div>
   </body>
 </html>

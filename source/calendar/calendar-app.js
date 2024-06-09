@@ -1,3 +1,30 @@
+// JavaScript to handle the click event and redirection
+document.querySelectorAll('.nav-element').forEach(link => {
+  link.addEventListener('click', function(event) {
+    console.log('Link clicked'); 
+      event.preventDefault(); // Prevent the default link behavior
+      
+      // Set a timeout to show the loading screen if the page takes too long
+      const loadingTimeout = setTimeout(() => {
+        document.getElementById('loadingScreen').style.display = 'flex';
+    }, 500); // Show loading screen if the page doesn't start loading within 500ms
+
+    // Store the href attribute
+    const targetUrl = this.querySelector('a').getAttribute('href');  
+
+    // Create a hidden iframe to detect when the page starts loading
+    const iframe = document.createElement('iframe');
+    iframe.style.display = 'none';
+    iframe.src = targetUrl;
+    document.body.appendChild(iframe);
+
+    iframe.onload = () => {
+      clearTimeout(loadingTimeout); // Clear the timeout if the page loads quickly
+      window.location.href = targetUrl; // Proceed to the target URL
+    };
+  });
+});
+
 document.addEventListener("DOMContentLoaded", () => {
   const calendarGrid = document.getElementById("calendar-grid");
   const currentMonthYear = document.getElementById("current-month-year");
@@ -15,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentDate = new Date();
   const today = new Date();
   let currentView = "month";
-
+  
   eventModal.style.display = "none";
 
   /**
@@ -36,6 +63,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const events = getEvents();
 
+    if (currentView != "day") {
+      document.getElementById("day-view").style.display = "none";
+      document.querySelector(".add-button").style.display = "none";
+    } else {
+      document.getElementById("day-view").style.display = "flex";
+      document.querySelector(".add-button").style.display = "block";
+    }
+
     if (currentView === "month") {
       renderMonthView(firstDayOfMonth, daysInMonth, month, year, events);
     } else if (currentView === "week") {
@@ -45,7 +80,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     renderTodaySection();
-    renderUpcomingSection();
   };
 
   /**
@@ -64,7 +98,6 @@ document.addEventListener("DOMContentLoaded", () => {
     year,
     events
   ) => {
-    calendarGrid.classList.remove("week-view");
     for (let i = 0; i < firstDayOfMonth; i++) {
       const emptyCell = document.createElement("div");
       calendarGrid.appendChild(emptyCell);
@@ -125,7 +158,6 @@ document.addEventListener("DOMContentLoaded", () => {
    * @param {Array} events - An array of events.
    */
   const renderWeekView = (day, month, year, events) => {
-    calendarGrid.classList.add("week-view");
     const startOfWeek = new Date(year, month, day - today.getDay());
     for (let i = 0; i < 7; i++) {
       const currentDay = new Date(startOfWeek);
@@ -146,9 +178,7 @@ document.addEventListener("DOMContentLoaded", () => {
         eventForDay.forEach((event) => {
           const eventElement = document.createElement("div");
           eventElement.classList.add("event", event.category);
-          eventElement.innerHTML = `${
-            event.title
-          }<br><span class="event-time">${event.time || "N/A"}</span>`; // Show title and time with line break in week view
+          eventElement.textContent = event.title;
           dayElement.appendChild(eventElement);
         });
       }
@@ -178,40 +208,14 @@ document.addEventListener("DOMContentLoaded", () => {
    * @param {Array} events - An array of events for the specified day.
    */
   const renderDayView = (day, month, year, events) => {
-    const dayViewContainer = document.getElementById("day-view");
-    const hoursColumn = dayViewContainer.querySelector(".hours-column");
-    const tasksColumn = dayViewContainer.querySelector(".tasks-column");
-    const calendarHeader = document.getElementById("calendar-header");
-
-    hoursColumn.innerHTML = ""; // Clear existing hours
-    tasksColumn.innerHTML = ""; // Clear existing tasks
-
-    // Generate the hours
-    for (let i = 0; i < 24; i++) {
-      const hourBlock = document.createElement("div");
-      hourBlock.classList.add("hour-block");
-      hourBlock.textContent = `${i}:00`;
-      hoursColumn.appendChild(hourBlock);
-
-      const taskBlock = document.createElement("div");
-      taskBlock.classList.add("task-block");
-      tasksColumn.appendChild(taskBlock);
-    }
-
     const currentDay = new Date(year, month, day);
-    const dayOfWeek = currentDay.toLocaleDateString("en-US", {
-      weekday: "long",
-    });
-    const formattedDate = currentDay.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
+    const dayElement = document.createElement("div");
+    dayElement.classList.add("day");
+    dayElement.textContent = currentDay.toDateString();
 
-    // Update the calendar header to show only the current day and date
-    calendarHeader.querySelector(
-      "h2"
-    ).textContent = `${dayOfWeek}, ${formattedDate}`;
+    if (currentDay.toDateString() === today.toDateString()) {
+      dayElement.classList.add("current-day");
+    }
 
     const eventForDay = events.filter(
       (event) => event.date === currentDay.toISOString().split("T")[0]
@@ -258,6 +262,7 @@ document.addEventListener("DOMContentLoaded", () => {
     currentView = event.target.value;
     if (currentView === "day") {
       document.getElementById("day-view").style.display = "flex";
+      document.querySelector(".add-button").style.display = "block";
       document.getElementById("calendar-grid").style.display = "none";
       document.getElementById("calendar-days").style.display = "none"; // Hide the week headers
       renderDayView(
@@ -268,6 +273,7 @@ document.addEventListener("DOMContentLoaded", () => {
       );
     } else {
       document.getElementById("day-view").style.display = "none";
+      document.querySelector(".add-button").style.display = "none";
       document.getElementById("calendar-grid").style.display = "grid";
       document.getElementById("calendar-days").style.display = ""; // Show the week headers
       renderCalendar(currentDate);
@@ -278,6 +284,7 @@ document.addEventListener("DOMContentLoaded", () => {
     currentView = event.target.value;
     if (currentView === "day") {
       document.getElementById("day-view").style.display = "flex";
+      document.querySelector(".add-button").style.display = "block";
       document.getElementById("calendar-grid").style.display = "none";
       renderDayView(
         currentDate.getDate(),
@@ -287,6 +294,7 @@ document.addEventListener("DOMContentLoaded", () => {
       );
     } else {
       document.getElementById("day-view").style.display = "none";
+      document.querySelector(".add-button").style.display = "none";
       document.getElementById("calendar-grid").style.display = "grid";
       renderCalendar(currentDate);
     }
@@ -296,6 +304,7 @@ document.addEventListener("DOMContentLoaded", () => {
     currentView = event.target.value;
     if (currentView === "day") {
       document.getElementById("day-view").style.display = "flex";
+      document.querySelector(".add-button").style.display = "block";
       document.getElementById("calendar-grid").style.display = "none";
       document.getElementById("calendar-days").style.display = "none"; // Hide the week headers
       renderDayView(
@@ -306,11 +315,13 @@ document.addEventListener("DOMContentLoaded", () => {
       );
     } else {
       document.getElementById("day-view").style.display = "none";
+      document.querySelector(".add-button").style.display = "none";
       document.getElementById("calendar-grid").style.display = "grid";
       document.getElementById("calendar-days").style.display = "grid"; // Show the week headers
       renderCalendar(currentDate);
     }
   });
+
 
   /**
    * Renders the today section of the calendar app.
@@ -367,6 +378,30 @@ document.addEventListener("DOMContentLoaded", () => {
           eventModal.style.display = "flex";
         }
       });
+    });
+
+    document.querySelector(".add-button").addEventListener("click", (event) => {
+      let dateStr = currentMonthYear.innerText;
+
+      dateStr = dateStr.split(", ").slice(1).join(", ");
+
+      let dateObj = new Date(dateStr);
+
+      let formattedDate =
+        dateObj.getFullYear() +
+        "-" +
+        (dateObj.getMonth() + 1).toString().padStart(2, "0") +
+        "-" +
+        dateObj.getDate().toString().padStart(2, "0");
+
+      document.getElementById("event-id").value = "";
+      document.getElementById("event-title").value = "";
+      document.getElementById("event-category").value = "";
+      document.getElementById("event-date").value = formattedDate;
+      document.getElementById("event-time").value = "";
+      document.getElementById("event-description").value = "";
+
+      eventModal.style.display = "flex";
     });
 
     document.querySelectorAll(".delete-button").forEach((button) => {
@@ -448,7 +483,6 @@ document.addEventListener("DOMContentLoaded", () => {
     eventForm.reset();
     renderCalendar(currentDate);
     renderTodaySection();
-    renderUpcomingSection();
   });
 
   /**
@@ -494,7 +528,6 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem("events", JSON.stringify(events));
     renderCalendar(currentDate);
     renderTodaySection();
-    renderUpcomingSection();
   };
 
   document.addEventListener("click", (event) => {
@@ -521,14 +554,31 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   searchBar.addEventListener("input", (event) => {
+    //Hide the day view, make the calendar-grid visible, and hide the week headers
+    document.getElementById("day-view").style.display = "none";
+    document.querySelector(".add-button").style.display = "none";
+    document.getElementById("calendar-grid").style.display = "grid";
+    document.getElementById("calendar-days").style.display = "none";
+
     const query = event.target.value.toLowerCase();
     const events = getEvents();
-    const filteredEvents = events.filter(
-      (event) =>
-        event.title.toLowerCase().includes(query) ||
-        event.description.toLowerCase().includes(query)
-    );
-    renderFilteredEvents(filteredEvents);
+
+    if (query == "") {
+      if (currentView === "day") {
+        document.getElementById("day-view").style.display = "flex";
+        document.querySelector(".add-button").style.display = "block";
+      }
+
+      renderCalendar(currentDate);
+    } else {
+      const filteredEvents = events.filter(
+        (event) =>
+          event.title.toLowerCase().includes(query) ||
+          event.description.toLowerCase().includes(query)
+      );
+
+      renderFilteredEvents(filteredEvents);
+    }
   });
 
   /**
@@ -541,6 +591,7 @@ document.addEventListener("DOMContentLoaded", () => {
     events.forEach((event) => {
       const eventElement = document.createElement("div");
       eventElement.classList.add("event", event.category);
+      eventElement.classList.add("results");
       eventElement.textContent = event.title;
       calendarGrid.appendChild(eventElement);
 
@@ -571,3 +622,51 @@ document.addEventListener("DOMContentLoaded", () => {
 
   renderCalendar(currentDate);
 });
+
+// Added event listener for category filter
+categoryFilter.addEventListener("change", (event) => {
+  const category = event.target.value;
+  const events = getEvents();
+  const filteredEvents = category === "all" ? events : events.filter((event) => event.category === category);
+  renderFilteredEvents(filteredEvents);
+});
+
+// Modified renderFilteredEvents function to display search results
+const renderFilteredEvents = (events) => {
+  calendarGrid.innerHTML = "Search results:";
+  events.forEach((event) => {
+      const eventElement = document.createElement("div");
+      eventElement.classList.add("event", event.category);
+      eventElement.textContent = event.title;
+      calendarGrid.appendChild(eventElement);
+
+      eventElement.addEventListener("click", (event) => {
+          const events = getEvents();
+
+          const eventName = event.target.innerHTML;
+
+          const selectedEvent = events.find((event) => event.title === eventName);
+
+          const id = selectedEvent.id;
+
+          if (selectedEvent) {
+              document.getElementById("event-id").value = selectedEvent.id;
+              document.getElementById("event-title").value = selectedEvent.title;
+              document.getElementById("event-category").value = selectedEvent.category;
+              document.getElementById("event-date").value = selectedEvent.date;
+              document.getElementById("event-time").value = selectedEvent.time || "";
+              document.getElementById("event-recurrence").value = selectedEvent.recurrence || "none";
+              document.getElementById("event-description").value = selectedEvent.description;
+              document.getElementById("event-reminder").value = selectedEvent.reminder || "";
+              eventModal.style.display = "flex";
+          }
+      });
+  });
+};
+
+// Added variable for category filter
+const categoryFilter = document.getElementById("category-filter");
+
+
+
+

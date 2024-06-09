@@ -5,6 +5,32 @@ window.addEventListener("DOMContentLoaded", init);
  * and configuring the drag and drop functionality.
  */
 function init() {
+  // JavaScript to handle the click event and redirection
+  document.querySelectorAll(".nav-element").forEach((link) => {
+    link.addEventListener("click", function (event) {
+      event.preventDefault(); // Prevent the default link behavior
+
+      // Set a timeout to show the loading screen if the page takes too long
+      const loadingTimeout = setTimeout(() => {
+        document.getElementById("loadingScreen").style.display = "flex";
+      }, 500); // Show loading screen if the page doesn't start loading within 500ms
+
+      // Store the href attribute
+      const targetUrl = this.querySelector("a").getAttribute("href");
+
+      // Create a hidden iframe to detect when the page starts loading
+      const iframe = document.createElement("iframe");
+      iframe.style.display = "none";
+      iframe.src = targetUrl;
+      document.body.appendChild(iframe);
+
+      iframe.onload = () => {
+        clearTimeout(loadingTimeout); // Clear the timeout if the page loads quickly
+        window.location.href = targetUrl; // Proceed to the target URL
+      };
+    });
+  });
+
   const addButtonNotStarted = document.querySelector(
     ".new-task-button-not-started"
   );
@@ -127,6 +153,7 @@ function handleDrop(event) {
     addTaskBetweenLists(taskId, parseInt(oldCategory), parseInt(newCategory));
     updateCount();
     event.currentTarget.querySelector("list").appendChild(taskElement);
+    location.reload();
   }
 }
 
@@ -145,18 +172,19 @@ function addTask(existing, category) {
   //Getting today's date as a placeholder in the template for dueDate
   const date = new Date();
   let day = date.getDate();
-  let month = date.getMonth() + 1;
+  let month = date.getMonth();
   let year = date.getFullYear();
   //storing the date in string format so it can be understood by the user
-  let currentDate = `${year}-${month}-${day}`;
+  let currentDate = `${year}-${String(month + 1).padStart(2, "0")}-${String(
+    day
+  ).padStart(2, "0")}`;
 
-  //TODO: Random word generation for the display title so that the user knows which task just created
   //Template for a task created with default values for all fields
   const toDoTemplate = {
     id: Math.floor(Math.random() * 2000000),
-    title: "Default Title",
+    title: generateRandomTitle(),
     dueDate: `${currentDate}`,
-    label: "self",
+    label: "personal",
   };
 
   //if true, then loads the previously created tasks from localStorage for Not Started and In Progress column
@@ -207,6 +235,9 @@ function addTask(existing, category) {
 
     //need to update count as we added new tasks
     updateCount();
+
+    //keeping the calendar in sync with task generation
+    addEventToCalendar(toDoTemplate);
   }
 }
 
@@ -216,7 +247,7 @@ function addTask(existing, category) {
  * @param {number} id - The ID of the task.
  * @param {string} title - The title of the task.
  * @param {string} dueDate - The due date of the task.
- * @param {string} label - The label of the task like self/work/school/other.
+ * @param {string} label - The label of the task like personal/work/school/other.
  * @param {number} category - The column of the task (1 for Not Started, 2 for In Progress).
  *
  * @return {string} - The ID of the created task element.
@@ -230,10 +261,6 @@ function createToDoElement(id, title, dueDate, label, category) {
   taskDiv.addEventListener("dragstart", handleDragStart);
   taskDiv.addEventListener("dragend", handleDragEnd);
 
-  const checkbox = document.createElement("input");
-  checkbox.type = "checkbox";
-  checkbox.id = "radio-button";
-
   const taskTitle = document.createElement("p");
   taskTitle.textContent = `${title}`;
 
@@ -241,9 +268,10 @@ function createToDoElement(id, title, dueDate, label, category) {
   categoryDiv.classList.add("category");
 
   const categorySelect = document.createElement("select");
-  categorySelect.id = "category-select";
+  categorySelect.classList.add("category-select");
+  categorySelect.id = `category-select-${id}`;
 
-  const categories = ["self", "work", "school", "other"];
+  const categories = ["personal", "work", "school", "other"];
   categories.forEach((cat) => {
     const option = document.createElement("option");
     option.value = cat;
@@ -260,6 +288,7 @@ function createToDoElement(id, title, dueDate, label, category) {
   categorySelect.addEventListener("change", (event) => {
     updateCategoryColor(event.target);
     updateTaskLabel(id, event.target.value, category);
+    updateCalendarEvent(id, title, dueDate, event.target.value);
   });
 
   categoryDiv.appendChild(categorySelect);
@@ -275,7 +304,10 @@ function createToDoElement(id, title, dueDate, label, category) {
   if (category === 1 || category === 2) {
     editButton = document.createElement("button");
     editButton.id = "edit-button";
-    editButton.textContent = "Edit Button";
+    let editIcon = document.createElement("img");
+    editIcon.src = "../assets/icons/editDarkBlue.png";
+    editIcon.alt = "Edit Button";
+    editButton.appendChild(editIcon);
 
     editButton.addEventListener("click", function (event) {
       const taskDiv = event.target.closest(".task");
@@ -291,7 +323,10 @@ function createToDoElement(id, title, dueDate, label, category) {
 
   const deleteButton = document.createElement("button");
   deleteButton.id = "delete-button";
-  deleteButton.textContent = "Delete";
+  const deleteIcon = document.createElement("img");
+  deleteIcon.src = "../assets/icons/trashDarkBlue.png";
+  deleteIcon.alt = "Delete Button";
+  deleteButton.appendChild(deleteIcon);
 
   deleteButton.addEventListener("click", () => {
     taskDiv.remove();
@@ -303,11 +338,19 @@ function createToDoElement(id, title, dueDate, label, category) {
   }
   buttonsDiv.appendChild(deleteButton);
 
-  taskDiv.appendChild(checkbox);
-  taskDiv.appendChild(taskTitle);
-  taskDiv.appendChild(categoryDiv);
-  taskDiv.appendChild(dueDateSpan);
-  taskDiv.appendChild(buttonsDiv);
+  // to help organize the layout of tasks
+  const firstRowDiv = document.createElement("div");
+  firstRowDiv.classList = "first-row";
+  firstRowDiv.appendChild(taskTitle);
+  firstRowDiv.appendChild(categoryDiv);
+
+  const secondRowDiv = document.createElement("div");
+  secondRowDiv.classList = "second-row";
+  secondRowDiv.appendChild(dueDateSpan);
+  secondRowDiv.appendChild(buttonsDiv);
+
+  taskDiv.appendChild(firstRowDiv);
+  taskDiv.appendChild(secondRowDiv);
 
   const notStarted = document.getElementById("not-started-list");
   const inProgress = document.getElementById("in-progress-list");
@@ -333,14 +376,15 @@ function updateCategoryColor(selectElement) {
   const category = selectElement.value;
 
   const categoryColors = {
-    self: "orange",
-    work: "blue",
-    school: "green",
+    personal: "darkorange",
+    work: "brown",
+    school: "crimson",
     other: "purple",
   };
 
   //updates the color based on the specified array, otherwise goes to default to avoid error
-  selectElement.style.backgroundColor = categoryColors[category] || "orange";
+  selectElement.style.backgroundColor =
+    categoryColors[category] || "darkorange";
 }
 
 /**
@@ -405,6 +449,9 @@ function removeTask(id, category) {
 
   //updating count because remove from localStorage, need to update display
   updateCount();
+
+  //need to update calendar on task deletion as well
+  removeFromCalendar(id);
 }
 
 /**
@@ -588,9 +635,12 @@ function updateTaskDetails(id, title, dueDate, label, category) {
     const taskElement = document.querySelector(`.task[task-id='${id}']`);
     taskElement.querySelector("p").textContent = title;
     taskElement.querySelector("#due-date").textContent = `Due Date: ${dueDate}`;
-    const categorySelect = taskElement.querySelector("#category-select");
+    const categorySelect = taskElement.querySelector(`#category-select-${id}`);
     categorySelect.value = label;
     updateCategoryColor(categorySelect);
+
+    //Need to keep calendar in sync with the latest changes from todo
+    updateCalendarEvent(id, title, dueDate, label);
   }
 }
 
@@ -600,4 +650,129 @@ function updateTaskDetails(id, title, dueDate, label, category) {
 function closeEditModal() {
   const editTaskModal = document.getElementById("edit-task-modal");
   editTaskModal.style.display = "none";
+}
+
+/**
+ * Retrieves events from localStorage.
+ * @returns {Array} The list of events stored in localStorage.
+ */
+function getEvents() {
+  return JSON.parse(localStorage.getItem("events") || "[]");
+}
+
+/**
+ * Saves events to localStorage.
+ * @param {Array} events - The list of events to be saved.
+ */
+function saveEvents(events) {
+  localStorage.setItem("events", JSON.stringify(events));
+}
+
+/**
+ * Adds a task from todo widget to the calendar.
+ * @param {Object} eventAdd - The task to be added. Parameter is named eventAdd because calendar has events
+ * @param {string} eventAdd.id - The ID of the event.
+ * @param {string} eventAdd.title - The title of the event.
+ * @param {string} eventAdd.label - The category label of the event.
+ * @param {string} eventAdd.dueDate - The due date of the event.
+ */
+function addEventToCalendar(eventAdd) {
+  const eventTemplate = {
+    id: eventAdd.id,
+    title: `${eventAdd.title}`,
+    category: `${eventAdd.label}`,
+    date: `${eventAdd.dueDate}`,
+    time: "23:59",
+    description: "",
+  };
+
+  const events = getEvents();
+  const eventIndex = events.findIndex((event) => event.id === eventAdd.id);
+
+  if (eventIndex <= -1) {
+    events.push(eventTemplate);
+  }
+
+  saveEvents(events);
+}
+
+/**
+ * Updates an existing event(task) in the calendar.
+ * @param {string} id - The ID of the event to update.
+ * @param {string} title - The new title of the event.
+ * @param {string} dueDate - The new due date of the event.
+ * @param {string} label - The new category label of the event.
+ */
+function updateCalendarEvent(id, title, dueDate, label) {
+  let events = getEvents();
+  const eventIndex = events.findIndex((event) => event.id === id);
+
+  if (eventIndex > -1) {
+    events[eventIndex].title = title;
+    events[eventIndex].date = dueDate;
+    events[eventIndex].category = label;
+    saveEvents(events);
+  }
+}
+
+/**
+ * Removes an event from the calendar.
+ * @param {string} id - The ID of the event to remove.
+ */
+function removeFromCalendar(id) {
+  let events = getEvents();
+  events = events.filter((event) => event.id !== id);
+  saveEvents(events);
+}
+
+/**
+ * Generates a random title from a predefined list of titles.
+ * @returns {string} A randomly selected title.
+ */
+function generateRandomTitle() {
+  const todoListTitles = [
+    "Grocery Shopping",
+    "Finish Project Report",
+    "Schedule Doctor Appointment",
+    "Clean the Garage",
+    "Prepare Presentation Slides",
+    "Call the Electrician",
+    "Update Resume",
+    "Plan Weekend Getaway",
+    "Pay Utility Bills",
+    "Water the Plants",
+    "Organize Closet",
+    "Write Blog Post",
+    "Renew Library Books",
+    "Send Birthday Card",
+    "Backup Computer Files",
+    "Attend Yoga Class",
+    "Review Monthly Budget",
+    "Wash the Car",
+    "Buy Office Supplies",
+    "Meal Prep for the Week",
+    "Respond to Emails",
+    "Walk the Dog",
+    "Finish Reading Book",
+    "Order Prescription Refill",
+    "Make Dentist Appointment",
+    "Prepare Tax Documents",
+    "Fix Leaky Faucet",
+    "Update Software",
+    "Create Fitness Plan",
+    "Visit the Post Office",
+    "Plan Family Dinner",
+    "Research Investment Options",
+    "Book Hotel for Vacation",
+    "Write Thank You Notes",
+    "Declutter Desk",
+    "Complete Online Course",
+    "Recycle Old Electronics",
+    "Host Dinner Party",
+    "Volunteer at Local Shelter",
+    "Attend Networking Event",
+  ];
+
+  const randomIndex = Math.floor(Math.random() * todoListTitles.length);
+  return todoListTitles[randomIndex];
 }
