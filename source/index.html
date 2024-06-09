@@ -3,14 +3,14 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CSE 110 Developer Journal</title>
+    <title>Dashboard</title>
 
     <!-- Stylesheet -->
-    <link rel="Stylesheet" href="../assets/styles/main.css" />
-    <link rel="Stylesheet" href="./dashboard.css" />
+    <link rel="Stylesheet" href="../source/assets/styles/main.css" />
 
     <!-- Scripts -->
-    <script src="../assets/scripts/main.js"></script>
+    <script src="./assets/scripts/main.js"></script>
+    <script src="../source/assets/scripts/dashboard.js" type="module"></script>
   </head>
 
   <body>
@@ -24,34 +24,34 @@
             ><a href="./index.html"
               ><img
                 class="nav-icon"
-                src="../assets/icons/homeFillBlue.png"
+                src="../source/assets/icons/homeFillBlue.png"
                 alt="homeButton"
               />Dashboard</a
             ></span
           >
           <span class="nav-element"
-            ><a href="../journal/journal-page.html"
+            ><a href="../source/journal/journal-page.html"
               ><img
                 class="nav-icon"
-                src="../assets/icons/fileFillWhite.png"
+                src="../source/assets/icons/fileFillWhite.png"
                 alt="journalButton"
               />Journal</a
             ></span
           >
           <span class="nav-element"
-            ><a href="../to_do/to-do.html"
+            ><a href="../source/to_do/to-do.html"
               ><img
                 class="nav-icon"
-                src="../assets/icons/checkFillWhite.png"
+                src="../source/assets/icons/checkFillWhite.png"
                 alt="toDoButton"
               />To Do List</a
             ></span
           >
           <span class="nav-element"
-            ><a href="../calendar/calendar-page.html"
+            ><a href="../source/calendar/calendar-page.html"
               ><img
                 class="nav-icon"
-                src="../assets/icons/dateFillWhite.png"
+                src="../source/assets/icons/dateFillWhite.png"
                 alt="calendarButton"
               />Calendar</a
             ></span
@@ -59,18 +59,30 @@
         </section>
         <section class="logo">
           <span id="team-logo"
-            ><img src="../assets/images/110Team30.png" />
+            ><img src="../source/assets/images/110Team30.png" />
           </span>
         </section>
       </nav>
 
       <main class="main-canvas">
-        <span class="dashboard-widget"> Number of Tasks: </span>
-        <span class="dashboard-widget"> Number of Journals: </span>
-        <span class="dashboard-widget"> Calendar Entries:</span>
-        <span class="dashboard-widget"> Mood Chart:</span>
-        <span class="dashboard-widget"> Mood Widget:</span>
+        <span class="dashboard-widget" id="widget-todo">
+          Number of Tasks:
+        </span>
+        <span class="dashboard-widget" id="widget-journal">
+          Number of Journals:
+        </span>
+        <span class="dashboard-widget" id="widget-calendar">
+          Calendar Entries:</span
+        >
+        <div class="widget-mood">
+        <div id="mood-chart"> Mood Chart:</div>
+        <div id="mood-today"> Mood Widget:</div>
+        </div>
       </main>
     </div>
+    <div class="loading-screen" id="loadingScreen">
+      <div class="spinner"></div>
+      <p>Loading, please wait...</p>
+  </div>
   </body>
 </html>

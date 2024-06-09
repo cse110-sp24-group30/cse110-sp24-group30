@@ -21,6 +21,32 @@ function init() {
     addJournalNew(journalContainer, true);
 }
 
+// JavaScript to handle the click event and redirection
+document.querySelectorAll('.nav-element').forEach(link => {
+    link.addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent the default link behavior
+        
+        // Set a timeout to show the loading screen if the page takes too long
+        const loadingTimeout = setTimeout(() => {
+          document.getElementById('loadingScreen').style.display = 'flex';
+      }, 500); // Show loading screen if the page doesn't start loading within 500ms
+  
+      // Store the href attribute
+      const targetUrl = this.querySelector('a').getAttribute('href');  
+  
+      // Create a hidden iframe to detect when the page starts loading
+      const iframe = document.createElement('iframe');
+      iframe.style.display = 'none';
+      iframe.src = targetUrl;
+      document.body.appendChild(iframe);
+  
+      iframe.onload = () => {
+        clearTimeout(loadingTimeout); // Clear the timeout if the page loads quickly
+        window.location.href = targetUrl; // Proceed to the target URL
+      };
+    });
+});
+
 /**
  * Creates and displays journal(s) onto the page
  * 
@@ -47,14 +73,14 @@ function addJournalNew(journalContainer, existing) {
                 journal.content, modalRef);
 
             // Creating journal widget for existing journal
-            createJournalWidget(journalContainer, journalID, journal.title, journal.content);
+            createJournalWidget(journalContainer, journalID, journal.content);
         });
     } else {
         journalID = createJournalElement(journalTemplate.id, journalTemplate.title,
             journalTemplate.content, modalRef);
 
         // Creating journal widget for new journal
-        createJournalWidget(journalContainer, journalID, journalTemplate.title, journalTemplate.content);
+        createJournalWidget(journalContainer, journalID, journalTemplate.content);
 
         // Save new journal to localStorage
         journalList.push(journalTemplate);
@@ -106,7 +132,7 @@ function createJournalElement(id, title, content, modalRef) {
         const firstHeader = getFirstHeader(markdownText);
         const journalWidgetTitle = document.querySelector(`.journal-widget[widget-id="${id}"] .journal-widget-title`);
         if (journalWidgetTitle) {
-            journalWidgetTitle.textContent = firstHeader || title;
+            widgetTitleLimit(firstHeader, journalWidgetTitle);
         }
     });
 
@@ -140,10 +166,9 @@ function createJournalElement(id, title, content, modalRef) {
  * 
  * @param {HTMLElement} journalContainer - DOM element to display journals in
  * @param {Number} journalID - The journal's unique identifier
- * @param {String} title - The journal's title
  * @param {String} content - Existing journal content if any
  */
-function createJournalWidget(journalContainer, journalID, title, content) {
+function createJournalWidget(journalContainer, journalID, content) {
     const journalWidget = document.createElement('div');
     journalWidget.classList.add('journal-widget');
     const journalWidgetTitle = document.createElement('span')
@@ -151,7 +176,7 @@ function createJournalWidget(journalContainer, journalID, title, content) {
 
     // Extract the first header title from the content
     const firstHeader = getFirstHeader(content);
-    journalWidgetTitle.textContent = firstHeader || title;
+    widgetTitleLimit(firstHeader, journalWidgetTitle);
     journalWidget.append(journalWidgetTitle);
     journalWidget.setAttribute('widget-id', journalID);
 
@@ -161,13 +186,17 @@ function createJournalWidget(journalContainer, journalID, title, content) {
 
     // Create the 'Edit' button
     const editButton = document.createElement('button');
-    editButton.innerText = 'Edit';
-    editButton.className = 'fa fa-pencil';
+    const editIcon = document.createElement("img");
+    editIcon.src = "../assets/icons/editDarkBlue.png";
+    editIcon.alt = "Edit Button";
+    editButton.appendChild(editIcon);
 
     // Create the 'Delete' button
     const deleteButton = document.createElement('button');
-    deleteButton.innerText = 'Delete';
-    deleteButton.className = 'fa fa-close';
+    const deleteIcon = document.createElement("img");
+    deleteIcon.src = "../assets/icons/trashDarkBlue.png";
+    deleteIcon.alt = "Edit Button";
+    deleteButton.appendChild(deleteIcon);
 
     // Append buttons to the container
     buttonContainer.appendChild(editButton);
@@ -178,9 +207,6 @@ function createJournalWidget(journalContainer, journalID, title, content) {
 
     // Append the button container to the div
     journalWidget.append(buttonContainer);
-
-    // Add event listener for double-click
-    journalWidget.addEventListener('dblclick', openJournalModal);
 
     // Add event listener for edit button click
     editButton.addEventListener('click', openJournalModal);
@@ -469,6 +495,23 @@ function updateWidgetDate(journalID) {
     // Find the journal with the matching ID
     const journal = journalList.find(journal => journal.id == journalID);
     dateDisplay.innerText = journal.date;
+}
+
+/**
+ * Prevents widget title from overflowing through the widget. Limits the displayed
+ * title to be up to 27 characters long before adding a "..." at the end.
+ * 
+ * @param {String} firstHeader - The first header of the journal or the widget title
+ * @param {HTMLElement} journalWidgetTitle - The HTML element of the widget title
+ */
+function widgetTitleLimit(firstHeader, journalWidgetTitle) {
+    if (firstHeader.length >= 28) {
+        let stringOverflow = firstHeader.substring(0, 28);
+        stringOverflow += "...";
+        journalWidgetTitle.textContent = stringOverflow;
+    } else {
+        journalWidgetTitle.textContent = firstHeader;
+    }
 }
 
 /**
