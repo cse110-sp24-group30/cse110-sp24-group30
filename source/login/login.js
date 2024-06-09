@@ -22,7 +22,21 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function redirectToProtectedPage() {
-    window.location.href = "../index.html";
+    // Set a timeout to show the loading screen if the page takes too long
+    const loadingTimeout = setTimeout(() => {
+      document.getElementById("loadingScreen").style.display = "flex";
+    }, 500); // Show loading screen if the page doesn't start loading within 500ms
+
+    // Create a hidden iframe to detect when the page starts loading
+    const iframe = document.createElement("iframe");
+    iframe.style.display = "none";
+    iframe.src = "../index.html";
+    document.body.appendChild(iframe);
+
+    iframe.onload = () => {
+      clearTimeout(loadingTimeout); // Clear the timeout if the page loads quickly
+      window.location.href = "../index.html"; // Proceed to the target URL
+    };
   }
 
   // Logout function to clear the session
