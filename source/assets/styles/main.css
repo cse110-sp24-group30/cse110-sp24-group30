@@ -69,3 +69,21 @@ a {
   height: 90px;
   border-radius: 50%;
 }
+
+@media only screen and (max-width: 600px) {
+  .main-navbar {
+    font-size: 11pt;
+  }
+
+  .widgets {
+    width: 100%;
+    justify-content: space-between;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .logo {
+    display: none;
+  }
+
+}
