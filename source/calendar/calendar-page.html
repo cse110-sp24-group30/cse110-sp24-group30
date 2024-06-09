@@ -7,12 +7,10 @@
     <link rel="stylesheet" href="./calendar-style.css" />
     <link rel="Stylesheet" href="../assets/styles/main.css" />
     <script src="./calendar-app.js" defer></script>
+    <script src="../assets/scripts/main.js"></script>
   </head>
   <body>
     <div class="background"></div>
-    <!-- <header>
-      <h1 class="header-title">Welcome back!</h1>
-    </header> -->
     <nav class="main-navbar">
       <!-- Widgets -->
       <section class="widgets">
@@ -20,7 +18,7 @@
           ><a href="../index.html"
             ><img
               class="nav-icon"
-              src="../assets/icons/homeFillBlue.png"
+              src="../assets/icons/homeFillWhite.png"
               alt="homeButton"
             />Dashboard</a
           ></span
@@ -155,5 +153,9 @@
         </form>
       </div>
     </div>
+    <div class="loading-screen" id="loadingScreen">
+      <div class="spinner"></div>
+      <p>Loading, please wait...</p>
+  </div>
   </body>
 </html>

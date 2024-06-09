@@ -9,7 +9,8 @@
     <link rel="Stylesheet" href="../source/assets/styles/main.css" />
 
     <!-- Scripts -->
-    <script src="../source/assets/scripts/main.js" type="module"></script>
+    <script src="./assets/scripts/main.js"></script>
+    <script src="../source/assets/scripts/dashboard.js" type="module"></script>
   </head>
 
   <body>
@@ -64,12 +65,24 @@
       </nav>
 
       <main class="main-canvas">
-        <span class="dashboard-widget"> Number of Tasks: </span>
-        <span class="dashboard-widget"> Number of Journals: </span>
-        <span class="dashboard-widget"> Calendar Entries:</span>
-        <span class="dashboard-widget"> Mood Chart:</span>
-        <span class="dashboard-widget"> Mood Widget:</span>
+        <span class="dashboard-widget" id="widget-todo">
+          Number of Tasks:
+        </span>
+        <span class="dashboard-widget" id="widget-journal">
+          Number of Journals:
+        </span>
+        <span class="dashboard-widget" id="widget-calendar">
+          Calendar Entries:</span
+        >
+        <div class="widget-mood">
+        <div id="mood-chart"> Mood Chart:</div>
+        <div id="mood-today"> Mood Widget:</div>
+        </div>
       </main>
     </div>
+    <div class="loading-screen" id="loadingScreen">
+      <div class="spinner"></div>
+      <p>Loading, please wait...</p>
+  </div>
   </body>
 </html>
