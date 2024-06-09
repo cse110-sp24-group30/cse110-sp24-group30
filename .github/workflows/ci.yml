@@ -45,7 +45,7 @@ jobs:
 
       - name: Run unit tests
         run: npm test
-        working-directory: ../
+        working-directory: ./config
 
       - name: Generate documentation
         run: npx jsdoc -c jsdoc.json
@@ -69,7 +69,7 @@ jobs:
         with:
           # Upload entire repository
           path: "."
-          
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
