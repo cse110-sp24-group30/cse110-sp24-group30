@@ -1,7 +1,15 @@
 .background {
     background-image: url("../assets/images/blurredBackground.avif");
+    background-size: cover;
+    background-position: center;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
   }
-  
+
   .dashboard {
     display: flex;
     border-radius: 25px;
@@ -57,3 +65,31 @@
   #protected-content a:hover {
     background-color: #218838;
   }
+  /* Error message styling */
+#error-message {
+  display: none;
+  color: red;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+#error-message.show {
+  display: block;
+}
+
+/* Animation for fade-in effect */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Ensure responsiveness */
+@media (max-width: 600px) {
+  #login-container {
+    width: 80%;
+  }
+}
