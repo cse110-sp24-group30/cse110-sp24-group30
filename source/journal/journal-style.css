@@ -246,7 +246,7 @@ body, html {
 }
 
 /* Save/Cancel Buttons */
-.save-button, .cancel-button, .link-calendar-button {
+.save-button, .cancel-button {
     padding: 5px 10px;
     cursor: pointer;
 
