@@ -10,10 +10,57 @@
     <script src="./journal-app.js"></script>
 </head>
 <body>
-    <header>
-        <!-- Nav Bar -->
+    <div class="background"></div>
+    <!-- Nav Bar -->
+    <nav class="main-navbar">
+      <!-- Widgets -->
+      <section class="widgets">
+        <span class="nav-element"
+          ><a href="../dashboard/index.html"
+            ><img
+              class="nav-icon"
+              src="../assets/icons/homeFillWhite.png"
+              alt="homeButton"
+            />Dashboard</a
+          ></span
+        >
+        <span class="nav-element"
+          ><a href="../journal/journal-page.html"
+            ><img
+              class="nav-icon"
+              src="../assets/icons/fileFillBlue.png"
+              alt="journalButton"
+            />Journal</a
+          ></span
+        >
+        <span class="nav-element"
+          ><a href=""
+            ><img
+              class="nav-icon"
+              src="../assets/icons/checkFillWhite.png"
+              alt="toDoButton"
+            />To Do List</a
+          ></span
+        >
+        <span class="nav-element"
+          ><a href="../calendar/calendar-page.html"
+            ><img
+              class="nav-icon"
+              src="../assets/icons/dateFillWhite.png"
+              alt="calendarButton"
+            />Calendar</a
+          ></span
+        >
+      </section>
+      <section class="logo">
+        <span id="team-logo"
+          ><img src="../assets/images/110Team30.png" />
+        </span>
+      </section>
+    </nav>
+
+    <!-- <header>
         <nav>
-            <!-- Widgets -->
             <div class="widgets">
                 <span class="dashboard"><a href="../dashboard/index.html">Dashboard</a></span>
                 <span class="journal"><a href="../journal/journal-page.html">Journal</a></span>
@@ -24,14 +71,21 @@
                 <span id="team-logo"><img src="../assets/images/110Team30.png"> </span>
             </div>
         </nav>
-    </header>
+    </header> -->
     
-    <h1 style="text-align: center;">Journal Page</h1>
+    <!-- <h1 style="text-align: center;">Journal Page</h1> -->
     <div style="text-align: center;">
         <input type="text" id="search-bar" placeholder="What are you looking for?" oninput="searchJournals()">
     </div>
     <div id="journal-app">
-        <button class="add-journal" type="button">Add Journal</button>
+        <button class="add-journal" type="button">
+            <img
+              class="add-icon"
+              src="../assets/icons/addFillDarkBlue.png"
+              alt="addJournalButton"
+            />
+            <p>Add Journal</p>
+        </button>
         <!--Below, journal widgets will dynamically be added-->
     </div>
     <div id="overlay"></div>

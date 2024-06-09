@@ -161,13 +161,17 @@ function createJournalWidget(journalContainer, journalID, title, content) {
 
     // Create the 'Edit' button
     const editButton = document.createElement('button');
-    editButton.innerText = 'Edit';
-    editButton.className = 'fa fa-pencil';
+    const editIcon = document.createElement("img");
+    editIcon.src = "../assets/icons/editDarkBlue.png";
+    editIcon.alt = "Edit Button";
+    editButton.appendChild(editIcon);
 
     // Create the 'Delete' button
     const deleteButton = document.createElement('button');
-    deleteButton.innerText = 'Delete';
-    deleteButton.className = 'fa fa-close';
+    const deleteIcon = document.createElement("img");
+    deleteIcon.src = "../assets/icons/trashDarkBlue.png";
+    deleteIcon.alt = "Edit Button";
+    deleteButton.appendChild(deleteIcon);
 
     // Append buttons to the container
     buttonContainer.appendChild(editButton);
@@ -178,9 +182,6 @@ function createJournalWidget(journalContainer, journalID, title, content) {
 
     // Append the button container to the div
     journalWidget.append(buttonContainer);
-
-    // Add event listener for double-click
-    journalWidget.addEventListener('dblclick', openJournalModal);
 
     // Add event listener for edit button click
     editButton.addEventListener('click', openJournalModal);
