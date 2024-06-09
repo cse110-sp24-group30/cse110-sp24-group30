@@ -1,7 +1,7 @@
 ---
 parent: Decisions
-nav_order: 4
-title: ADR 0005 - Restructuring Branches and Updating CI/CD Pipeline
+nav_order: 6
+title: ADR 0006 - Restructuring Branches and Updating CI/CD Pipeline
 status: proposed
 date: 2024-06-02
 deciders: Project Team
