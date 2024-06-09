@@ -1,3 +1,30 @@
+// JavaScript to handle the click event and redirection
+document.querySelectorAll('.nav-element').forEach(link => {
+  link.addEventListener('click', function(event) {
+    console.log('Link clicked'); 
+      event.preventDefault(); // Prevent the default link behavior
+      
+      // Set a timeout to show the loading screen if the page takes too long
+      const loadingTimeout = setTimeout(() => {
+        document.getElementById('loadingScreen').style.display = 'flex';
+    }, 500); // Show loading screen if the page doesn't start loading within 500ms
+
+    // Store the href attribute
+    const targetUrl = this.querySelector('a').getAttribute('href');  
+
+    // Create a hidden iframe to detect when the page starts loading
+    const iframe = document.createElement('iframe');
+    iframe.style.display = 'none';
+    iframe.src = targetUrl;
+    document.body.appendChild(iframe);
+
+    iframe.onload = () => {
+      clearTimeout(loadingTimeout); // Clear the timeout if the page loads quickly
+      window.location.href = targetUrl; // Proceed to the target URL
+    };
+  });
+});
+
 document.addEventListener("DOMContentLoaded", () => {
   const calendarGrid = document.getElementById("calendar-grid");
   const currentMonthYear = document.getElementById("current-month-year");
@@ -11,14 +38,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const upcomingEventsContainer = document.getElementById("upcoming-events");
   const viewSelector = document.getElementById("view-selector");
   const searchBar = document.getElementById("search-bar");
-  const categoryFilter = document.getElementById("category-filter");
 
   let currentDate = new Date();
   const today = new Date();
   let currentView = "month";
-
+  
   eventModal.style.display = "none";
-
+  
   const renderCalendar = (date) => {
     calendarGrid.innerHTML = "";
     const year = date.getFullYear();
@@ -52,7 +78,6 @@ document.addEventListener("DOMContentLoaded", () => {
     year,
     events
   ) => {
-    calendarGrid.classList.remove("week-view");
     for (let i = 0; i < firstDayOfMonth; i++) {
       const emptyCell = document.createElement("div");
       calendarGrid.appendChild(emptyCell);
@@ -107,7 +132,6 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const renderWeekView = (day, month, year, events) => {
-    calendarGrid.classList.add("week-view");
     const startOfWeek = new Date(year, month, day - today.getDay());
     for (let i = 0; i < 7; i++) {
       const currentDay = new Date(startOfWeek);
@@ -128,9 +152,7 @@ document.addEventListener("DOMContentLoaded", () => {
         eventForDay.forEach((event) => {
           const eventElement = document.createElement("div");
           eventElement.classList.add("event", event.category);
-          eventElement.innerHTML = `${
-            event.title
-          }<br><span class="event-time">${event.time || "N/A"}</span>`; // Show title and time with line break in week view
+          eventElement.textContent = event.title;
           dayElement.appendChild(eventElement);
         });
       }
@@ -154,114 +176,43 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const renderDayView = (day, month, year, events) => {
-    const dayViewContainer = document.getElementById("day-view");
-    const hoursColumn = dayViewContainer.querySelector(".hours-column");
-    const tasksColumn = dayViewContainer.querySelector(".tasks-column");
-    const calendarHeader = document.getElementById("calendar-header");
-
-    hoursColumn.innerHTML = ""; // Clear existing hours
-    tasksColumn.innerHTML = ""; // Clear existing tasks
-
-    // Generate the hours
-    for (let i = 0; i < 24; i++) {
-      const hourBlock = document.createElement("div");
-      hourBlock.classList.add("hour-block");
-      hourBlock.textContent = `${i}:00`;
-      hoursColumn.appendChild(hourBlock);
-
-      const taskBlock = document.createElement("div");
-      taskBlock.classList.add("task-block");
-      tasksColumn.appendChild(taskBlock);
-    }
-
     const currentDay = new Date(year, month, day);
-    const dayOfWeek = currentDay.toLocaleDateString("en-US", {
-      weekday: "long",
-    });
-    const formattedDate = currentDay.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
+    const dayElement = document.createElement("div");
+    dayElement.classList.add("day");
+    dayElement.textContent = currentDay.toDateString();
 
-    // Update the calendar header to show only the current day and date
-    calendarHeader.querySelector(
-      "h2"
-    ).textContent = `${dayOfWeek}, ${formattedDate}`;
+    if (currentDay.toDateString() === today.toDateString()) {
+      dayElement.classList.add("current-day");
+    }
 
     const eventForDay = events.filter(
       (event) => event.date === currentDay.toISOString().split("T")[0]
     );
-
     if (eventForDay.length > 0) {
       eventForDay.forEach((event) => {
-        const hour = parseInt(event.time.split(":")[0], 10);
-        const taskBlock = tasksColumn.children[hour];
         const eventElement = document.createElement("div");
         eventElement.classList.add("event", event.category);
-        eventElement.textContent = `${event.title} at ${event.time}`;
-        taskBlock.appendChild(eventElement);
+        eventElement.textContent = event.title;
+        dayElement.appendChild(eventElement);
       });
     }
+
+    dayElement.addEventListener("click", () => {
+      document.getElementById("event-id").value = "";
+      document.getElementById("event-title").value = "";
+      document.getElementById("event-category").value = "";
+      document.getElementById("event-date").value = currentDay
+        .toISOString()
+        .split("T")[0];
+      document.getElementById("event-time").value = "";
+      document.getElementById("event-recurrence").value = "none";
+      document.getElementById("event-description").value = "";
+      document.getElementById("event-reminder").value = "";
+      eventModal.style.display = "flex";
+    });
+
+    calendarGrid.appendChild(dayElement);
   };
-
-  viewSelector.addEventListener("change", (event) => {
-    currentView = event.target.value;
-    if (currentView === "day") {
-      document.getElementById("day-view").style.display = "flex";
-      document.getElementById("calendar-grid").style.display = "none";
-      document.getElementById("calendar-days").style.display = "none"; // Hide the week headers
-      renderDayView(
-        currentDate.getDate(),
-        currentDate.getMonth(),
-        currentDate.getFullYear(),
-        getEvents()
-      );
-    } else {
-      document.getElementById("day-view").style.display = "none";
-      document.getElementById("calendar-grid").style.display = "grid";
-      document.getElementById("calendar-days").style.display = ""; // Show the week headers
-      renderCalendar(currentDate);
-    }
-  });
-
-  viewSelector.addEventListener("change", (event) => {
-    currentView = event.target.value;
-    if (currentView === "day") {
-      document.getElementById("day-view").style.display = "flex";
-      document.getElementById("calendar-grid").style.display = "none";
-      renderDayView(
-        currentDate.getDate(),
-        currentDate.getMonth(),
-        currentDate.getFullYear(),
-        getEvents()
-      );
-    } else {
-      document.getElementById("day-view").style.display = "none";
-      document.getElementById("calendar-grid").style.display = "grid";
-      renderCalendar(currentDate);
-    }
-  });
-
-  viewSelector.addEventListener("change", (event) => {
-    currentView = event.target.value;
-    if (currentView === "day") {
-      document.getElementById("day-view").style.display = "flex";
-      document.getElementById("calendar-grid").style.display = "none";
-      document.getElementById("calendar-days").style.display = "none"; // Hide the week headers
-      renderDayView(
-        currentDate.getDate(),
-        currentDate.getMonth(),
-        currentDate.getFullYear(),
-        getEvents()
-      );
-    } else {
-      document.getElementById("day-view").style.display = "none";
-      document.getElementById("calendar-grid").style.display = "grid";
-      document.getElementById("calendar-days").style.display = "grid"; // Show the week headers
-      renderCalendar(currentDate);
-    }
-  });
 
   const renderTodaySection = () => {
     const year = today.getFullYear();
@@ -503,15 +454,53 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   };
 
-  categoryFilter.addEventListener("change", (event) => {
-    const category = event.target.value;
-    const events = getEvents();
-    const filteredEvents =
-      category === "all"
-        ? events
-        : events.filter((event) => event.category === category);
-    renderFilteredEvents(filteredEvents);
-  });
-
   renderCalendar(currentDate);
 });
+
+// Added event listener for category filter
+categoryFilter.addEventListener("change", (event) => {
+  const category = event.target.value;
+  const events = getEvents();
+  const filteredEvents = category === "all" ? events : events.filter((event) => event.category === category);
+  renderFilteredEvents(filteredEvents);
+});
+
+// Modified renderFilteredEvents function to display search results
+const renderFilteredEvents = (events) => {
+  calendarGrid.innerHTML = "Search results:";
+  events.forEach((event) => {
+      const eventElement = document.createElement("div");
+      eventElement.classList.add("event", event.category);
+      eventElement.textContent = event.title;
+      calendarGrid.appendChild(eventElement);
+
+      eventElement.addEventListener("click", (event) => {
+          const events = getEvents();
+
+          const eventName = event.target.innerHTML;
+
+          const selectedEvent = events.find((event) => event.title === eventName);
+
+          const id = selectedEvent.id;
+
+          if (selectedEvent) {
+              document.getElementById("event-id").value = selectedEvent.id;
+              document.getElementById("event-title").value = selectedEvent.title;
+              document.getElementById("event-category").value = selectedEvent.category;
+              document.getElementById("event-date").value = selectedEvent.date;
+              document.getElementById("event-time").value = selectedEvent.time || "";
+              document.getElementById("event-recurrence").value = selectedEvent.recurrence || "none";
+              document.getElementById("event-description").value = selectedEvent.description;
+              document.getElementById("event-reminder").value = selectedEvent.reminder || "";
+              eventModal.style.display = "flex";
+          }
+      });
+  });
+};
+
+// Added variable for category filter
+const categoryFilter = document.getElementById("category-filter");
+
+
+
+
