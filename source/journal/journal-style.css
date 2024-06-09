@@ -78,9 +78,6 @@ nav {
     width: 14in;
     height: 6in;
     
-    overflow-y: scroll;
-    overflow-x: hidden;
-    
     display: flex;
     justify-content: center;
     align-items: center;
@@ -158,13 +155,41 @@ nav {
 .save-cancel-container {
     display: flex;
     justify-content: space-around;
-    margin-top: 10px;
+
+    position: relative;
+    bottom: 2.5vh
 }
 
 /* Save/Cancel Buttons */
 .save-button, .cancel-button {
     padding: 5px 10px;
     cursor: pointer;
+}
+
+#subtitles {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    width: 100%;
+
+    position: relative;
+    top: 6vh;
+    font-size: 4vh;
+}
+
+#markdown-title {
+    position: relative;
+    left: 2vw;
+}
+
+#preview-title {
+    position: relative;
+    right: 3vw;
+}
+
+#date-display {
+    position: relative;
+    text-align: end;
 }
 
 /* Style for the loading screen */

@@ -2,9 +2,9 @@ name: CI Pipeline
 
 on:
   push:
-    branches: [main, develop]
+    branches: [main, dev, admin, journal, calendar, to-do, dashboard]
   pull_request:
-    branches: [main, develop]
+    branches: [main, dev, admin, journal, calendar, to-do, dashboard]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -51,12 +51,9 @@ jobs:
         run: npx jsdoc -c jsdoc.json
         working-directory: ./config
 
-  # Deploy GitHub pages
+  # Deploy GitHub pages only from main
   build-and-deploy:
     needs: lint-and-test
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
 
@@ -72,6 +69,7 @@ jobs:
         with:
           # Upload entire repository
           path: "."
+          
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

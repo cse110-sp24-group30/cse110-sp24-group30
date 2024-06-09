@@ -62,12 +62,24 @@
     </nav>
     
     <h1 style="text-align: center;">Journal Page</h1>
+    <div style="text-align: center;">
+        <input type="text" id="search-bar" placeholder="What are you looking for?" oninput="searchJournals()">
+    </div>
     <div id="journal-app">
         <button class="add-journal" type="button">Add Journal</button>
         <!--Below, journal widgets will dynamically be added-->
     </div>
     <div id="overlay"></div>
     <div id="modal">
+        <div id="date-display"></div>
+        <div id="subtitles">
+            <div id="markdown-title">
+                Markdown
+            </div>
+            <div id="preview-title">
+                Preview
+            </div>
+        </div>
         <!--Below, journal contents will dynamically be added-->
     </div>
     <div class="loading-screen" id="loadingScreen">

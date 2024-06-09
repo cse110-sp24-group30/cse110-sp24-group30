@@ -1,3 +1,4 @@
+/* background and dashboard CSS */
 body,
 html {
   margin: 0;
@@ -8,10 +9,6 @@ html {
   font-size: 18pt;
   font-family: Arial, sans-serif;
   overflow: hidden;
-}
-a {
-  text-decoration: none;
-  color: inherit;
 }
 
 .background {
@@ -33,6 +30,12 @@ a {
   background-color: rgb(12, 26, 54, 0.5);
 }
 
+/* dashboard CSS */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 .main-navbar {
   height: 15%;
   width: 100%;
@@ -50,6 +53,7 @@ a {
   justify-content: space-around;
 }
 
+.nav-icon {
 .nav-icon {
   margin-right: 10px;
 }

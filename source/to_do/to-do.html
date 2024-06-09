@@ -11,150 +11,130 @@
   <body>
     <div class="background"></div>
     <div class="to-do" id="protected-content">
+      <div class="todo">
       <!-- Nav Bar -->
-    <nav class="main-navbar">
-      <!-- Widgets -->
-      <section class="widgets">
-        <span class="nav-element"
-          ><a href="../index.html"
-            ><img
-              class="nav-icon"
-              src="../assets/icons/homeFillWhite.png"
-              alt="homeButton"
-            />Dashboard</a
-          ></span
-        >
-        <span class="nav-element"
-          ><a href="../journal/journal-page.html"
-            ><img
-              class="nav-icon"
-              src="../assets/icons/fileFillWhite.png"
-              alt="journalButton"
-            />Journal</a
-          ></span
-        >
-        <span class="nav-element"
-          ><a href="./to-do.html"
-            ><img
-              class="nav-icon"
-              src="../assets/icons/checkFillBlue.png"
-              alt="toDoButton"
-            />To Do List</a
-          ></span
-        >
-        <span class="nav-element"
-          ><a href="../calendar/calendar-page.html"
-            ><img
-              class="nav-icon"
-              src="../assets/icons/dateFillWhite.png"
-              alt="calendarButton"
-            />Calendar</a
-          ></span
-        >
-      </section>
-      <section class="logo">
-        <span id="team-logo"
-          ><img src="../assets/images/110Team30.png" />
-        </span>
-      </section>
-    </nav>
+      <nav class="main-navbar">
+        <!-- Widgets -->
+        <section class="widgets">
+          <span class="nav-element"
+            ><a href="../dashboard/index.html"
+              ><img
+                class="nav-icon"
+                src="../assets/icons/homeFillWhite.png"
+                alt="homeButton"
+              />Dashboard</a
+            ></span
+          >
+          <span class="nav-element"
+            ><a href="../journal/journal-page.html"
+              ><img
+                class="nav-icon"
+                src="../assets/icons/fileFillWhite.png"
+                alt="journalButton"
+              />Journal</a
+            ></span
+          >
+          <span class="nav-element"
+            ><a href="./to-do.html"
+              ><img
+                class="nav-icon"
+                src="../assets/icons/checkFillBlue.png"
+                alt="toDoButton"
+              />To Do List</a
+            ></span
+          >
+          <span class="nav-element"
+            ><a href="../calendar/calendar-page.html"
+              ><img
+                class="nav-icon"
+                src="../assets/icons/dateFillWhite.png"
+                alt="calendarButton"
+              />Calendar</a
+            ></span
+          >
+        </section>
+        <section class="logo">
+          <span id="team-logo"
+            ><img src="../assets/images/110Team30.png" />
+          </span>
+        </section>
+      </nav>
 
-    <!-- To-Do Main Section -->
-    <div id="list-container">
-      <div class="list-column" id="not-started-column">
-        <div id="not-started-title">
-          <h2>Not Started</h2>
-          <h2 id="num-not-started">2</h2>
+      <!-- To-Do Main Section -->
+      <div id="list-container">
+        <div class="list-column" id="not-started-column">
+          <div id="not-started-title">
+            <h2>Not Started</h2>
+            <h2 id="num-not-started">2</h2>
+          </div>
+          <div id="not-started-content" class="task-column" data-category="1">
+            <div id="not-started">
+              <list id="not-started-list"></list>
+              <button class="new-task-button-not-started">Add New Task</button>
+            </div>
+          </div>
         </div>
-        <div id="not-started-content" class="task-column" data-category="1">
-          <div id="not-started">
-            <list id="not-started-list">
-              <div class="task">
-                <input type="checkbox" id="radio-button" />
-                <p>Complete Lab 9</p>
-                <div class="category">
-                  <p id="work-category">work</p>
-                </div>
-                <span id="due-date">Due Date: 6/4</span>
-                <div class="buttons">
-                  <button id="edit-button">Edit Button</button>
-                  <button id="delete-button">Delete</button>
-                </div>
-              </div>
-              <div class="task">
-                <input type="checkbox" id="radio-button" />
-                <p>CSE 110 Final Project</p>
-                <div class="category">
-                  <p id="people-category">people</p>
-                </div>
-                <span id="due-date">Due Date: 6/7</span>
-                <div class="buttons">
-                  <button id="edit-button">Edit Button</button>
-                  <button id="delete-button">Delete</button>
-                </div>
-              </div>
-            </list>
-            <button class="new-task-button-not-started">Add New Task</button>
+
+        <!-- In Progress Column -->
+        <div class="list-column" id="in-progress-column">
+          <div id="in-progress-title">
+            <h2>In Progress</h2>
+            <h2 id="num-in-progress">1</h2>
+          </div>
+          <div id="in-progress-content" class="task-column" data-category="2">
+            <div id="in-progress">
+              <list id="in-progress-list"></list>
+              <button class="new-task-button-in-progress">Add New Task</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Done Column -->
+        <div class="list-column" id="done-column">
+          <div id="done-title">
+            <h2>Done</h2>
+            <h2 id="num-done">1</h2>
+          </div>
+          <div id="done-content" class="task-column" data-category="3">
+            <div id="done-list">
+              <list></list>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- In Progress Column -->
-      <div class="list-column" id="in-progress-column">
-        <div id="in-progress-title">
-          <h2>In Progress</h2>
-          <h2 id="num-in-progress">1</h2>
-        </div>
-        <div id="in-progress-content" class="task-column" data-category="2">
-          <div id="in-progress">
-            <list id="in-progress-list">
-              <div class="task">
-                <input type="checkbox" id="radio-button" />
-                <p>Todo List Canvas</p>
-                <div class="category">
-                  <p id="school-category">school</p>
-                </div>
-                <span id="due-date">Due Date: 5/31</span>
-                <div class="buttons">
-                  <button id="edit-button">Edit Button</button>
-                  <button id="delete-button">Delete</button>
-                </div>
-              </div>
-            </list>
-            <button class="new-task-button-in-progress">Add New Task</button>
-          </div>
-        </div>
-      </div>
+      <!-- Edit Task Modal -->
+      <div id="edit-task-modal" class="modal">
+        <div class="modal-content">
+          <span class="close-button">&times;</span>
+          <h2>Edit Task</h2>
+          <form id="edit-task-form">
+            <label for="edit-task-title">Title:</label>
+            <input type="text" id="edit-task-title" name="title" required />
+            <br />
+            <label for="edit-task-due-date">Due Date:</label>
+            <input
+              type="date"
+              id="edit-task-due-date"
+              name="dueDate"
+              required
+            />
+            <br />
+            <label for="edit-task-label">Label:</label>
+            <select id="edit-task-label" name="label" required>
+              <option value="personal">Personal</option>
+              <option value="work">Work</option>
+              <option value="school">School</option>
+              <option value="other">Other</option>
+            </select>
+            <br />
+            <input type="hidden" id="edit-task-id" />
+            <input type="hidden" id="edit-task-category" />
 
-      <!-- Done Column -->
-      <div class="list-column" id="done-column">
-        <div id="done-title">
-          <h2>Done</h2>
-          <h2 id="num-done">1</h2>
-        </div>
-        <div id="done-content" class="task-column" data-category="3">
-          <div id="done-list">
-            <list>
-              <div class="task">
-                <input type="checkbox" id="radio-button" />
-                <p>Journal Canvas</p>
-                <div class="category">
-                  <p id="work-category">work</p>
-                </div>
-                <span id="due-date">Due Date: 5/28</span>
-                <div class="buttons">
-                  <button id="delete-button">Delete</button>
-                </div>
-              </div>
-            </list>
-          </div>
+            <button type="submit">Save Changes</button>
+          </form>
         </div>
       </div>
     </div>
-    </div>
-    <div class="loading-screen" id="loadingScreen">
-      <div class="spinner"></div>
-      <p>Loading, please wait...</p>
-  </div>
   </body>
 </html>
