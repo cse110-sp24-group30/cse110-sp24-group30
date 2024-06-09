@@ -2,10 +2,8 @@ name: CI Pipeline
 
 on:
   push:
-    branches: [main, develop]
+    branches: [main, dev, admin, journal, calendar, to-do, dashboard]
   pull_request:
-    branches: [main, develop]
-
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 

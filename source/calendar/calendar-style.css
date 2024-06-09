@@ -60,6 +60,7 @@ body {
 
 #calendar-app {
   flex: 2;
+
   max-width: 60%;
   max-height: 70vh;
   margin: 20px auto;
@@ -69,6 +70,7 @@ body {
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   overflow: scroll;
+
 }
 
 #calendar-header {
@@ -81,7 +83,7 @@ body {
 
 #calendar-header h2 {
   margin: 0;
-  font-size: 1em;
+  font-size: 1.5em;
   color: #333;
 }
 
@@ -139,12 +141,11 @@ body {
 
 .day {
   border: 1px solid #ddd;
-  padding: 10px;
+  padding: 15px;
   border-radius: 5px;
   background-color: #f9f9f9;
   cursor: pointer;
   transition: background-color 0.3s;
-  overflow: hidden;
 }
 
 .day:hover {
@@ -174,11 +175,7 @@ body {
   background-color: #ffefc1;
   padding: 5px;
   border-radius: 3px;
-  margin: 5px 5px 5px 5px;
-  font-size: 0.8em;
-  word-wrap: break-word; 
-  word-break: break-word; 
-  white-space: pre-wrap;
+  margin-top: 5px;
 }
 
 .event.work {
@@ -208,25 +205,24 @@ body {
 
 .modal-content {
   background-color: #fff;
-  padding: 30px 20px 30px 20px;
+  padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 90%;
   max-width: 500px;
   display: flex;
   justify-content: center;
+
 }
 
 .form-group {
   margin-bottom: 15px;
-
 }
 
 .form-group label {
   display: block;
   margin-bottom: 5px;
   font-weight: bold;
-  width: 100%;
 }
 
 .form-group input,
@@ -237,7 +233,6 @@ body {
   border: 1px solid #ddd;
   border-radius: 5px;
   font-size: 1em;
-  box-sizing: border-box;
 }
 
 .save-button {
@@ -283,7 +278,6 @@ body {
   max-height: 70vh;
   overflow-y: auto;
 }
-
 #today-events .event {
   padding: 10px;
   border: 1px solid #ddd;
@@ -334,23 +328,12 @@ body {
   font-size: 1em;
 }
 
-/* Styles for enlarged days in week view */
-.week-view .day {
-  padding: 10px;
-  transition: all 0.3s ease;
-  height: 45vh;
-}
-
-.day .event-time {
-  display: block;
-  margin-top: 5px; 
-  font-size: 0.8em; 
-  color: #666; 
-}
-
-#day-view {
-  display: none; 
-  flex-direction: row;
+/* Style for the loading screen */
+.loading-screen {
+  display: none; /* Hidden by default */
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   overflow-y: auto;
@@ -388,10 +371,22 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-bottom: 1px solid #ddd;
-  font-size: 0.6em;
+  align-items: center;
+  z-index: 1000;
 }
-
+.spinner {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+  margin-bottom: 20px;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 #today-section h2 {
   text-align: center;
 }
@@ -400,3 +395,4 @@ body {
   text-align: center;
   margin-bottom: -45px;
 } 
+
