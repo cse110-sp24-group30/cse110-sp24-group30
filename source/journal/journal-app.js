@@ -45,7 +45,7 @@ document.querySelectorAll('.nav-element').forEach(link => {
         window.location.href = targetUrl; // Proceed to the target URL
       };
     });
-  });
+});
 
 /**
  * Creates and displays journal(s) onto the page
@@ -127,7 +127,7 @@ function createJournalElement(id, title, content, modalRef) {
         const firstHeader = getFirstHeader(markdownText);
         const journalWidgetTitle = document.querySelector(`.journal-widget[widget-id="${id}"] .journal-widget-title`);
         if (journalWidgetTitle) {
-            journalWidgetTitle.textContent = firstHeader || 'Insert Title';
+            widgetTitleLimit(firstHeader, journalWidgetTitle);
         }
     });
 
@@ -171,7 +171,7 @@ function createJournalWidget(journalContainer, journalID, content) {
 
     // Extract the first header title from the content
     const firstHeader = getFirstHeader(content);
-    journalWidgetTitle.textContent = firstHeader || 'Insert Title';
+    widgetTitleLimit(firstHeader, journalWidgetTitle);
     journalWidget.append(journalWidgetTitle);
     journalWidget.setAttribute('widget-id', journalID);
 
@@ -374,4 +374,138 @@ function getJournals() {
  */
 function saveJournals(journals) {
     localStorage.setItem("journal-list", JSON.stringify(journals));
+}
+
+/**
+ * Filters the journals based on the search input.
+ */
+function searchJournals() {
+    const searchValue = document.getElementById('search-bar').value.toLowerCase();
+    const journalWidgets = document.querySelectorAll('.journal-widget');
+    journalWidgets.forEach(widget => {
+        const title = widget.querySelector('.journal-widget-title').textContent.toLowerCase();
+        if (title.includes(searchValue)) {
+            widget.style.display = '';
+        } else {
+            widget.style.display = 'none';
+        }
+    });
+}
+
+/**
+ * Generates a random title from a predefined list of titles
+ * 
+ * @returns {String} - A randomly selected title
+ */
+function generateRandomTitle() {
+    const titles = [
+        "A Day in the Life",
+        "Reflections and Musings",
+        "The Journey Begins",
+        "Thoughts and Ideas",
+        "Memories of Yesterday",
+        "Random Ramblings",
+        "Adventures Await",
+        "Personal Journal",
+        "Daily Diary",
+        "Notes and Notions",
+        "Life's Little Moments",
+        "Mindful Musings",
+        "Journey Through Time",
+        "Captured Moments",
+        "Whispers of the Heart",
+        "Silent Reflections",
+        "Dreams and Realities",
+        "Echoes of the Past",
+        "Future Visions",
+        "Diary of Dreams",
+        "Moments in Time",
+        "Heartfelt Chronicles",
+        "Inspiration and Imagination",
+        "Soulful Scribbles",
+        "The Writer's Corner",
+        "Words from Within",
+        "Tales Untold",
+        "Life's Journey",
+        "Thoughts Unveiled",
+        "Pages of My Life",
+        "Moments of Solitude",
+        "Chronicles of Change",
+        "Wandering Words",
+        "Midnight Musings",
+        "Reflections in Time",
+        "Journey of Thoughts",
+        "Silent Contemplations",
+        "Ephemeral Moments",
+        "Life's Reflections",
+        "The Path Unseen",
+        "Soulful Wanderings",
+        "Fragments of Time",
+        "Whispers of Wisdom",
+        "Fleeting Thoughts",
+        "Diary of Reflections",
+        "Journeys in Words",
+        "Timeless Thoughts",
+        "Eternal Echoes",
+        "Inner Reflections"
+    ];
+    const randomIndex = Math.floor(Math.random() * titles.length);
+    return titles[randomIndex];
+}
+
+/**
+ * Gets the current date of the user's system
+ * 
+ * @returns {String} - A readable string format to the year-month-day of the date
+ */
+function getCurrentDate() {
+    const date = new Date();
+    let day = date.getDate();
+    let month = date.getMonth();
+    let year = date.getFullYear();
+
+    return `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+}
+
+/**
+ * Updates the "pop-up" date on the top right corner based on the current journal's date creation
+ * 
+ * @param {String} journalID - A journal's unique ID
+ */
+function updateWidgetDate(journalID) {
+    const dateDisplay = document.getElementById('date-display');
+    const journalList = getJournals();
+
+    // Find the journal with the matching ID
+    const journal = journalList.find(journal => journal.id == journalID);
+    dateDisplay.innerText = journal.date;
+}
+
+/**
+ * Prevents widget title from overflowing through the widget. Limits the displayed
+ * title to be up to 27 characters long before adding a "..." at the end.
+ * 
+ * @param {String} firstHeader - The first header of the journal or the widget title
+ * @param {HTMLElement} journalWidgetTitle - The HTML element of the widget title
+ */
+function widgetTitleLimit(firstHeader, journalWidgetTitle) {
+    if (firstHeader.length >= 28) {
+        let stringOverflow = firstHeader.substring(0, 28);
+        stringOverflow += "...";
+        journalWidgetTitle.textContent = stringOverflow;
+    } else {
+        journalWidgetTitle.textContent = firstHeader;
+    }
+}
+
+/**
+ * Links a journal to the calendar upon button press
+ * 
+ * TODO: link current journal to calendar day
+ */
+function linkCalendar() {
+    
+    // TODO:
+
+    alert('Journal linked to calendar!');
 }
