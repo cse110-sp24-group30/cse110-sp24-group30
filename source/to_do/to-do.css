@@ -1,7 +1,3 @@
-* {
-  font-family: "Helvetica Neue", Arial, sans-serif;
-}
-
 html {
   overflow: auto;
   height: 100%;
@@ -36,16 +32,12 @@ a {
   z-index: -1;
 }
 
-.todo {
+.dashboard {
   width: 90%;
   height: 90%;
   margin: 2% 5% 0% 5%;
   flex-wrap: wrap;
   background-color: rgb(12, 26, 54, 0.5);
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  position: relative;
 }
 
 .main-navbar {
@@ -87,9 +79,10 @@ a {
   justify-content: space-evenly;
   width: 100%;
   gap: 20px;
+  min-width: 200px;
+  max-width: 1200px;
   padding: 50px 50px 50px 0px;
   box-sizing: border-box;
-  height: calc(100% - 100px);
 }
 
 .list-column {
@@ -103,20 +96,13 @@ a {
 #not-started-title,
 #in-progress-title,
 #done-title {
-  background-color: #33646d;
-  color: #d8fafcf4;
+  background-color: #437e8a;
   padding: 10px;
   text-align: center;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
   overflow: hidden;
-}
-
-#num-not-started,
-#num-in-progress,
-#num-done {
-  color: black;
 }
 
 #not-started,
@@ -129,7 +115,7 @@ a {
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow: auto;
+  overflow: hidden;
 }
 
 #not-started-list,
@@ -142,9 +128,6 @@ a {
   flex-direction: column;
   gap: 10px;
   overflow: auto;
-  max-height: 100%;
-  width: 100%;
-  box-sizing: border-box;
 }
 
 .new-task-button-not-started,
@@ -158,78 +141,15 @@ a {
 .task {
   background-color: #54959f;
   border-radius: 5px;
-  padding: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  align-items: center;
+  justify-content: space-evenly;
   overflow: auto;
 
-  .first-row,
-  .second-row {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-  }
-
-  .category {
-    margin-top: 15px;
-    margin-left: 7px;
-    width: 100px;
-    flex-shrink: 0;
-  }
-
-  .buttons {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    border: none;
-    background: none;
-    padding: 0;
-    cursor: pointer;
-    outline: none;
-    box-shadow: none;
-  }
-
-  #edit-button,
-  #delete-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    background: none;
-    padding: 0;
-    margin-right: 10px;
-    cursor: pointer;
-    outline: none;
-    box-shadow: none;
-  }
-
-  #edit-button img,
-  #delete-button img {
-    width: 20px;
-    height: 20px;
-    border: none;
-    background: none;
-    outline: none;
-    box-shadow: none;
-    pointer-events: none;
-  }
-
   #due-date {
-    margin-top: 3px;
-    margin-right: 10px;
-    font-size: 1em;
-    color: #80f1fd;
-    background-color: #315d6d;
-    padding: 5px 10px;
-    border-radius: 5px;
-  }
-
-  p {
-    font-size: 1.2em;
-    font-weight: bold;
-    color: #f5fdfe;
+    padding: 15px;
   }
 }
 
@@ -264,6 +184,7 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: orange;
   width: 100px;
   height: 25px;
   border-radius: 25px;
@@ -271,11 +192,11 @@ a {
   font-size: 16px;
 }
 
-.category-select {
-  background-color: darkorange;
+#category-select {
+  background-color: orange;
   border: none;
   border-radius: 25px;
-  color: white;
+  color: black;
   font-size: 16px;
   height: 25px;
   width: 100px;
@@ -287,7 +208,7 @@ a {
   outline: none;
 }
 
-.category-select option {
+#category-select option {
   background-color: white;
   color: black;
 }
@@ -307,34 +228,12 @@ a {
 
 .modal-content {
   background-color: #fefefe;
-  margin: 5% auto;
-  padding: 30px;
+  margin: 10% auto;
+  padding: 20px;
   border: 1px solid #888;
-  width: 90%;
-  max-width: 800px;
+  width: 80%;
+  max-width: 500px;
   border-radius: 5px;
-  font-size: 18px;
-  line-height: 1.6;
-}
-
-.modal-content p,
-.modal-content label,
-.modal-content input,
-.modal-content button,
-.modal-content select,
-.modal-content textarea {
-  font-size: 1.2em;
-}
-
-/* Ensuring buttons and inputs are larger for better accessibility */
-.modal-content input,
-.modal-content button,
-.modal-content select,
-.modal-content textarea {
-  padding: 10px;
-  border-radius: 5px;
-  margin-top: 10px;
-  font-size: 1.2em;
 }
 
 .close-button {
@@ -351,72 +250,32 @@ a {
   cursor: pointer;
 }
 
-@media only screen and (max-width: 600px) {
-  .main-navbar {
-    font-size: 11pt;
-  }
-
-  .widgets {
-    width: 100%;
-    justify-content: space-between;
-    padding-left: 10px;
-    padding-right: 10px;
-  }
-
-  .logo {
-    display: none;
-  }
-
-  #list-container {
-    flex-direction: column;
-    align-items: center;
-    overflow-x: auto;
-    gap: 10px;
-    padding: 20px 10px;
-  }
-
-  .list-column {
-    flex: 0 0 80%;
-    width: 80%;
-    min-width: auto;
-    padding: 10px;
-    overflow: auto;
-  }
-
-  #not-started-title,
-  #in-progress-title,
-  #done-title {
-    flex-direction: column;
-    align-items: center;
-    padding: 5px;
-  }
-
-  .task {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 10px;
-    gap: 5px;
-  }
-
-  .category {
-    width: auto;
-    padding: 5px 10px;
-    font-size: 14px;
-  }
-
-  .new-task-button-not-started,
-  .new-task-button-in-progress {
-    width: 100%;
-    padding: 10px;
-    font-size: 14px;
-  }
-
-  .modal-content {
-    width: 90%;
-    padding: 10px;
-  }
-
-  .modal {
-    padding-top: 10px;
-  }
+/* Style for the loading screen */
+.loading-screen {
+  display: none; /* Hidden by default */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  font-size: 2em;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+.spinner {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+  margin-bottom: 20px;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

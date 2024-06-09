@@ -21,6 +21,32 @@ function init() {
     addJournalNew(journalContainer, true);
 }
 
+// JavaScript to handle the click event and redirection
+document.querySelectorAll('.nav-element').forEach(link => {
+    link.addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent the default link behavior
+        
+        // Set a timeout to show the loading screen if the page takes too long
+        const loadingTimeout = setTimeout(() => {
+          document.getElementById('loadingScreen').style.display = 'flex';
+      }, 500); // Show loading screen if the page doesn't start loading within 500ms
+  
+      // Store the href attribute
+      const targetUrl = this.querySelector('a').getAttribute('href');  
+  
+      // Create a hidden iframe to detect when the page starts loading
+      const iframe = document.createElement('iframe');
+      iframe.style.display = 'none';
+      iframe.src = targetUrl;
+      document.body.appendChild(iframe);
+  
+      iframe.onload = () => {
+        clearTimeout(loadingTimeout); // Clear the timeout if the page loads quickly
+        window.location.href = targetUrl; // Proceed to the target URL
+      };
+    });
+  });
+
 /**
  * Creates and displays journal(s) onto the page
  * 
@@ -30,13 +56,11 @@ function init() {
 function addJournalNew(journalContainer, existing) {
     const journalList = getJournals();
     let journalID = 0;
-    let randomTitle = generateRandomTitle();
 
     const journalTemplate = {
         id: Math.floor(Math.random() * 2000000),
-        title: randomTitle,
-        content: `# ${randomTitle}`,
-        date: getCurrentDate()
+        title: "",
+        content: ""
     };
 
     const modalRef = document.getElementById('modal');
@@ -47,14 +71,14 @@ function addJournalNew(journalContainer, existing) {
                 journal.content, modalRef);
 
             // Creating journal widget for existing journal
-            createJournalWidget(journalContainer, journalID, journal.title, journal.content);
+            createJournalWidget(journalContainer, journalID, journal.content);
         });
     } else {
         journalID = createJournalElement(journalTemplate.id, journalTemplate.title,
             journalTemplate.content, modalRef);
 
         // Creating journal widget for new journal
-        createJournalWidget(journalContainer, journalID, journalTemplate.title, journalTemplate.content);
+        createJournalWidget(journalContainer, journalID, journalTemplate.content);
 
         // Save new journal to localStorage
         journalList.push(journalTemplate);
@@ -92,9 +116,6 @@ function createJournalElement(id, title, content, modalRef) {
     markdownInput.name = "markdownInput";
     markdownInput.rows = 25;
     markdownInput.cols = 50;
-    markdownInput.value = `# ${title}`;
-    let htmlContent = marked.parse(markdownInput.value);
-    htmlOutput.innerHTML = htmlContent;
 
     // Live preview of markdown text to formatted html
     markdownInput.addEventListener('input', () => {
@@ -106,7 +127,7 @@ function createJournalElement(id, title, content, modalRef) {
         const firstHeader = getFirstHeader(markdownText);
         const journalWidgetTitle = document.querySelector(`.journal-widget[widget-id="${id}"] .journal-widget-title`);
         if (journalWidgetTitle) {
-            journalWidgetTitle.textContent = firstHeader || title;
+            journalWidgetTitle.textContent = firstHeader || 'Insert Title';
         }
     });
 
@@ -140,10 +161,9 @@ function createJournalElement(id, title, content, modalRef) {
  * 
  * @param {HTMLElement} journalContainer - DOM element to display journals in
  * @param {Number} journalID - The journal's unique identifier
- * @param {String} title - The journal's title
  * @param {String} content - Existing journal content if any
  */
-function createJournalWidget(journalContainer, journalID, title, content) {
+function createJournalWidget(journalContainer, journalID, content) {
     const journalWidget = document.createElement('div');
     journalWidget.classList.add('journal-widget');
     const journalWidgetTitle = document.createElement('span')
@@ -151,7 +171,7 @@ function createJournalWidget(journalContainer, journalID, title, content) {
 
     // Extract the first header title from the content
     const firstHeader = getFirstHeader(content);
-    journalWidgetTitle.textContent = firstHeader || title;
+    journalWidgetTitle.textContent = firstHeader || 'Insert Title';
     journalWidget.append(journalWidgetTitle);
     journalWidget.setAttribute('widget-id', journalID);
 
@@ -203,8 +223,7 @@ function openJournalModal(event) {
     // Use closest to find the parent element with the journal-widget class
     const widget = event.target.closest('.journal-widget');
     const currentJournalID = widget.getAttribute('widget-id'); // Correctly get the widget-id
-    updateWidgetDate(currentJournalID);
-
+    
     const journalEntries = document.querySelectorAll('.journal-entry');
     hideOtherJournalEntries(journalEntries, currentJournalID);
     let modal = document.getElementById('modal');
@@ -236,7 +255,7 @@ function deleteJournal(event) {
 
     // Remove the journal element from the DOM
     widget.remove();
-    entry.remove();
+    entry.remove()
 
     // Remove the journal entry from localStorage
     const journalList = getJournals();
@@ -287,16 +306,7 @@ function createSaveCancelButtons(modalRef) {
     // Event listener for save button
     saveButton.addEventListener('click', saveContent);
 
-    // Create the 'Link to Calendar' button
-    let linkCalendarButton = document.createElement('button');
-    linkCalendarButton.innerText = 'Link to Calendar';
-    linkCalendarButton.className = 'link-calendar-button';
-
-    // Event listener for link button
-    linkCalendarButton.addEventListener('click', linkCalendar);
-
     buttonContainer.append(saveButton);
-    buttonContainer.append(linkCalendarButton);
     buttonContainer.append(cancelButton);
     modalRef.append(buttonContainer);
 }
@@ -320,7 +330,6 @@ function saveContent(event) {
             if (journal.id == activeJournal.id) {
                 return {
                     ...journal,
-                    "title": getFirstHeader(markdownInput.value),
                     "content": markdownInput.value
                 };
             }
@@ -364,121 +373,4 @@ function getJournals() {
  */
 function saveJournals(journals) {
     localStorage.setItem("journal-list", JSON.stringify(journals));
-}
-
-/**
- * Filters the journals based on the search input.
- */
-function searchJournals() {
-    const searchValue = document.getElementById('search-bar').value.toLowerCase();
-    const journalWidgets = document.querySelectorAll('.journal-widget');
-    journalWidgets.forEach(widget => {
-        const title = widget.querySelector('.journal-widget-title').textContent.toLowerCase();
-        if (title.includes(searchValue)) {
-            widget.style.display = '';
-        } else {
-            widget.style.display = 'none';
-        }
-    });
-}
-
-/**
- * Generates a random title from a predefined list of titles
- * 
- * @returns {String} - A randomly selected title
- */
-function generateRandomTitle() {
-    const titles = [
-        "A Day in the Life",
-        "Reflections and Musings",
-        "The Journey Begins",
-        "Thoughts and Ideas",
-        "Memories of Yesterday",
-        "Random Ramblings",
-        "Adventures Await",
-        "Personal Journal",
-        "Daily Diary",
-        "Notes and Notions",
-        "Life's Little Moments",
-        "Mindful Musings",
-        "Journey Through Time",
-        "Captured Moments",
-        "Whispers of the Heart",
-        "Silent Reflections",
-        "Dreams and Realities",
-        "Echoes of the Past",
-        "Future Visions",
-        "Diary of Dreams",
-        "Moments in Time",
-        "Heartfelt Chronicles",
-        "Inspiration and Imagination",
-        "Soulful Scribbles",
-        "The Writer's Corner",
-        "Words from Within",
-        "Tales Untold",
-        "Life's Journey",
-        "Thoughts Unveiled",
-        "Pages of My Life",
-        "Moments of Solitude",
-        "Chronicles of Change",
-        "Wandering Words",
-        "Midnight Musings",
-        "Reflections in Time",
-        "Journey of Thoughts",
-        "Silent Contemplations",
-        "Ephemeral Moments",
-        "Life's Reflections",
-        "The Path Unseen",
-        "Soulful Wanderings",
-        "Fragments of Time",
-        "Whispers of Wisdom",
-        "Fleeting Thoughts",
-        "Diary of Reflections",
-        "Journeys in Words",
-        "Timeless Thoughts",
-        "Eternal Echoes",
-        "Inner Reflections"
-    ];
-    const randomIndex = Math.floor(Math.random() * titles.length);
-    return titles[randomIndex];
-}
-
-/**
- * Gets the current date of the user's system
- * 
- * @returns {String} - A readable string format to the year-month-day of the date
- */
-function getCurrentDate() {
-    const date = new Date();
-    let day = date.getDate();
-    let month = date.getMonth();
-    let year = date.getFullYear();
-
-    return `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
-}
-
-/**
- * Updates the "pop-up" date on the top right corner based on the current journal's date creation
- * 
- * @param {String} journalID - A journal's unique ID
- */
-function updateWidgetDate(journalID) {
-    const dateDisplay = document.getElementById('date-display');
-    const journalList = getJournals();
-
-    // Find the journal with the matching ID
-    const journal = journalList.find(journal => journal.id == journalID);
-    dateDisplay.innerText = journal.date;
-}
-
-/**
- * Links a journal to the calendar upon button press
- * 
- * TODO: link current journal to calendar day
- */
-function linkCalendar() {
-    
-    // TODO:
-
-    alert('Journal linked to calendar!');
 }
