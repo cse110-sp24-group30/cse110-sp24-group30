@@ -18,7 +18,7 @@
       <!-- Widgets -->
       <section class="widgets">
         <span class="nav-element"
-          ><a href="../index.html"
+          ><a href="../dashboard/index.html"
             ><img
               class="nav-icon"
               src="../assets/icons/homeFillWhite.png"
@@ -30,7 +30,7 @@
           ><a href="../journal/journal-page.html"
             ><img
               class="nav-icon"
-              src="../assets/icons/fileFillWhite.png"
+              src="../assets/icons/fileFillBlue.png"
               alt="journalButton"
             />Journal</a
           ></span
@@ -60,10 +60,18 @@
         </span>
       </section>
     </nav>
-    
-    <h1 style="text-align: center;">Journal Page</h1>
+    <div style="text-align: center;">
+        <input type="text" id="search-bar" placeholder="What are you looking for?" oninput="searchJournals()">
+    </div>
     <div id="journal-app">
-        <button class="add-journal" type="button">Add Journal</button>
+        <button class="add-journal" type="button">
+            <img
+              class="add-icon"
+              src="../assets/icons/addFillDarkBlue.png"
+              alt="addJournalButton"
+            />
+            <p>Add Journal</p>
+        </button>
         <!--Below, journal widgets will dynamically be added-->
     </div>
     <div id="overlay"></div>
