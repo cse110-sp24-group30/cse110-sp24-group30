@@ -18,6 +18,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   eventModal.style.display = "none";
 
+  /**
+   * Renders the calendar based on the given date.
+   * @param {Date} date - The date to render the calendar for.
+   */
   const renderCalendar = (date) => {
     calendarGrid.innerHTML = "";
     const year = date.getFullYear();
@@ -44,6 +48,15 @@ document.addEventListener("DOMContentLoaded", () => {
     renderUpcomingSection();
   };
 
+  /**
+   * Renders the month view of the calendar.
+   *
+   * @param {number} firstDayOfMonth - The index of the first day of the month (0-6).
+   * @param {number} daysInMonth - The number of days in the month.
+   * @param {number} month - The month (0-11).
+   * @param {number} year - The year.
+   * @param {Array} events - An array of events for the month.
+   */
   const renderMonthView = (
     firstDayOfMonth,
     daysInMonth,
@@ -103,6 +116,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
+  /**
+   * Renders the week view of the calendar.
+   *
+   * @param {number} day - The day of the month.
+   * @param {number} month - The month (0-11, where 0 is January and 11 is December).
+   * @param {number} year - The year.
+   * @param {Array} events - An array of events.
+   */
   const renderWeekView = (day, month, year, events) => {
     calendarGrid.classList.add("week-view");
     const startOfWeek = new Date(year, month, day - today.getDay());
@@ -140,9 +161,7 @@ document.addEventListener("DOMContentLoaded", () => {
           .toISOString()
           .split("T")[0];
         document.getElementById("event-time").value = "";
-        document.getElementById("event-recurrence").value = "none";
         document.getElementById("event-description").value = "";
-        document.getElementById("event-reminder").value = "";
         eventModal.style.display = "flex";
       });
 
@@ -150,6 +169,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
+  /**
+   * Renders the day view of the calendar.
+   *
+   * @param {number} day - The day of the month.
+   * @param {number} month - The month (0-11, where 0 is January and 11 is December).
+   * @param {number} year - The year.
+   * @param {Array} events - An array of events for the specified day.
+   */
   const renderDayView = (day, month, year, events) => {
     const dayViewContainer = document.getElementById("day-view");
     const hoursColumn = dayViewContainer.querySelector(".hours-column");
@@ -190,18 +217,43 @@ document.addEventListener("DOMContentLoaded", () => {
       (event) => event.date === currentDay.toISOString().split("T")[0]
     );
 
-    if (eventForDay.length > 0) {
-      eventForDay.forEach((event) => {
-        const hour = parseInt(event.time.split(":")[0], 10);
+    // Group events by hour
+    const eventsByHour = {};
+    eventForDay.forEach((event) => {
+      const hour = parseInt(event.time.split(":")[0], 10);
+      if (!eventsByHour[hour]) {
+        eventsByHour[hour] = [];
+      }
+      eventsByHour[hour].push(event);
+    });
+
+    // Render events for each hour
+    for (let hour = 0; hour < 24; hour++) {
+      if (eventsByHour[hour]) {
         const taskBlock = tasksColumn.children[hour];
-        const eventElement = document.createElement("div");
-        eventElement.classList.add("event", event.category);
-        eventElement.textContent = `${event.title} at ${event.time}`;
-        taskBlock.appendChild(eventElement);
-      });
+        const numEvents = eventsByHour[hour].length;
+        eventsByHour[hour].forEach((event) => {
+          const eventElement = document.createElement("div");
+          eventElement.classList.add("event", event.category);
+          eventElement.textContent =
+            event.title.length > 8
+              ? event.title.slice(0, 8) + "..."
+              : event.title; // Truncate long titles
+          eventElement.style.width = `${100 / numEvents}%`;
+          eventElement.title = `${event.title}\n${event.time}\n${event.description}`; // Tooltip with full details
+          eventElement.addEventListener("click", () => {
+            alert(
+              `Title: ${event.title}\nTime: ${event.time}\nDescription: ${event.description}`
+            );
+          });
+          taskBlock.appendChild(eventElement);
+        });
+        taskBlock.style.display = "flex"; // Make sure to display the task block as flex
+      }
     }
   };
 
+  // Event listeners for view changes
   viewSelector.addEventListener("change", (event) => {
     currentView = event.target.value;
     if (currentView === "day") {
@@ -260,6 +312,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  /**
+   * Renders the today section of the calendar app.
+   */
   const renderTodaySection = () => {
     const year = today.getFullYear();
     const month = today.getMonth() + 1;
@@ -279,43 +334,47 @@ document.addEventListener("DOMContentLoaded", () => {
         const eventElement = document.createElement("div");
         eventElement.classList.add("event", event.category);
         eventElement.innerHTML = `
-                    <strong>${event.title}</strong>
-                    <p>${event.description}</p>
-                    <button class="edit-button" data-id="${event.id}">Edit</button>
-                    <button class="delete-button" data-id="${event.id}">Delete</button>
-                `;
+          <strong>${event.title}</strong>
+          <p>${event.description}</p>
+          <button class="edit-button" data-id="${event.id}">
+            <img src="../assets/icons/calendarEditBlue.png" alt="Edit">
+          </button>
+          <button class="delete-button" data-id="${event.id}">
+            <img src="../assets/icons/calendarDeleteBlue.png" alt="Delete">
+          </button>
+        `;
         todayEventsContainer.appendChild(eventElement);
       });
     } else {
       todayEventsContainer.innerHTML = "<p>No events today.</p>";
     }
-  };
 
-  const renderUpcomingSection = () => {
-    const year = today.getFullYear();
-    const month = today.getMonth() + 1;
-    const day = today.getDate();
-    const todayDate = `${year}-${String(month).padStart(2, "0")}-${String(
-      day
-    ).padStart(2, "0")}`;
-    const events = getEvents();
-    const upcomingEvents = events.filter((event) => event.date > todayDate);
-    upcomingEventsContainer.innerHTML = "";
-    if (upcomingEvents.length > 0) {
-      upcomingEvents.forEach((event) => {
-        const eventElement = document.createElement("div");
-        eventElement.classList.add("event", event.category);
-        eventElement.innerHTML = `
-                        <strong>${event.title}</strong>
-                        <p>${event.description}</p>
-                        <button class="edit-button" data-id="${event.id}">Edit</button>
-                        <button class="delete-button" data-id="${event.id}">Delete</button>
-                    `;
-        upcomingEventsContainer.appendChild(eventElement);
+    // Add event listeners for edit and delete buttons
+    document.querySelectorAll(".edit-button").forEach((button) => {
+      button.addEventListener("click", (event) => {
+        const id = event.target.closest("button").getAttribute("data-id");
+        const events = getEvents();
+        const eventToEdit = events.find((event) => event.id == id);
+        if (eventToEdit) {
+          document.getElementById("event-id").value = eventToEdit.id;
+          document.getElementById("event-title").value = eventToEdit.title;
+          document.getElementById("event-category").value =
+            eventToEdit.category;
+          document.getElementById("event-date").value = eventToEdit.date;
+          document.getElementById("event-time").value = eventToEdit.time || "";
+          document.getElementById("event-description").value =
+            eventToEdit.description;
+          eventModal.style.display = "flex";
+        }
       });
-    } else {
-      upcomingEventsContainer.innerHTML = "<p>No upcoming events.</p>";
-    }
+    });
+
+    document.querySelectorAll(".delete-button").forEach((button) => {
+      button.addEventListener("click", (event) => {
+        const id = event.target.closest("button").getAttribute("data-id");
+        deleteEvent(id);
+      });
+    });
   };
 
   prevMonth.addEventListener("click", () => {
@@ -372,7 +431,7 @@ document.addEventListener("DOMContentLoaded", () => {
         category,
         date,
         time,
-        description
+        description,
       });
     } else {
       saveEvent({
@@ -381,7 +440,7 @@ document.addEventListener("DOMContentLoaded", () => {
         category,
         date,
         time,
-        description
+        description,
       });
     }
 
@@ -392,16 +451,30 @@ document.addEventListener("DOMContentLoaded", () => {
     renderUpcomingSection();
   });
 
+  /**
+   * Saves an event to the local storage.
+   * @param {Object} event - The event to be saved.
+   */
   const saveEvent = (event) => {
     const events = getEvents();
     events.push(event);
     localStorage.setItem("events", JSON.stringify(events));
   };
 
+  /**
+   * Retrieves the events from the local storage.
+   * If no events are found, an empty array is returned.
+   *
+   * @returns {Array} The array of events retrieved from the local storage.
+   */
   const getEvents = () => {
     return JSON.parse(localStorage.getItem("events") || "[]");
   };
 
+  /**
+   * Updates an event in the calendar.
+   * @param {Object} updatedEvent - The updated event object.
+   */
   const updateEvent = (updatedEvent) => {
     const events = getEvents();
     const index = events.findIndex((event) => event.id == updatedEvent.id);
@@ -411,6 +484,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
+  /**
+   * Deletes an event from the calendar.
+   * @param {string} id - The ID of the event to be deleted.
+   */
   const deleteEvent = (id) => {
     let events = getEvents();
     events = events.filter((event) => event.id != id);
@@ -431,12 +508,8 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("event-category").value = eventToEdit.category;
         document.getElementById("event-date").value = eventToEdit.date;
         document.getElementById("event-time").value = eventToEdit.time || "";
-        document.getElementById("event-recurrence").value =
-          eventToEdit.recurrence || "none";
         document.getElementById("event-description").value =
           eventToEdit.description;
-        document.getElementById("event-reminder").value =
-          eventToEdit.reminder || "";
         eventModal.style.display = "flex";
       }
     }
@@ -458,6 +531,11 @@ document.addEventListener("DOMContentLoaded", () => {
     renderFilteredEvents(filteredEvents);
   });
 
+  /**
+   * Renders the filtered events on the calendar grid.
+   *
+   * @param {Array} events - The array of events to be rendered.
+   */
   const renderFilteredEvents = (events) => {
     calendarGrid.innerHTML = "Search results:";
     events.forEach((event) => {
@@ -483,12 +561,8 @@ document.addEventListener("DOMContentLoaded", () => {
           document.getElementById("event-date").value = selectedEvent.date;
           document.getElementById("event-time").value =
             selectedEvent.time || "";
-          document.getElementById("event-recurrence").value =
-            selectedEvent.recurrence || "none";
           document.getElementById("event-description").value =
             selectedEvent.description;
-          document.getElementById("event-reminder").value =
-            selectedEvent.reminder || "";
           eventModal.style.display = "flex";
         }
       });
