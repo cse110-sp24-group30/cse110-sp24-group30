@@ -45,7 +45,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     renderTodaySection();
-    renderUpcomingSection();
   };
 
   /**
@@ -258,6 +257,7 @@ document.addEventListener("DOMContentLoaded", () => {
     currentView = event.target.value;
     if (currentView === "day") {
       document.getElementById("day-view").style.display = "flex";
+      document.querySelector(".add-button").style.display = "block";
       document.getElementById("calendar-grid").style.display = "none";
       document.getElementById("calendar-days").style.display = "none"; // Hide the week headers
       renderDayView(
@@ -268,6 +268,7 @@ document.addEventListener("DOMContentLoaded", () => {
       );
     } else {
       document.getElementById("day-view").style.display = "none";
+      document.querySelector(".add-button").style.display = "none";
       document.getElementById("calendar-grid").style.display = "grid";
       document.getElementById("calendar-days").style.display = ""; // Show the week headers
       renderCalendar(currentDate);
@@ -278,6 +279,7 @@ document.addEventListener("DOMContentLoaded", () => {
     currentView = event.target.value;
     if (currentView === "day") {
       document.getElementById("day-view").style.display = "flex";
+      document.querySelector(".add-button").style.display = "block";
       document.getElementById("calendar-grid").style.display = "none";
       renderDayView(
         currentDate.getDate(),
@@ -287,6 +289,7 @@ document.addEventListener("DOMContentLoaded", () => {
       );
     } else {
       document.getElementById("day-view").style.display = "none";
+      document.querySelector(".add-button").style.display = "none";
       document.getElementById("calendar-grid").style.display = "grid";
       renderCalendar(currentDate);
     }
@@ -296,6 +299,7 @@ document.addEventListener("DOMContentLoaded", () => {
     currentView = event.target.value;
     if (currentView === "day") {
       document.getElementById("day-view").style.display = "flex";
+      document.querySelector(".add-button").style.display = "block";
       document.getElementById("calendar-grid").style.display = "none";
       document.getElementById("calendar-days").style.display = "none"; // Hide the week headers
       renderDayView(
@@ -306,6 +310,7 @@ document.addEventListener("DOMContentLoaded", () => {
       );
     } else {
       document.getElementById("day-view").style.display = "none";
+      document.querySelector(".add-button").style.display = "none";
       document.getElementById("calendar-grid").style.display = "grid";
       document.getElementById("calendar-days").style.display = "grid"; // Show the week headers
       renderCalendar(currentDate);
@@ -367,6 +372,30 @@ document.addEventListener("DOMContentLoaded", () => {
           eventModal.style.display = "flex";
         }
       });
+    });
+
+    document.querySelector(".add-button").addEventListener("click", (event) => {
+      let dateStr = currentMonthYear.innerText;
+
+      dateStr = dateStr.split(", ").slice(1).join(", ");
+
+      let dateObj = new Date(dateStr);
+
+      let formattedDate =
+        dateObj.getFullYear() +
+        "-" +
+        (dateObj.getMonth() + 1).toString().padStart(2, "0") +
+        "-" +
+        dateObj.getDate().toString().padStart(2, "0");
+
+      document.getElementById("event-id").value = "";
+      document.getElementById("event-title").value = "";
+      document.getElementById("event-category").value = "";
+      document.getElementById("event-date").value = formattedDate;
+      document.getElementById("event-time").value = "";
+      document.getElementById("event-description").value = "";
+
+      eventModal.style.display = "flex";
     });
 
     document.querySelectorAll(".delete-button").forEach((button) => {
@@ -448,7 +477,6 @@ document.addEventListener("DOMContentLoaded", () => {
     eventForm.reset();
     renderCalendar(currentDate);
     renderTodaySection();
-    renderUpcomingSection();
   });
 
   /**
@@ -494,7 +522,6 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem("events", JSON.stringify(events));
     renderCalendar(currentDate);
     renderTodaySection();
-    renderUpcomingSection();
   };
 
   document.addEventListener("click", (event) => {
