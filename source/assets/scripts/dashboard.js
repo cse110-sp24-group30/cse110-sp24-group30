@@ -126,6 +126,9 @@ function populateMoodChart() {
         neutral: "#2187ab",
         happy: "#abdbe3",
       };
+      if (moodColors[savedMoods[dateString]] == "#abdbe3") {
+        dayCell.style.color = "#000000";
+      }
       dayCell.style.backgroundColor = moodColors[savedMoods[dateString]];
     }
   }
@@ -158,6 +161,11 @@ function updateMoodChart(mood) {
   };
 
   moodElement.style.backgroundColor = moodColors[mood];
+  if (mood === "happy") {
+    moodElement.style.color = "#000000";
+  } else {
+    moodElement.style.color = "#e3e1e1";
+  }
 
   const moods = JSON.parse(localStorage.getItem("moods") || "{}");
   moods[currentDate] = mood;
