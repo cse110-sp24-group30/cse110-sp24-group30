@@ -1,27 +1,21 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const rootUrl = window.location.pathname.split("/").slice(0, 2).join("/");
-  const protectedPaths = [
-    rootUrl + "/dashboard/",
-    rootUrl + "/dashboard/index.html",
-    rootUrl + "/to_do/",
-    rootUrl + "/to_do/to-do.html",
-    rootUrl + "/journal/",
-    rootUrl + "/journal/journal-page.html",
-    rootUrl + "/calendar/calendar-page.html",
-    rootUrl + "/calendar/",
+  const rootUrl =
+    window.location.origin +
+    window.location.pathname.split("/").slice(0, 2).join("/");
+  const protectedKeyWords = [
+    "calendar",
+    "journal",
+    "dashboard",
+    "todo",
+    "to_do",
   ];
 
-  console.log(protectedPaths);
-  console.log(localStorage.getItem("pinVerified"));
   const sourcePath = window.location.pathname;
-
-  console.log(sourcePath);
   if (
     !sessionStorage.getItem("pinVerified") &&
-    protectedPaths.includes(sourcePath)
+    protectedKeyWords.some((substring) => sourcePath.includes(substring))
   ) {
-    console.log("got here");
-    window.location.href = rootUrl + "/login/login.html";
+    window.location.href = rootUrl + "source/login/login.html";
   }
   let correctPin;
   const pinForm = document.getElementById("pin-form");
@@ -75,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Redirect to the protected page (dashboard)
   function redirectToProtectedPage() {
-    window.location.href = "../index.html";
+    window.location.href = rootUrl + "source/dashboard/index.html";
   }
 
   // Show the loading spinner
