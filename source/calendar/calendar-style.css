@@ -1,3 +1,10 @@
+/**
+ * Styles for the calendar page.
+ *
+ * This CSS file contains styles for the calendar page of the application.
+ * It sets the font family, margin, padding, display, flex direction, alignment,
+ * and height for the body element.
+ */
 body {
   font-family: "Helvetica Neue", Arial, sans-serif;
   margin: 0;
@@ -8,6 +15,22 @@ body {
   height: 100vh;
 }
 
+/**
+ * 
+ * This CSS code defines the styling for the background of a calendar.
+ * 
+ * CSS class: .background
+ * 
+ * Properties:
+ * - width: Specifies the width of the background element to be 100% of its parent container.
+ * - height: Specifies the height of the background element to be 100% of its parent container.
+ * - position: Specifies the positioning of the background element as fixed, so it remains in a fixed position even when the page is scrolled.
+ * - background-image: Specifies the URL of the background image to be "../assets/images/blueWaveBackground.jpeg".
+ * - background-size: Specifies the size of the background image to cover the entire background element.
+ * - filter: Applies a blur effect to the background element with a blur radius of 10 pixels.
+ * - transform: Applies a scale transformation to the background element, increasing its size by 10% to remove any white frame around the image.
+ * - z-index: Specifies the stacking order of the background element, placing it behind other elements with a z-index of -1.
+ */
 .background {
   width: 100%;
   height: 100%;
@@ -66,12 +89,12 @@ body {
   border: 2px solid #74cbdf;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  height: 70vh; /* Match the calendar height */
+  height: 70vh; 
   overflow-y: auto;
 }
 
 #today-events {
-  max-height: calc(70vh - 40px); /* Adjust to account for padding and title */
+  max-height: calc(70vh - 40px); 
   overflow-y: auto;
 }
 
@@ -113,6 +136,19 @@ body {
   font-size: 1em;
 }
 
+/**
+ * 
+ * This CSS code defines the styles for the view-selector and search-bar elements in a calendar.
+ * 
+ * The view-selector and search-bar elements have the following styles:
+ * - Background color: rgba(32, 154, 182, 0.47)
+ * - Text color: black
+ * - Border: 2px solid #3e8d9f
+ * - Border radius: 5px
+ * - Padding: 10px
+ * - Cursor: pointer
+ * - Font size: 1em
+ */
 .view-selector,
 #search-bar {
   background-color: rgba(32, 154, 182, 0.47);
@@ -215,6 +251,15 @@ body {
   background-color: purple;
 }
 
+/**
+ * Represents a modal element.
+ *
+ * Modals are used to display content on top of the current page. They are positioned
+ * fixed and cover the entire viewport. The background color is set to a semi-transparent
+ * black color to create an overlay effect.
+ *
+ * @class
+ */
 .modal {
   display: none;
   position: fixed;
@@ -232,6 +277,25 @@ body {
   resize: none;
 }
 
+.save-button, .cancel-button {
+  all: unset;
+}
+
+/**
+ * 
+ * This CSS code defines the styling for the modal content in a calendar.
+ * 
+ * The `.modal-content` class is used to style the background color, padding, border radius,
+ * box shadow, width, max width, and display properties of the modal content.
+ * 
+ * - `background-color` sets the background color of the modal content to #fff (white).
+ * - `padding` sets the padding of the modal content to 30px on the top and bottom, and 20px on the left and right.
+ * - `border-radius` sets the border radius of the modal content to 10px, giving it rounded corners.
+ * - `box-shadow` adds a box shadow to the modal content, creating a subtle shadow effect.
+ * - `width` sets the width of the modal content to 90% of its parent container.
+ * - `max-width` sets the maximum width of the modal content to 500px, ensuring it doesn't exceed a certain size.
+ * - `display` sets the display property of the modal content to flex, allowing it to be centered horizontally.
+ */
 .modal-content {
   background-color: #fff;
   padding: 30px 20px 30px 20px;
@@ -255,6 +319,12 @@ body {
   width: 100%;
 }
 
+/**
+ * 
+ * This CSS code defines the styling for form inputs, textareas, and select elements within a form-group class.
+ * The elements will have a width of 100%, a padding of 10px, a 1px solid border with a border radius of 5px,
+ * and a font size of 1em. The box-sizing property is set to border-box to include padding and border in the element's total width.
+ */
 .form-group input,
 .form-group textarea,
 .form-group select {
@@ -345,6 +415,12 @@ body {
   position: relative;
 }
 
+/**
+ * 
+ * This CSS code defines the styles for the edit and delete buttons within the event element.
+ * The buttons are positioned absolutely and have no background or border.
+ * They have a cursor pointer and a font size of 0, making them invisible.
+ */
 .event .edit-button,
 .event .delete-button {
   position: absolute;
@@ -375,7 +451,12 @@ body {
   outline: 2px solid #74cbdf;
 }
 
-/* Added styles for category filter dropdown */
+/**
+ * 
+ * This CSS code defines the styling for the category filter element in a calendar.
+ * The category filter is a clickable element with a background color, border, and padding.
+ * It has a specific font size and color, and a border radius to give it rounded corners.
+ */
 .category-filter {
   background-color: rgba(32, 154, 182, 0.47);
   color: black;
@@ -386,7 +467,6 @@ body {
   font-size: 1em;
 }
 
-/* Styles for enlarged days in week view */
 .week-view .day {
   padding: 10px;
   transition: all 0.3s ease;
@@ -454,6 +534,11 @@ body {
   margin-bottom: -45px;
 } 
 
+/**
+ * 
+ * This media query targets screens with a maximum width of 600 pixels.
+ * It is used to apply specific styles to the calendar when viewed on smaller screens.
+ */
 @media only screen and (max-width: 600px) {
   #today-section {
     display: none;

@@ -108,7 +108,9 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       }
 
+      // Add event listener to open modal when clicking on a day
       dayElement.addEventListener("click", () => {
+        // unique event id that will be used to identify the event
         document.getElementById("event-id").value = "";
         document.getElementById("event-title").value = "";
         document.getElementById("event-category").value = "";
@@ -161,6 +163,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       }
 
+      // Add event listener to open modal when clicking on a day (same as the one in month view)
       dayElement.addEventListener("click", () => {
         document.getElementById("event-id").value = "";
         document.getElementById("event-title").value = "";
@@ -226,6 +229,7 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
     // Group events by hour
+    // So for example, 12:00 through 12:59 will be the same group
     const eventsByHour = {};
     eventForDay.forEach((event) => {
       const hour = parseInt(event.time.split(":")[0], 10);
@@ -284,6 +288,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  // Event listeners for view changes
   viewSelector.addEventListener("change", (event) => {
     currentView = event.target.value;
     if (currentView === "day") {
@@ -304,6 +309,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  // Event listeners for view changes
   viewSelector.addEventListener("change", (event) => {
     currentView = event.target.value;
     if (currentView === "day") {
@@ -328,6 +334,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /**
    * Renders the today section of the calendar app.
+   * This is the section on the left hand side of the calendar
+   * that shows the current date and events for the day.
    */
   const renderTodaySection = () => {
     const year = today.getFullYear();
@@ -343,10 +351,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const todayEvents = events.filter((event) => event.date === todayDate);
 
     todayEventsContainer.innerHTML = "";
+    // Display the events for today
     if (todayEvents.length > 0) {
       todayEvents.forEach((event) => {
         const eventElement = document.createElement("div");
         eventElement.classList.add("event", event.category);
+        // Display the event title and description
+        // Generating the HTML for the event element
         eventElement.innerHTML = `
           <strong>${event.title}</strong>
           <p>${event.description}</p>
@@ -412,6 +423,9 @@ document.addEventListener("DOMContentLoaded", () => {
       button.addEventListener("click", (event) => {
         const id = event.target.closest("button").getAttribute("data-id");
         deleteEvent(id);
+        removeTask(parseInt(id), 1);
+        removeTask(parseInt(id), 2);
+        removeTask(parseInt(id), 3);
       });
     });
   };
@@ -427,6 +441,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  // Event listeners for navigation through the calendar
   prevMonth.addEventListener("click", () => {
     if (currentView === "month") {
       currentDate.setMonth(currentDate.getMonth() - 1);
@@ -437,7 +452,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     renderCalendar(currentDate);
   });
-
+  // Event listeners for navigation through the calendar
   nextMonth.addEventListener("click", () => {
     if (currentView === "month") {
       currentDate.setMonth(currentDate.getMonth() + 1);
@@ -545,6 +560,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderTodaySection();
   };
 
+  // Event listeners for editing and deleting events
   document.addEventListener("click", (event) => {
     if (event.target.classList.contains("edit-button")) {
       const id = event.target.getAttribute("data-id");
@@ -569,6 +585,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  // Event listener for the search bar
   searchBar.addEventListener("input", (event) => {
     //Hide the day view, make the calendar-grid visible, and hide the week headers
     document.getElementById("day-view").style.display = "none";
@@ -638,3 +655,83 @@ document.addEventListener("DOMContentLoaded", () => {
 
   renderCalendar(currentDate);
 });
+
+/**
+ * Retrieves all the "not started" tasks from localStorage.
+ *
+ * @return {Object[]} An array of "not started" tasks.
+ */
+function getNotStarted() {
+  return JSON.parse(localStorage.getItem("not-started") || "[]");
+}
+
+/**
+ * Saves the "not started" tasks array to localStorage.
+ *
+ * @param {Object[]} notStarted - An array of "not started" tasks to be saved.
+ */
+function saveNotStarted(notStarted) {
+  localStorage.setItem("not-started", JSON.stringify(notStarted));
+}
+
+/**
+ * Retrieves all the "in progress" tasks from localStorage.
+ *
+ * @return {Object[]} An array of "in progress" tasks.
+ */
+function getInProgress() {
+  return JSON.parse(localStorage.getItem("in-progress") || "[]");
+}
+
+/**
+ * Saves the "in progress" tasks array to localStorage.
+ *
+ * @param {Object[]} inProgress - An array of "in progress" tasks to be saved.
+ */
+function saveInProgress(inProgress) {
+  localStorage.setItem("in-progress", JSON.stringify(inProgress));
+}
+
+/**
+ * Retrieves all the "done" tasks from localStorage.
+ *
+ * @return {Object[]} An array of "done" tasks.
+ */
+function getDone() {
+  return JSON.parse(localStorage.getItem("done") || "[]");
+}
+
+/**
+ * Saves the "done" tasks array to localStorage.
+ *
+ * @param {Object[]} done - An array of "done" tasks to be saved.
+ */
+function saveDone(done) {
+  localStorage.setItem("done", JSON.stringify(done));
+}
+
+function removeTask(id, category) {
+  let taskList;
+  if (category === 1) {
+    taskList = getNotStarted();
+  } else if (category === 2) {
+    taskList = getInProgress();
+  } else {
+    taskList = getDone();
+  }
+
+  //finds index of the task based on the localStorage id
+  const taskIndex = taskList.findIndex((task) => task.id === id);
+
+  //check if we get a valid index, if its valid then removes that element from the specified localStorage array
+  if (taskIndex > -1) {
+    taskList.splice(taskIndex, 1);
+    if (category === 1) {
+      saveNotStarted(taskList);
+    } else if (category === 2) {
+      saveInProgress(taskList);
+    } else {
+      saveDone(taskList);
+    }
+  }
+}
