@@ -395,6 +395,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
 
+    //Add event listeners for add button
     document.querySelector(".add-button").addEventListener("click", (event) => {
       let dateStr = currentMonthYear.innerText;
 
@@ -430,6 +431,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   };
 
+  //Add event listener for taskDeleteButton
   taskDeleteButton.addEventListener("click", (event) => {
     const eventName = document.getElementById("event-title").value;
 
@@ -464,22 +466,26 @@ document.addEventListener("DOMContentLoaded", () => {
     renderCalendar(currentDate);
   });
 
+  //Add event listeners for the viewSelector for when the calendar view is changed
   viewSelector.addEventListener("change", (event) => {
     currentView = event.target.value;
     renderCalendar(currentDate);
   });
 
+  //Add event listener to close eventModal once you click outside of it
   window.addEventListener("click", (event) => {
     if (event.target == eventModal) {
       eventModal.style.display = "none";
     }
   });
 
+  //Add event listener to make cancel button close the eventModal
   cancelButton.addEventListener("click", (event) => {
     event.preventDefault();
     eventModal.style.display = "none";
   });
 
+  //Add event listener for when the form is submitter to either update an existing event or save a new one
   eventForm.addEventListener("submit", (event) => {
     event.preventDefault();
     const id = document.getElementById("event-id").value;
