@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Redirect to the protected page (dashboard)
   function redirectToProtectedPage() {
-    window.location.href = rootUrl + "source/dashboard/index.html";
+    window.location.href = rootUrl + "/index.html";
   }
 
   // Show the loading spinner
