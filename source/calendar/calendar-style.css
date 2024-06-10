@@ -55,12 +55,14 @@ body {
   width: 15%;
   flex-direction: column;
   gap: 20px;
+  height: 70vh;
 }
 
 #today-section {
+  height: 100%;
   flex: 1;
   padding: 20px;
-  background-color: rgb(116, 203, 223, 0.60);
+  background-color: rgb(116, 203, 223, 0.80);
   border: 2px solid #74cbdf;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -76,14 +78,15 @@ body {
 #calendar-app {
   flex: 2;
   max-width: 60%;
-  max-height: 70vh;
+  height: 70vh;
   margin: 20px auto;
   padding: 20px;
   background-color: rgb(116, 203, 223, 0.80);
   border: 2px solid #74cbdf;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  overflow: scroll;
+  overflow:-y auto;
+  overflow-x: hidden;
 }
 
 #calendar-header {
@@ -229,10 +232,6 @@ body {
   resize: none;
 }
 
-.save-button, .cancel-button {
-  all: unset;
-}
-
 .modal-content {
   background-color: #fff;
   padding: 30px 20px 30px 20px;
@@ -267,6 +266,15 @@ body {
   box-sizing: border-box;
 }
 
+.save-button, .cancel-button, .task-delete-button {
+  all: unset;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+}
+
 .save-button {
   background-color: #28a745;
   color: white;
@@ -275,17 +283,29 @@ body {
   padding: 10px 15px;
   cursor: pointer;
   font-size: 1em;
+  margin-right: 10px;
 }
 
 .cancel-button {
-  float: right;
   background-color: #727573;
   color: white;
   border: none;
   border-radius: 5px;
   padding: 10px 15px;
   cursor: pointer;
-  
+  font-size: 1em;
+  margin-right: 10px;
+
+}
+
+.task-delete-button {
+  /* float: right; */
+  background-color: #df2d2d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  cursor: pointer;
   font-size: 1em;
 }
 
@@ -296,6 +316,11 @@ body {
 .cancel-button:hover {
   background-color: #3c3e3c; 
 }
+
+.task-delete-button:hover {
+  background-color: #ac2020;
+}
+
 
 #today-section {
   margin-top: 20px;

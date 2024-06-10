@@ -10,13 +10,15 @@
   </head>
   <body>
     <div class="background"></div>
+    <div class="dashboard">
+
     <nav class="main-navbar">
       <section class="widgets">
         <span class="nav-element"
-          ><a href="../source/index.html"
+          ><a href="../index.html"
             ><img
               class="nav-icon"
-              src="../assets/icons/homeFillBlue.png"
+              src="../assets/icons/homeFillWhite.png"
               alt="homeButton"
             />Dashboard</a
           ></span
@@ -43,7 +45,7 @@
           ><a href="../calendar/calendar-page.html"
             ><img
               class="nav-icon"
-              src="../assets/icons/dateFillWhite.png"
+              src="../assets/icons/dateFillBlue.png"
               alt="calendarButton"
             />Calendar</a
           ></span
@@ -128,10 +130,15 @@
               <option value="other">Other</option>
             </select>
           </div>
-          <button type="submit" class="save-button">Save Event</button>
-          <button type="submit" class="cancel-button">Cancel</button>
+
+          <div class = "button-container">
+            <button type="submit" class="save-button">Save Event</button>
+            <button type="submit" class="cancel-button">Cancel</button>
+            <button type="submit" class="task-delete-button">Delete</button>
+          </div>
         </form>
       </div>
     </div>
+  </div>
   </body>
 </html>
