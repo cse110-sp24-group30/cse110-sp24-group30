@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Calendar</title>
     <link rel="stylesheet" href="./calendar-style.css" />
-    <link rel="Stylesheet" href="../assets/styles/main.css" />
+    <link rel="stylesheet" href="../assets/styles/main.css" />
+    <script src="../assets/scripts/main.js"></script>
     <script src="./calendar-app.js" defer></script>
     <script src="../assets/scripts/main.js"></script>
+    <script src="../login/logout.js" defer></script>
   </head>
   <body>
     <div class="background"></div>
@@ -54,6 +56,9 @@
       <section class="logo">
         <span id="team-logo"
           ><img src="../assets/images/110Team30.png" />
+          <div class="dropdown-content">
+            <a href="#" id="logout">Logout</a>
+          </div>
         </span>
       </section>
     </nav>
@@ -156,6 +161,6 @@
     <div class="loading-screen" id="loadingScreen">
       <div class="spinner"></div>
       <p>Loading, please wait...</p>
-  </div>
+    </div>
   </body>
 </html>
