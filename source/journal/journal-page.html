@@ -1,16 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Journal</title>
-    <link rel="stylesheet" href="./journal-style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./journal-style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="./sw2.css"> <!-- Added stylesheet from 'main' -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- Added script from 'main' -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="../assets/scripts/main.js"></script>
     <script src="./journal-app.js"></script>
-</head>
-<body>
+    <script src="../login/logout.js" defer></script>
+  </head>
+  <body>
     <div class="background"></div>
+    <div class="dashboard">
     <!-- Nav Bar -->
     <nav class="main-navbar">
       <!-- Widgets -->
@@ -55,41 +63,39 @@
       <section class="logo">
         <span id="team-logo"
           ><img src="../assets/images/110Team30.png" />
+          <div class="dropdown-content">
+            <a href="#" id="logout">Logout</a>
+          </div>
         </span>
       </section>
     </nav>
-    
-    <!-- <h1 style="text-align: center;">Journal Page</h1> -->
     <div style="text-align: center;">
         <input type="text" id="search-bar" placeholder="What are you looking for?" oninput="searchJournals()">
     </div>
+    </div>
     <div id="journal-app">
-        <button class="add-journal" type="button">
-            <img
-              class="add-icon"
-              src="../assets/icons/addFillDarkBlue.png"
-              alt="addJournalButton"
-            />
-            <p>Add Journal</p>
-        </button>
-        <!--Below, journal widgets will dynamically be added-->
+      <button class="add-journal" type="button">
+        <img
+          class="add-icon"
+          src="../assets/icons/addFillDarkBlue.png"
+          alt="addJournalButton"
+        />
+        <p>Add Journal</p>
+      </button>
+      <!--Below, journal widgets will dynamically be added-->
     </div>
     <div id="overlay"></div>
     <div id="modal">
-        <div id="date-display"></div>
-        <div id="subtitles">
-            <div id="markdown-title">
-                Markdown
-            </div>
-            <div id="preview-title">
-                Preview
-            </div>
-        </div>
-        <!--Below, journal contents will dynamically be added-->
+      <div id="date-display"></div>
+      <div id="subtitles">
+        <div id="markdown-title">Markdown</div>
+        <div id="preview-title">Preview</div>
+      </div>
+      <!--Below, journal contents will dynamically be added-->
     </div>
     <div class="loading-screen" id="loadingScreen">
       <div class="spinner"></div>
       <p>Loading, please wait...</p>
     </div>
-</body>
+  </body>
 </html>

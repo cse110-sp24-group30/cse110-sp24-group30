@@ -4,6 +4,32 @@ window.addEventListener('DOMContentLoaded', init);
  * Main function that initializes the journal page
  */
 function init() {
+    // JavaScript to handle the click event and redirection
+    document.querySelectorAll('.nav-element').forEach(link => {
+        link.addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent the default link behavior
+            
+            // Set a timeout to show the loading screen if the page takes too long
+            const loadingTimeout = setTimeout(() => {
+              document.getElementById('loadingScreen').style.display = 'flex';
+          }, 500); // Show loading screen if the page doesn't start loading within 500ms
+      
+          // Store the href attribute
+          const targetUrl = this.querySelector('a').getAttribute('href');  
+      
+          // Create a hidden iframe to detect when the page starts loading
+          const iframe = document.createElement('iframe');
+          iframe.style.display = 'none';
+          iframe.src = targetUrl;
+          document.body.appendChild(iframe);
+      
+          iframe.onload = () => {
+            clearTimeout(loadingTimeout); // Clear the timeout if the page loads quickly
+            window.location.href = targetUrl; // Proceed to the target URL
+          };
+        });
+      });
+    
     const journalContainer = document.getElementById('journal-app');
     const addButton = journalContainer.querySelector('.add-journal');
     const overlayRef = document.getElementById('overlay');
@@ -20,32 +46,6 @@ function init() {
     // Add saved journals from localStorage
     addJournalNew(journalContainer, true);
 }
-
-// JavaScript to handle the click event and redirection
-document.querySelectorAll('.nav-element').forEach(link => {
-    link.addEventListener('click', function(event) {
-        event.preventDefault(); // Prevent the default link behavior
-        
-        // Set a timeout to show the loading screen if the page takes too long
-        const loadingTimeout = setTimeout(() => {
-          document.getElementById('loadingScreen').style.display = 'flex';
-      }, 500); // Show loading screen if the page doesn't start loading within 500ms
-  
-      // Store the href attribute
-      const targetUrl = this.querySelector('a').getAttribute('href');  
-  
-      // Create a hidden iframe to detect when the page starts loading
-      const iframe = document.createElement('iframe');
-      iframe.style.display = 'none';
-      iframe.src = targetUrl;
-      document.body.appendChild(iframe);
-  
-      iframe.onload = () => {
-        clearTimeout(loadingTimeout); // Clear the timeout if the page loads quickly
-        window.location.href = targetUrl; // Proceed to the target URL
-      };
-    });
-});
 
 /**
  * Creates and displays journal(s) onto the page
@@ -212,7 +212,7 @@ function createJournalWidget(journalContainer, journalID, content) {
     editButton.addEventListener('click', openJournalModal);
 
     // Add event listener for delete button click
-    deleteButton.addEventListener('click', deleteJournal);
+    deleteButton.addEventListener('click', deletingConfirm);
 
     journalContainer.append(journalWidget);
 }
@@ -313,16 +313,7 @@ function createSaveCancelButtons(modalRef) {
     // Event listener for save button
     saveButton.addEventListener('click', saveContent);
 
-    // Create the 'Link to Calendar' button
-    let linkCalendarButton = document.createElement('button');
-    linkCalendarButton.innerText = 'Link to Calendar';
-    linkCalendarButton.className = 'link-calendar-button';
-
-    // Event listener for link button
-    linkCalendarButton.addEventListener('click', linkCalendar);
-
     buttonContainer.append(saveButton);
-    buttonContainer.append(linkCalendarButton);
     buttonContainer.append(cancelButton);
     modalRef.append(buttonContainer);
 }
@@ -331,7 +322,7 @@ function createSaveCancelButtons(modalRef) {
  * When the save button is pressed, the active journal's content is saved into
  * localStorage
  * 
- * @param {*} event 
+ * @param {*} event - Event listener target
  */
 function saveContent(event) {
 
@@ -354,7 +345,11 @@ function saveContent(event) {
         });
 
         saveJournals(updatedJournalList);
-        alert("Saved!");
+        Swal.fire({
+            title: 'Success!',
+            text: 'Journal has been saved.',
+            icon: 'success'
+        });
     }
 
     let overlay = document.getElementById('overlay');
@@ -515,13 +510,43 @@ function widgetTitleLimit(firstHeader, journalWidgetTitle) {
 }
 
 /**
- * Links a journal to the calendar upon button press
+ * When the delete button is pressed, this gives a confirmation pop-up to the user
  * 
- * TODO: link current journal to calendar day
+ * @param {*} event - Event listener target
  */
-function linkCalendar() {
-    
-    // TODO:
-
-    alert('Journal linked to calendar!');
+function deletingConfirm(event) {
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: "btn btn-success",
+            cancelButton: "btn btn-danger"
+        },
+        buttonsStyling: false
+        });
+        swalWithBootstrapButtons.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "No, cancel!",
+        reverseButtons: true
+        }).then((result) => {
+        if (result.isConfirmed) {
+            swalWithBootstrapButtons.fire({
+            title: "Deleted!",
+            text: "Your journal has been deleted.",
+            icon: "success"
+            });
+            deleteJournal(event);
+        } else if (
+            /* Read more about handling dismissals below */
+            result.dismiss === Swal.DismissReason.cancel
+        ) {
+            swalWithBootstrapButtons.fire({
+            title: "Cancelled",
+            text: "Your journal is safe :)",
+            icon: "error"
+            });
+        }
+        });
 }

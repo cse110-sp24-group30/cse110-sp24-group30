@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+
+    <!-- Stylesheet -->
+    <link rel="Stylesheet" href="../../source/assets/styles/main.css" />
+    <link rel="Stylesheet" href="./login.css" />
+
+    <!-- Scripts -->
+    <script src="./login.js" defer></script>
+  </head>
+
+  <body>
+    <div class="background"></div>
+    <div class="dashboard">
+      <div id="login-container">
+        <h2>Enter PIN</h2>
+        <form id="pin-form">
+          <div class="pin-input">
+            <label for="pin">PIN:</label>
+            <input type="password" id="pin" name="pin" maxlength="4" required />
+            <button
+              type="button"
+              id="toggle-pin-visibility"
+              class="show"
+            ></button>
+          </div>
+          <div id="remember-me-container">
+            <label for="remember-me">Remember Me</label>
+            <input type="checkbox" id="remember-me" name="remember-me" />
+          </div>
+          <button type="submit">Unlock</button>
+          <div id="spinner" class="spinner"></div>
+          <p id="feedback-message"></p>
+        </form>
+      </div>
+      <div id="meme-container">
+        <h3>Random Meme</h3>
+        <img id="meme" src="" alt="Random Meme" />
+        <button id="new-meme">Keep Going</button>
+        <!-- Button to load a new meme -->
+      </div>
+    </div>
+  </body>
+</html>

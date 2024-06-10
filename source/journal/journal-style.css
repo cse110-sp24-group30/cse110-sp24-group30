@@ -9,7 +9,6 @@ body, html {
     font-family: Arial, sans-serif;
     overflow: hidden;
     flex-direction: column;
-    overflow: auto;
 }
 
 .background {
@@ -37,8 +36,16 @@ body, html {
     color: inherit;
   }
 
+.dashboard {
+    width: 90%;
+    height: 11em;
+    margin: 2% 5% 0% 5%;
+    flex-wrap: wrap;
+    background-color: rgb(12, 26, 54, 0.5);
+  }
+
 .main-navbar {
-    height: 15%;
+    height: 4em;
     width: 100%;
     display: flex;
     font-size: 18pt;
@@ -78,6 +85,7 @@ body, html {
     height: 2em;
 
     text-align: center;
+    border-radius: 1em;
 }
 
 #search-bar::placeholder {
@@ -96,12 +104,11 @@ body, html {
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 
     display: grid;
-    /*grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));*/
-    /* grid-template-columns: repeat(6, 150px); */
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     grid-gap: 20px;
     justify-items: center;
     align-items: center;
+    overflow-y: scroll;
 }
 
 /* Add Journal Button */
@@ -110,13 +117,13 @@ body, html {
     padding: 5px 10px;
     height: 150px;
     width: 150px;
-    /* margin-bottom: 10px; */
     cursor: pointer;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
+    border-radius: 1em;
 }
 
 /* The journal(s) displayed on the page */
@@ -150,6 +157,37 @@ body, html {
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
+/* Add the following CSS for the dropdown menu */
+#team-logo {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 100px; /* Adjusted the minimum width */
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    right: 0; /* Ensure the dropdown is contained within the page */
+  }
+  
+  .dropdown-content a {
+    color: black;
+    padding: 8px 12px; /* Adjusted padding to make it smaller */
+    text-decoration: none;
+    display: block;
+    font-size: 14px; /* Adjusted font size to make it smaller */
+  }
+  
+  .dropdown-content a:hover {
+    background-color: #f1f1f1;
+  }
+  
+  #team-logo:hover .dropdown-content {
+    display: block;
+  }
 /* The "popup" of that particular journal */
 .journal-entry {
     width: 14in;
@@ -175,6 +213,10 @@ body, html {
     padding: 10px 10px 10px 10px;
     overflow-y: auto;
     position: relative;
+}
+
+#markdown-title, #preview-title {
+    margin-bottom: 20px;
 }
 
 /* The live preview of the markdown to formatted html box*/
@@ -219,7 +261,7 @@ body, html {
 }
 
 /* Blend buttons to background */
-button {
+.button-container button {
     background-color: lightblue;
     outline: none;
     border: none;
@@ -251,6 +293,25 @@ button {
 .save-button, .cancel-button {
     padding: 5px 10px;
     cursor: pointer;
+
+    background-color: lightblue;
+    outline: none;
+    border: none;
+
+    border-radius: 10px;
+
+    width: 8em;
+    height: 2em;
+    font-size: 1em;
+    position: relative;
+}
+
+.save-button {
+    left: 1em;
+}
+
+.cancel-button {
+    right: 1em;
 }
 
 #subtitles {

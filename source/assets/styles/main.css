@@ -33,6 +33,9 @@ a {
   display: flex;
   justify-content: center;
   background-color: rgb(12, 26, 54, 0.5);
+  align-items: center;
+  justify-content: center;
+  position: relative;
 }
 
 .main-navbar {
@@ -68,8 +71,37 @@ a {
   height: 90px;
   border-radius: 50%;
 }
+/* Add the following CSS for the dropdown menu */
+#team-logo {
+  position: relative;
+  display: inline-block;
+}
 
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 100px; /* Adjusted the minimum width */
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  right: 0; /* Ensure the dropdown is contained within the page */
+}
 
+.dropdown-content a {
+  color: black;
+  padding: 8px 12px; /* Adjusted padding to make it smaller */
+  text-decoration: none;
+  display: block;
+  font-size: 14px; /* Adjusted font size to make it smaller */
+}
+
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+#team-logo:hover .dropdown-content {
+  display: block;
+}
 .main-canvas {
   width: 100%;
   height: 85%;
@@ -85,17 +117,47 @@ a {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: calc(20% - 10px);
-  height: 20%;
+  width: calc(17% - 10px);
+  height: 17%;
   padding: 20px;
   text-align: center;
   border: 2px solid #74cbdf;
   background-color: rgb(116, 203, 223, 0.47);
+  overflow: hidden; /* Prevent text overflow */
+  overflow-wrap: break-word;
+  min-width: 200px; /* Set a minimum width */
+}
+
+.dashboard-widget p {
+  padding: 10px;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 .dashboard-widget:nth-child(n + 4) {
   width: calc(30% - 10px);
   height: 30%;
+}
+
+.widget-mood {
+  display: flex;
+  /* margin-top: -5%; */
+  margin-right: 5%;
+}
+
+h2,
+h3 {
+  color: #ccfcfe;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+#widget-todo,
+#widget-journal,
+#widget-calendar {
+  font-size: xx-large;
+  font-weight: bold;
+  color: #ccfcfe;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .day-box {
@@ -108,7 +170,7 @@ a {
   line-height: 30px;
   text-align: center;
   border-color: black;
-  color: rgb(228, 228, 228);
+  color: #e3e3e1;
 }
 
 .week-row {
@@ -117,12 +179,10 @@ a {
   margin-bottom: 10px;
 }
 
-.widget-mood {
-  display: flex;
-}
 
-#mood-chart, #mood-today {
-  /* margin-top: 1%; */
+#mood-chart,
+#mood-today {
+  
   max-width: 100%;
   max-height: 100%;
   overflow: auto;
@@ -130,11 +190,12 @@ a {
 
   align-items: center;
   margin-left: 10%;
-  height: 70%;
   padding: 20px;
   text-align: center;
   border: 2px solid #74cbdf;
   background-color: rgb(116, 203, 223, 0.47);
+  height: 70%; 
+  max-height: 100%;
 }
 
 #mood-chart h3 {
@@ -148,6 +209,8 @@ a {
 
 #mood-today {
   width: 120%;
+  align-items: center;
+  justify-content: center;
 }
 
 #mood-chart .week-row {
@@ -159,14 +222,17 @@ a {
 button {
   height: 60px;
   width: 60px;
-  margin-right: 10%;
+  margin-right: 5%;
+  margin-left: 5%;
 }
+
+
 
 #mood-today > button > img {
   height: 40px;
   width: 40px;
   object-fit: contain;
-  object-position: center
+  object-position: center;
 }
 
 /* Style for the loading screen */
@@ -195,8 +261,99 @@ button {
   margin-bottom: 20px;
 }
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+
+}
+
+/* Responsive adjustments */
+
+@media (max-width: 840px) {
+  .main-canvas {
+    overflow: scroll;
+  }
+}
+
+/* TODO: Adjust font size for phone screen */
+@media (max-width: 425px) {
+  .main-canvas {
+    font-size: medium;
+  }
+}
+
+/* Mobile Responsiveness */
+@media only screen and (max-width: 670px) {
+  .dashboard,
+  .widget-mood {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: auto;
+    gap: 10px;
+    padding: 10%;
+  }
+
+  .main-canvas {
+    overflow: scroll;
+    font-size: 10pt;
+  }
+
+  #widget-todo, #widget-journal, #widget-calendar {
+    font-size: 15pt;
+  }
+
+  .dashboard {
+    overflow: auto;
+  }
+  .main-navbar {
+    height: 10%;
+    font-size: 11pt;
+  }
+  .widgets {
+    width: 100%;
+    padding-left: 10px;
+  }
+  .logo {
+    width: 100%;
+    justify-content: center;
+  }
+  #team-logo > img {
+    width: 60px;
+    height: 60px;
+  }
+  .main-canvas {
+    padding-top: 2%;
+  }
+
+  .day-box {
+    width: 30px;
+    height: 30px;
+  }
+
+  .dashboard-widget {
+    width: calc(17% - 10px);
+    height: 25%;
+    padding: 10px;
+  }
+  .dashboard-widget:nth-child(n + 4) {
+    width: calc(45% - 10px);
+    height: 30%;
+  }
+  button {
+    height: 50px;
+    width: 50px;
+  }
+  #mood-today > button > img {
+    height: 30px;
+    width: 30px;
+  }
+
 }
 
 @media only screen and (max-width: 600px) {

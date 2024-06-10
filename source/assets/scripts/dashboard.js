@@ -126,6 +126,9 @@ function populateMoodChart() {
         neutral: "#2187ab",
         happy: "#abdbe3",
       };
+      if (moodColors[savedMoods[dateString]] == "#abdbe3") {
+        dayCell.style.color = "#000000";
+      }
       dayCell.style.backgroundColor = moodColors[savedMoods[dateString]];
     }
   }
@@ -158,6 +161,11 @@ function updateMoodChart(mood) {
   };
 
   moodElement.style.backgroundColor = moodColors[mood];
+  if (mood === "happy") {
+    moodElement.style.color = "#000000";
+  } else {
+    moodElement.style.color = "#e3e1e1";
+  }
 
   const moods = JSON.parse(localStorage.getItem("moods") || "{}");
   moods[currentDate] = mood;
@@ -201,3 +209,20 @@ function getEvents() {
 function getDoneTasks() {
   return JSON.parse(localStorage.getItem("done") || "[]");
 }
+
+// JavaScript to handle the click event for the logout link
+document.addEventListener("DOMContentLoaded", function () {
+  const logoutButton = document.getElementById("logout");
+  if (logoutButton) {
+    logoutButton.addEventListener("click", function (event) {
+      event.preventDefault(); // Prevent the default link behavior
+
+      // Clear session and local storage
+      sessionStorage.removeItem("pinVerified");
+      localStorage.removeItem("pinVerified");
+
+      // Redirect to the login page
+      window.location.href = "../source/login/login.html";
+    });
+  }
+});
