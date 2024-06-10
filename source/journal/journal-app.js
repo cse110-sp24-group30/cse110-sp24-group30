@@ -322,7 +322,7 @@ function createSaveCancelButtons(modalRef) {
  * When the save button is pressed, the active journal's content is saved into
  * localStorage
  * 
- * @param {*} event 
+ * @param {*} event - Event listener target
  */
 function saveContent(event) {
 
@@ -509,6 +509,11 @@ function widgetTitleLimit(firstHeader, journalWidgetTitle) {
     }
 }
 
+/**
+ * When the delete button is pressed, this gives a confirmation pop-up to the user
+ * 
+ * @param {*} event - Event listener target
+ */
 function deletingConfirm(event) {
     const swalWithBootstrapButtons = Swal.mixin({
         customClass: {
