@@ -69,7 +69,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Redirect to the protected page (dashboard)
   function redirectToProtectedPage() {
-    window.location.href = rootUrl + "/index.html";
+    window.location.href =
+      "https://cse110-sp24-group30.github.io/cse110-sp24-group30/source/index.html";
   }
 
   // Show the loading spinner
