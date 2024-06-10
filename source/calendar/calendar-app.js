@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const nextMonth = document.getElementById("next-month");
   const eventModal = document.getElementById("event-modal");
   const cancelButton = document.querySelector(".cancel-button");
+  const taskDeleteButton = document.querySelector(".task-delete-button");
   const eventForm = document.getElementById("event-form");
   const todayDateElement = document.getElementById("today-date");
   const todayEventsContainer = document.getElementById("today-events");
@@ -373,7 +374,7 @@ document.addEventListener("DOMContentLoaded", () => {
       todayEventsContainer.innerHTML = "<p>No events today.</p>";
     }
 
-    // Add event listeners for edit and delete buttons
+    // Add event listeners for edit buttons
     document.querySelectorAll(".edit-button").forEach((button) => {
       button.addEventListener("click", (event) => {
         const id = event.target.closest("button").getAttribute("data-id");
@@ -428,6 +429,17 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
   };
+
+  taskDeleteButton.addEventListener("click", (event) => {
+    const eventName = document.getElementById("event-title").value;
+
+    if (eventName == "") {
+      event.preventDefault();
+      eventModal.style.display = "none";
+    } else {
+      deleteEvent(document.getElementById("event-id").value);
+    }
+  });
 
   // Event listeners for navigation through the calendar
   prevMonth.addEventListener("click", () => {
