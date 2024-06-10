@@ -64,8 +64,8 @@
 .pin-input {
   display: flex;
   align-items: center;
-  gap:20px;
-  justify-content: space-between;/
+  gap: 20px;
+  justify-content: space-between;
 }
 /* Styling for the PIN input field and show/hide button */
 #login-container input[type="password"],
@@ -80,7 +80,7 @@
   padding-right: 40px; /* Space for the icon */
 }
 
-#pin-form{
+#pin-form {
   width: 100%;
 }
 
@@ -125,16 +125,10 @@
   text-align: center;
 }
 
-#unlock-button{
+#unlock-button {
   margin-top: 10px;
 }
 
-#submit-span{
-  display: flex;
-  width: 100%;
-  align-items: center;
-  justify-content: center;
-}
 /* Error message styling */
 #error-message {
   display: none;
