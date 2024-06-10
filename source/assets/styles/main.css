@@ -31,7 +31,6 @@ a {
   margin: 2% 5% 0% 5%;
   flex-wrap: wrap;
   display: flex;
-  justify-content: center;
   background-color: rgb(12, 26, 54, 0.5);
   align-items: center;
   justify-content: center;

@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
     protectedKeyWords.some((substring) => sourcePath.includes(substring))
   ) {
     window.location.href =
-      "https://cse110-sp24-group30.github.io/cse110-sp24-group30/login/login.html";
+      "https://cse110-sp24-group30.github.io/cse110-sp24-group30/source/login/login.html";
   }
   let correctPin;
   const pinForm = document.getElementById("pin-form");
@@ -44,16 +44,12 @@ document.addEventListener("DOMContentLoaded", function () {
         pinForm.addEventListener("submit", function (e) {
           e.preventDefault();
           const enteredPin = document.getElementById("pin").value;
-          const rememberMe = document.getElementById("remember-me").checked;
           showSpinner(); //
 
           // Simulate network delay for PIN verification
           setTimeout(() => {
             if (enteredPin === correctPin) {
               sessionStorage.setItem("pinVerified", "true");
-              if (rememberMe) {
-                localStorage.setItem("pinVerified", "true");
-              }
               showFeedback("Access Granted!", "success");
               setTimeout(redirectToProtectedPage, 1000); // delay for showing success message
             } else {
