@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Redirect to the protected page (dashboard)
   function redirectToProtectedPage() {
-    window.location.href = "../dashboard/index.html";
+    window.location.href = "../index.html";
   }
 
   // Show the loading spinner
@@ -85,7 +85,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Hide the loading spinner
   function hideSpinner() {
-    //
     spinner.style.display = "none";
   }
 
