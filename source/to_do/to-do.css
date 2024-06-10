@@ -1,3 +1,4 @@
+/* Global Styles */
 * {
   font-family: "Helvetica Neue", Arial, sans-serif;
 }
@@ -25,6 +26,7 @@ a {
   color: inherit;
 }
 
+/* Background Styles */
 .background {
   width: 100%;
   height: 100%;
@@ -36,6 +38,7 @@ a {
   z-index: -1;
 }
 
+/* Main Todo Container */
 .todo {
   width: 90%;
   height: 90%;
@@ -48,6 +51,7 @@ a {
   position: relative;
 }
 
+/* Navbar Styles */
 .main-navbar {
   height: 15%;
   width: 100%;
@@ -82,6 +86,7 @@ a {
   border-radius: 50%;
 }
 
+/* List Container Styles */
 #list-container {
   display: flex;
   justify-content: space-evenly;
@@ -92,6 +97,7 @@ a {
   height: calc(100% - 100px);
 }
 
+/* Column Styles */
 .list-column {
   border-radius: 5px;
   width: 30%;
@@ -100,6 +106,7 @@ a {
   overflow: auto;
 }
 
+/* Column Titles */
 #not-started-title,
 #in-progress-title,
 #done-title {
@@ -113,12 +120,14 @@ a {
   overflow: hidden;
 }
 
+/* Task Counters */
 #num-not-started,
 #num-in-progress,
 #num-done {
   color: black;
 }
 
+/* Column Content */
 #not-started,
 #in-progress,
 #done-content {
@@ -155,6 +164,7 @@ a {
   cursor: pointer;
 }
 
+/* Task Styles */
 .task {
   background-color: #54959f;
   border-radius: 5px;
@@ -233,6 +243,7 @@ a {
   }
 }
 
+/* Progress Styles */
 #num-not-started {
   background-color: red;
   border-radius: 100px;
@@ -260,6 +271,7 @@ a {
   line-height: 9px;
 }
 
+/* Category STyles */
 .category {
   display: flex;
   align-items: center;
@@ -351,6 +363,7 @@ a {
   cursor: pointer;
 }
 
+/* Mobile Responsiveness */
 @media only screen and (max-width: 600px) {
   .main-navbar {
     font-size: 11pt;
@@ -421,6 +434,37 @@ a {
   }
 }
 
+/* Add the following CSS for the dropdown menu */
+#team-logo {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 100px; /* Adjusted the minimum width */
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  right: 0; /* Ensure the dropdown is contained within the page */
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 8px 12px; /* Adjusted padding to make it smaller */
+  text-decoration: none;
+  display: block;
+  font-size: 14px; /* Adjusted font size to make it smaller */
+}
+
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+#team-logo:hover .dropdown-content {
+  display: block;
+}
 /* Style for the loading screen */
 .loading-screen {
   display: none; /* Hidden by default */
