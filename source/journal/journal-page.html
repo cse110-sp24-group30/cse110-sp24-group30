@@ -18,6 +18,7 @@
   </head>
   <body>
     <div class="background"></div>
+    <div class="dashboard">
     <!-- Nav Bar -->
     <nav class="main-navbar">
       <!-- Widgets -->
@@ -68,15 +69,9 @@
         </span>
       </section>
     </nav>
-
-    <!-- <h1 style="text-align: center;">Journal Page</h1> -->
-    <div style="text-align: center">
-      <input
-        type="text"
-        id="search-bar"
-        placeholder="What are you looking for?"
-        oninput="searchJournals()"
-      />
+    <div style="text-align: center;">
+        <input type="text" id="search-bar" placeholder="What are you looking for?" oninput="searchJournals()">
+    </div>
     </div>
     <div id="journal-app">
       <button class="add-journal" type="button">
