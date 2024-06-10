@@ -23,6 +23,7 @@ function init() {
     !sessionStorage.getItem("pinVerified") &&
     protectedPaths.includes(sourcePath)
   ) {
-    ("https://cse110-sp24-group30.github.io/cse110-sp24-group30/source/login/login.html");
+    window.location.href =
+      "https://cse110-sp24-group30.github.io/cse110-sp24-group30/source/login/login.html";
   }
 }
