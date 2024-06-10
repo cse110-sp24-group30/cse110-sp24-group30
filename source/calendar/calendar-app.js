@@ -1,30 +1,3 @@
-// JavaScript to handle the click event and redirection
-document.querySelectorAll('.nav-element').forEach(link => {
-  link.addEventListener('click', function(event) {
-    console.log('Link clicked'); 
-      event.preventDefault(); // Prevent the default link behavior
-      
-      // Set a timeout to show the loading screen if the page takes too long
-      const loadingTimeout = setTimeout(() => {
-        document.getElementById('loadingScreen').style.display = 'flex';
-    }, 500); // Show loading screen if the page doesn't start loading within 500ms
-
-    // Store the href attribute
-    const targetUrl = this.querySelector('a').getAttribute('href');  
-
-    // Create a hidden iframe to detect when the page starts loading
-    const iframe = document.createElement('iframe');
-    iframe.style.display = 'none';
-    iframe.src = targetUrl;
-    document.body.appendChild(iframe);
-
-    iframe.onload = () => {
-      clearTimeout(loadingTimeout); // Clear the timeout if the page loads quickly
-      window.location.href = targetUrl; // Proceed to the target URL
-    };
-  });
-});
-
 document.addEventListener("DOMContentLoaded", () => {
   const calendarGrid = document.getElementById("calendar-grid");
   const currentMonthYear = document.getElementById("current-month-year");
@@ -42,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentDate = new Date();
   const today = new Date();
   let currentView = "month";
-  
+
   eventModal.style.display = "none";
 
   /**
@@ -98,6 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
     year,
     events
   ) => {
+    calendarGrid.classList.remove("week-view");
     for (let i = 0; i < firstDayOfMonth; i++) {
       const emptyCell = document.createElement("div");
       calendarGrid.appendChild(emptyCell);
@@ -158,6 +132,7 @@ document.addEventListener("DOMContentLoaded", () => {
    * @param {Array} events - An array of events.
    */
   const renderWeekView = (day, month, year, events) => {
+    calendarGrid.classList.add("week-view");
     const startOfWeek = new Date(year, month, day - today.getDay());
     for (let i = 0; i < 7; i++) {
       const currentDay = new Date(startOfWeek);
@@ -178,7 +153,9 @@ document.addEventListener("DOMContentLoaded", () => {
         eventForDay.forEach((event) => {
           const eventElement = document.createElement("div");
           eventElement.classList.add("event", event.category);
-          eventElement.textContent = event.title;
+          eventElement.innerHTML = `${
+            event.title
+          }<br><span class="event-time">${event.time || "N/A"}</span>`; // Show title and time with line break in week view
           dayElement.appendChild(eventElement);
         });
       }
@@ -208,14 +185,40 @@ document.addEventListener("DOMContentLoaded", () => {
    * @param {Array} events - An array of events for the specified day.
    */
   const renderDayView = (day, month, year, events) => {
-    const currentDay = new Date(year, month, day);
-    const dayElement = document.createElement("div");
-    dayElement.classList.add("day");
-    dayElement.textContent = currentDay.toDateString();
+    const dayViewContainer = document.getElementById("day-view");
+    const hoursColumn = dayViewContainer.querySelector(".hours-column");
+    const tasksColumn = dayViewContainer.querySelector(".tasks-column");
+    const calendarHeader = document.getElementById("calendar-header");
 
-    if (currentDay.toDateString() === today.toDateString()) {
-      dayElement.classList.add("current-day");
+    hoursColumn.innerHTML = ""; // Clear existing hours
+    tasksColumn.innerHTML = ""; // Clear existing tasks
+
+    // Generate the hours
+    for (let i = 0; i < 24; i++) {
+      const hourBlock = document.createElement("div");
+      hourBlock.classList.add("hour-block");
+      hourBlock.textContent = `${i}:00`;
+      hoursColumn.appendChild(hourBlock);
+
+      const taskBlock = document.createElement("div");
+      taskBlock.classList.add("task-block");
+      tasksColumn.appendChild(taskBlock);
     }
+
+    const currentDay = new Date(year, month, day);
+    const dayOfWeek = currentDay.toLocaleDateString("en-US", {
+      weekday: "long",
+    });
+    const formattedDate = currentDay.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+
+    // Update the calendar header to show only the current day and date
+    calendarHeader.querySelector(
+      "h2"
+    ).textContent = `${dayOfWeek}, ${formattedDate}`;
 
     const eventForDay = events.filter(
       (event) => event.date === currentDay.toISOString().split("T")[0]
@@ -321,7 +324,6 @@ document.addEventListener("DOMContentLoaded", () => {
       renderCalendar(currentDate);
     }
   });
-
 
   /**
    * Renders the today section of the calendar app.
@@ -622,51 +624,3 @@ document.addEventListener("DOMContentLoaded", () => {
 
   renderCalendar(currentDate);
 });
-
-// Added event listener for category filter
-categoryFilter.addEventListener("change", (event) => {
-  const category = event.target.value;
-  const events = getEvents();
-  const filteredEvents = category === "all" ? events : events.filter((event) => event.category === category);
-  renderFilteredEvents(filteredEvents);
-});
-
-// Modified renderFilteredEvents function to display search results
-const renderFilteredEvents = (events) => {
-  calendarGrid.innerHTML = "Search results:";
-  events.forEach((event) => {
-      const eventElement = document.createElement("div");
-      eventElement.classList.add("event", event.category);
-      eventElement.textContent = event.title;
-      calendarGrid.appendChild(eventElement);
-
-      eventElement.addEventListener("click", (event) => {
-          const events = getEvents();
-
-          const eventName = event.target.innerHTML;
-
-          const selectedEvent = events.find((event) => event.title === eventName);
-
-          const id = selectedEvent.id;
-
-          if (selectedEvent) {
-              document.getElementById("event-id").value = selectedEvent.id;
-              document.getElementById("event-title").value = selectedEvent.title;
-              document.getElementById("event-category").value = selectedEvent.category;
-              document.getElementById("event-date").value = selectedEvent.date;
-              document.getElementById("event-time").value = selectedEvent.time || "";
-              document.getElementById("event-recurrence").value = selectedEvent.recurrence || "none";
-              document.getElementById("event-description").value = selectedEvent.description;
-              document.getElementById("event-reminder").value = selectedEvent.reminder || "";
-              eventModal.style.display = "flex";
-          }
-      });
-  });
-};
-
-// Added variable for category filter
-const categoryFilter = document.getElementById("category-filter");
-
-
-
-
