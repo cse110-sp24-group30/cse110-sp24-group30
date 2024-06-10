@@ -114,7 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("event-date").value = `${year}-${String(
           month + 1
         ).padStart(2, "0")}-${String(i).padStart(2, "0")}`;
-        document.getElementById("event-time").value = "";
+        document.getElementById("event-time").value = "23:59";
         document.getElementById("event-description").value = "";
         eventModal.style.display = "flex";
       });
@@ -167,7 +167,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("event-date").value = currentDay
           .toISOString()
           .split("T")[0];
-        document.getElementById("event-time").value = "";
+        document.getElementById("event-time").value = "23:59";
         document.getElementById("event-description").value = "";
         eventModal.style.display = "flex";
       });
@@ -374,7 +374,8 @@ document.addEventListener("DOMContentLoaded", () => {
           document.getElementById("event-category").value =
             eventToEdit.category;
           document.getElementById("event-date").value = eventToEdit.date;
-          document.getElementById("event-time").value = eventToEdit.time || "";
+          document.getElementById("event-time").value =
+            eventToEdit.time || "23:59";
           document.getElementById("event-description").value =
             eventToEdit.description;
           eventModal.style.display = "flex";
@@ -400,7 +401,7 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("event-title").value = "";
       document.getElementById("event-category").value = "";
       document.getElementById("event-date").value = formattedDate;
-      document.getElementById("event-time").value = "";
+      document.getElementById("event-time").value = "23:59";
       document.getElementById("event-description").value = "";
 
       eventModal.style.display = "flex";
@@ -542,7 +543,8 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("event-title").value = eventToEdit.title;
         document.getElementById("event-category").value = eventToEdit.category;
         document.getElementById("event-date").value = eventToEdit.date;
-        document.getElementById("event-time").value = eventToEdit.time || "";
+        document.getElementById("event-time").value =
+          eventToEdit.time || "23:59";
         document.getElementById("event-description").value =
           eventToEdit.description;
         eventModal.style.display = "flex";
@@ -613,7 +615,7 @@ document.addEventListener("DOMContentLoaded", () => {
             selectedEvent.category;
           document.getElementById("event-date").value = selectedEvent.date;
           document.getElementById("event-time").value =
-            selectedEvent.time || "";
+            selectedEvent.time || "23:59";
           document.getElementById("event-description").value =
             selectedEvent.description;
           eventModal.style.display = "flex";

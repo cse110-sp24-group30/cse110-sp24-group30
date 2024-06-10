@@ -196,16 +196,20 @@ body {
   white-space: pre-wrap;
 }
 
-.event.work {
-  background-color: #ffefc1;
-}
-
 .event.personal {
-  background-color: #c1e1ff;
+  background-color: darkorange;
 }
 
-.event.urgent {
-  background-color: #ffc1c1;
+.event.work {
+  background-color: brown;
+}
+
+.event.school {
+  background-color: crimson;
+}
+
+.event.other {
+  background-color: purple;
 }
 
 .modal {
@@ -219,6 +223,14 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+#event-description {
+  resize: none;
+}
+
+.save-button, .cancel-button {
+  all: unset;
 }
 
 .modal-content {
