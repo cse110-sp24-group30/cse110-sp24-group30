@@ -410,6 +410,9 @@ document.addEventListener("DOMContentLoaded", () => {
       button.addEventListener("click", (event) => {
         const id = event.target.closest("button").getAttribute("data-id");
         deleteEvent(id);
+        removeTask(parseInt(id), 1);
+        removeTask(parseInt(id), 2);
+        removeTask(parseInt(id), 3);
       });
     });
   };
@@ -624,3 +627,83 @@ document.addEventListener("DOMContentLoaded", () => {
 
   renderCalendar(currentDate);
 });
+
+/**
+ * Retrieves all the "not started" tasks from localStorage.
+ *
+ * @return {Object[]} An array of "not started" tasks.
+ */
+function getNotStarted() {
+  return JSON.parse(localStorage.getItem("not-started") || "[]");
+}
+
+/**
+ * Saves the "not started" tasks array to localStorage.
+ *
+ * @param {Object[]} notStarted - An array of "not started" tasks to be saved.
+ */
+function saveNotStarted(notStarted) {
+  localStorage.setItem("not-started", JSON.stringify(notStarted));
+}
+
+/**
+ * Retrieves all the "in progress" tasks from localStorage.
+ *
+ * @return {Object[]} An array of "in progress" tasks.
+ */
+function getInProgress() {
+  return JSON.parse(localStorage.getItem("in-progress") || "[]");
+}
+
+/**
+ * Saves the "in progress" tasks array to localStorage.
+ *
+ * @param {Object[]} inProgress - An array of "in progress" tasks to be saved.
+ */
+function saveInProgress(inProgress) {
+  localStorage.setItem("in-progress", JSON.stringify(inProgress));
+}
+
+/**
+ * Retrieves all the "done" tasks from localStorage.
+ *
+ * @return {Object[]} An array of "done" tasks.
+ */
+function getDone() {
+  return JSON.parse(localStorage.getItem("done") || "[]");
+}
+
+/**
+ * Saves the "done" tasks array to localStorage.
+ *
+ * @param {Object[]} done - An array of "done" tasks to be saved.
+ */
+function saveDone(done) {
+  localStorage.setItem("done", JSON.stringify(done));
+}
+
+function removeTask(id, category) {
+  let taskList;
+  if (category === 1) {
+    taskList = getNotStarted();
+  } else if (category === 2) {
+    taskList = getInProgress();
+  } else {
+    taskList = getDone();
+  }
+
+  //finds index of the task based on the localStorage id
+  const taskIndex = taskList.findIndex((task) => task.id === id);
+
+  //check if we get a valid index, if its valid then removes that element from the specified localStorage array
+  if (taskIndex > -1) {
+    taskList.splice(taskIndex, 1);
+    if (category === 1) {
+      saveNotStarted(taskList);
+    } else if (category === 2) {
+      saveInProgress(taskList);
+    } else {
+      saveDone(taskList);
+    }
+  }
+}
