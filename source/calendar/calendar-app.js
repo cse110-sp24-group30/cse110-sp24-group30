@@ -107,7 +107,9 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       }
 
+      // Add event listener to open modal when clicking on a day
       dayElement.addEventListener("click", () => {
+        // unique event id that will be used to identify the event
         document.getElementById("event-id").value = "";
         document.getElementById("event-title").value = "";
         document.getElementById("event-category").value = "";
@@ -160,6 +162,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       }
 
+      // Add event listener to open modal when clicking on a day (same as the one in month view)
       dayElement.addEventListener("click", () => {
         document.getElementById("event-id").value = "";
         document.getElementById("event-title").value = "";
@@ -225,6 +228,7 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
     // Group events by hour
+    // So for example, 12:00 through 12:59 will be the same group
     const eventsByHour = {};
     eventForDay.forEach((event) => {
       const hour = parseInt(event.time.split(":")[0], 10);
@@ -283,6 +287,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  // Event listeners for view changes
   viewSelector.addEventListener("change", (event) => {
     currentView = event.target.value;
     if (currentView === "day") {
@@ -303,6 +308,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  // Event listeners for view changes
   viewSelector.addEventListener("change", (event) => {
     currentView = event.target.value;
     if (currentView === "day") {
@@ -327,6 +333,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /**
    * Renders the today section of the calendar app.
+   * This is the section on the left hand side of the calendar
+   * that shows the current date and events for the day.
    */
   const renderTodaySection = () => {
     const year = today.getFullYear();
@@ -342,10 +350,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const todayEvents = events.filter((event) => event.date === todayDate);
 
     todayEventsContainer.innerHTML = "";
+    // Display the events for today
     if (todayEvents.length > 0) {
       todayEvents.forEach((event) => {
         const eventElement = document.createElement("div");
         eventElement.classList.add("event", event.category);
+        // Display the event title and description
+        // Generating the HTML for the event element
         eventElement.innerHTML = `
           <strong>${event.title}</strong>
           <p>${event.description}</p>
@@ -415,6 +426,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   };
 
+  // Event listeners for navigation through the calendar
   prevMonth.addEventListener("click", () => {
     if (currentView === "month") {
       currentDate.setMonth(currentDate.getMonth() - 1);
@@ -425,7 +437,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     renderCalendar(currentDate);
   });
-
+  // Event listeners for navigation through the calendar
   nextMonth.addEventListener("click", () => {
     if (currentView === "month") {
       currentDate.setMonth(currentDate.getMonth() + 1);
@@ -533,6 +545,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderTodaySection();
   };
 
+  // Event listeners for editing and deleting events
   document.addEventListener("click", (event) => {
     if (event.target.classList.contains("edit-button")) {
       const id = event.target.getAttribute("data-id");
@@ -557,6 +570,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  // Event listener for the search bar
   searchBar.addEventListener("input", (event) => {
     //Hide the day view, make the calendar-grid visible, and hide the week headers
     document.getElementById("day-view").style.display = "none";

@@ -1,17 +1,32 @@
+<!--
+This HTML file represents the calendar page of the web application.
+It contains the structure and layout of the calendar page, including the navigation bar, main content, and event modal.
+The calendar page allows users to view and manage their events and tasks in a calendar format.
+-->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- Meta tags and title -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Calendar</title>
+
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="./calendar-style.css" />
     <link rel="stylesheet" href="../assets/styles/main.css" />
+
+    <!-- JavaScript -->
     <script src="./calendar-app.js" defer></script>
   </head>
   <body>
+    <!-- Background -->
     <div class="background"></div>
+
+    <!-- Navigation bar -->
     <nav class="main-navbar">
       <section class="widgets">
+        <!-- Dashboard link -->
         <span class="nav-element"
           ><a href="../source/index.html"
             ><img
@@ -21,6 +36,8 @@
             />Dashboard</a
           ></span
         >
+
+        <!-- Journal link -->
         <span class="nav-element"
           ><a href="../journal/journal-page.html"
             ><img
@@ -30,6 +47,8 @@
             />Journal</a
           ></span
         >
+
+        <!-- To Do List link -->
         <span class="nav-element"
           ><a href="../to_do/to-do.html"
             ><img
@@ -39,6 +58,8 @@
             />To Do List</a
           ></span
         >
+
+        <!-- Calendar link (current page) -->
         <span class="nav-element"
           ><a href="../calendar/calendar-page.html"
             ><img
@@ -49,20 +70,28 @@
           ></span
         >
       </section>
+
+      <!-- Team logo -->
       <section class="logo">
         <span id="team-logo"
           ><img src="../assets/images/110Team30.png" />
         </span>
       </section>
     </nav>
+
+    <!-- Main content -->
     <div id="main-container">
       <div id="left-column">
+        <!-- Today's Date section -->
         <section id="today-section">
           <h2>Today's Date: <span id="today-date"></span></h2>
           <div id="today-events"></div>
         </section>
       </div>
+
+      <!-- Calendar app -->
       <main id="calendar-app">
+        <!-- Calendar header -->
         <div id="calendar-header" class="header-container">
           <button id="prev-month" class="nav-button">&lt;</button>
           <h2 id="current-month-year"></h2>
@@ -74,6 +103,8 @@
           </select>
           <input type="text" id="search-bar" placeholder="Search events..." />
         </div>
+
+        <!-- Calendar days -->
         <div id="calendar-days" class="calendar-header">
           <div class="day-header">Sun</div>
           <div class="day-header">Mon</div>
@@ -83,9 +114,12 @@
           <div class="day-header">Fri</div>
           <div class="day-header">Sat</div>
         </div>
+
+        <!-- Calendar grid -->
         <div id="calendar-grid"></div>
+
         <!-- Day view container -->
-        <div id = "day-view-button-container" class="day-view-button">
+        <div id="day-view-button-container" class="day-view-button">
           <button class="add-button" style="display: none;">Add Task</button>
           <div id="day-view" class="day-view-container" style="display: none;">
             <div class="hours-column"></div>
@@ -95,6 +129,7 @@
       </main>
     </div>
 
+    <!-- Event modal -->
     <div id="event-modal" class="modal">
       <div class="modal-content">
         <form id="event-form">
