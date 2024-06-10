@@ -11,10 +11,10 @@ function init() {
     rootUrl + "/journal/journal-page.html",
     rootUrl + "/calendar/calendar-page.html",
     rootUrl + "/calendar/",
-    "https://cse110-sp24-group30.github.io/cse110-sp24-group30/source/calendar/calendar-page.html",
-    "https://cse110-sp24-group30.github.io/cse110-sp24-group30/source/to_do/to-do.html",
-    "https://cse110-sp24-group30.github.io/cse110-sp24-group30/source/journal/journal-page.html",
-    "https://cse110-sp24-group30.github.io/cse110-sp24-group30/source/index.html",
+    "/cse110-sp24-group30/source/calendar/calendar-page.html",
+    "/cse110-sp24-group30/source/to_do/to-do.html",
+    "/cse110-sp24-group30/source/journal/journal-page.html",
+    "/cse110-sp24-group30/source/index.html",
   ];
   const sourcePath = window.location.pathname;
   console.log("current path is: " + sourcePath);
