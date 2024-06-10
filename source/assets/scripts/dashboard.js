@@ -201,3 +201,4 @@ function getEvents() {
 function getDoneTasks() {
   return JSON.parse(localStorage.getItem("done") || "[]");
 }
+
