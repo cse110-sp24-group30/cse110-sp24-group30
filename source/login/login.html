@@ -16,32 +16,26 @@
   <body>
     <div class="background"></div>
     <div class="dashboard">
-      <div id="left-column">
-        <div id="login-container">
-          <h2>Enter PIN</h2>
-          <form id="pin-form">
-            <div class="pin-input">
-              <label for="pin">PIN:</label>
-              <input
-                type="password"
-                id="pin"
-                name="pin"
-                maxlength="4"
-                required
-              />
-              <button
-                type="button"
-                id="toggle-pin-visibility"
-                class="show"
-              ></button>
-            </div>
-            <div id="submit-span">
-              <button type="submit" id="unlock-button">Unlock</button>
-            </div>
-            <div id="spinner" class="spinner"></div>
-            <p id="feedback-message"></p>
-          </form>
-        </div>
+      <div id="login-container">
+        <h2>Enter PIN</h2>
+        <form id="pin-form">
+          <div class="pin-input">
+            <label for="pin">PIN:</label>
+            <input type="password" id="pin" name="pin" maxlength="4" required />
+            <button
+              type="button"
+              id="toggle-pin-visibility"
+              class="show"
+            ></button>
+          </div>
+          <div id="remember-me-container">
+            <label for="remember-me">Remember Me</label>
+            <input type="checkbox" id="remember-me" name="remember-me" />
+          </div>
+          <button type="submit">Unlock</button>
+          <div id="spinner" class="spinner"></div>
+          <p id="feedback-message"></p>
+        </form>
       </div>
       <div id="meme-container">
         <h3>Random Meme</h3>
