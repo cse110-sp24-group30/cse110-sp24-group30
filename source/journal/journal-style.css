@@ -9,7 +9,6 @@ body, html {
     font-family: Arial, sans-serif;
     overflow: hidden;
     flex-direction: column;
-    overflow: auto;
 }
 
 .background {
@@ -96,12 +95,11 @@ body, html {
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 
     display: grid;
-    /*grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));*/
-    /* grid-template-columns: repeat(6, 150px); */
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     grid-gap: 20px;
     justify-items: center;
     align-items: center;
+    overflow-y: scroll;
 }
 
 /* Add Journal Button */
@@ -250,7 +248,7 @@ body, html {
 }
 
 /* Blend buttons to background */
-button {
+.button-container button {
     background-color: lightblue;
     outline: none;
     border: none;
@@ -282,6 +280,25 @@ button {
 .save-button, .cancel-button {
     padding: 5px 10px;
     cursor: pointer;
+
+    background-color: lightblue;
+    outline: none;
+    border: none;
+
+    border-radius: 10px;
+
+    width: 8em;
+    height: 2em;
+    font-size: 1em;
+    position: relative;
+}
+
+.save-button {
+    left: 1em;
+}
+
+.cancel-button {
+    right: 1em;
 }
 
 #subtitles {
