@@ -184,6 +184,10 @@ body, html {
     position: relative;
 }
 
+#markdown-title, #preview-title {
+    margin-bottom: 20px;
+}
+
 /* The live preview of the markdown to formatted html box*/
 .journal-entry div.journal-htmlOutput {
     border: 1px solid green;
