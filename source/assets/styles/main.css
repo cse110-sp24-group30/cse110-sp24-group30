@@ -250,6 +250,7 @@ button {
   }
 }
 
+/* Mobile Responsiveness */
 @media only screen and (max-width: 670px) {
   .dashboard,
   .widget-mood {
@@ -265,6 +266,11 @@ button {
 
   .main-canvas {
     overflow: scroll;
+    font-size: 10pt;
+  }
+
+  #widget-todo, #widget-journal, #widget-calendar {
+    font-size: 15pt;
   }
 
   .dashboard {
@@ -296,7 +302,7 @@ button {
   }
 
   .dashboard-widget {
-    width: calc(45% - 10px);
+    width: calc(17% - 10px);
     height: 25%;
     padding: 10px;
   }
