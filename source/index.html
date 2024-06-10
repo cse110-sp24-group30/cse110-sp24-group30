@@ -10,13 +10,14 @@
 
     <!-- Scripts -->
     <script src="./assets/scripts/main.js"></script>
+    <script src="../login/login.js"></script>
     <script src="../login/logout.js" defer></script>
     <script src="../source/assets/scripts/dashboard.js" type="module"></script>
   </head>
 
   <body>
     <div class="background"></div>
-    <div class="dashboard">
+    <div class="dashboard" id="protected-content">
       <!-- Nav Bar -->
       <nav class="main-navbar">
         <!-- Widgets -->
@@ -79,14 +80,14 @@
           Calendar Entries:</span
         >
         <div class="widget-mood">
-        <div id="mood-chart"> Mood Chart:</div>
-        <div id="mood-today"> Mood Widget:</div>
+          <div id="mood-chart">Mood Chart:</div>
+          <div id="mood-today">Mood Widget:</div>
         </div>
       </main>
     </div>
     <div class="loading-screen" id="loadingScreen">
       <div class="spinner"></div>
       <p>Loading, please wait...</p>
-  </div>
+    </div>
   </body>
 </html>
