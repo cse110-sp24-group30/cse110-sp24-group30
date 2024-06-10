@@ -14,18 +14,31 @@
   display: flex;
   border-radius: 25px;
   align-items: center;
-  justify-content: center;
   gap: 100px; /* Added gap between login and meme containers */
+  background-color: rgb(151, 182, 222);
 }
 
+#left-column {
+  background-image: url("../assets/images/loginwave.avif");
+  background-size: cover;
+  width: 40%;
+  height: 100%;
+  text-align: center;
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
 #login-container,
 #protected-content {
-  background-color: #ffffff;
   padding: 20px;
   border-radius: 8px;
+  background-color: white;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  width: 300px;
+  display: block;
+  width: 80%;
+  height: 30%;
   animation: fadeIn 0.5s ease;
 }
 
@@ -51,8 +64,8 @@
 .pin-input {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  position: relative; 
+  gap:20px;
+  justify-content: space-between;/
 }
 /* Styling for the PIN input field and show/hide button */
 #login-container input[type="password"],
@@ -65,7 +78,10 @@
   box-sizing: border-box;
   transition: border-color 0.3s;
   padding-right: 40px; /* Space for the icon */
+}
 
+#pin-form{
+  width: 100%;
 }
 
 #toggle-pin-visibility {
@@ -97,19 +113,28 @@
 }
 #login-container button,
 #protected-content a {
-  width: 100%;
   padding: 10px;
-  background-color: #28a745;
+  background-color: #487fb6;
   color: #ffffff;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   display: block;
-  margin-top: 10px;
+  width: 50%;
   text-decoration: none;
   text-align: center;
 }
 
+#unlock-button{
+  margin-top: 10px;
+}
+
+#submit-span{
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
 /* Error message styling */
 #error-message {
   display: none;
@@ -120,19 +145,6 @@
 
 #error-message.show {
   display: block;
-}
-
-/* Checkbox and label styling */
-#remember-me-container {
-  justify-content: center; /* Center the content */
-  font-size: 0.9em; /* Adjust font size */
-}
-#remember-me-container label {
-  margin-left: 5px;
-}
-#remember-me {
-  
-  margin-right: 5px;
 }
 
 /* Spinner styling */
@@ -174,13 +186,14 @@
   display: block;
 }
 /* Meme container styling */
+
 #meme-container {
-  background-color: #ffffff;
+  background-color: #ffffff8a;
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2l);
   text-align: center;
-  width: 300px;
+  width: 40%;
   animation: fadeIn 0.5s ease; /* Added animation */
 }
 
