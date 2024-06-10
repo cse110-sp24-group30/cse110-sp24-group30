@@ -14,14 +14,11 @@ function init() {
     "https://cse110-sp24-group30.github.io/cse110-sp24-group30/source/calendar/calendar-page.html",
     "https://cse110-sp24-group30.github.io/cse110-sp24-group30/source/to_do/to-do.html",
     "https://cse110-sp24-group30.github.io/cse110-sp24-group30/source/journal/journal-page.html",
-    "https://cse110-sp24-group30.github.io/cse110-sp24-group30/source/index.html"
+    "https://cse110-sp24-group30.github.io/cse110-sp24-group30/source/index.html",
   ];
-
-  console.log(protectedPaths);
-  console.log(localStorage.getItem("pinVerified"));
   const sourcePath = window.location.pathname;
-
-  console.log(sourcePath);
+  console.log("current path is: " + sourcePath);
+  console.log("is verified: " + sessionStorage.getItem("pinVerified"));
   if (
     !sessionStorage.getItem("pinVerified") &&
     protectedPaths.includes(sourcePath)
