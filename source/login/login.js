@@ -15,7 +15,8 @@ document.addEventListener("DOMContentLoaded", function () {
     !sessionStorage.getItem("pinVerified") &&
     protectedKeyWords.some((substring) => sourcePath.includes(substring))
   ) {
-    window.location.href = rootUrl + "source/login/login.html";
+    window.location.href =
+      "https://cse110-sp24-group30.github.io/cse110-sp24-group30/login/login.html";
   }
   let correctPin;
   const pinForm = document.getElementById("pin-form");
