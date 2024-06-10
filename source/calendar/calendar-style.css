@@ -78,7 +78,7 @@ body {
   width: 15%;
   flex-direction: column;
   gap: 20px;
-  height: 70vh;
+  height: 715px;
 }
 
 #today-section {
@@ -101,7 +101,7 @@ body {
 #calendar-app {
   flex: 2;
   max-width: 60%;
-  height: 70vh;
+  height: 650px;
   margin: 20px auto;
   padding: 20px;
   background-color: rgb(116, 203, 223, 0.80);
