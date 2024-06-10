@@ -108,7 +108,7 @@ body, html {
     grid-gap: 20px;
     justify-items: center;
     align-items: center;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 /* Add Journal Button */
