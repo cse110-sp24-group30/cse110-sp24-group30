@@ -243,6 +243,13 @@ button {
   }
 }
 
+/* TODO: Adjust font size for phone screen */
+@media (max-width: 425px) {
+  .main-canvas {
+    font-size: medium;
+  }
+}
+
 @media only screen and (max-width: 670px) {
   .dashboard,
   .widget-mood {
