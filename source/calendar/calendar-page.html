@@ -1,21 +1,38 @@
+<!--
+This HTML file represents the calendar page of the web application.
+It contains the structure and layout of the calendar page, including the navigation bar, main content, and event modal.
+The calendar page allows users to view and manage their events and tasks in a calendar format.
+-->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- Meta tags and title -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Calendar</title>
+
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="./calendar-style.css" />
     <link rel="stylesheet" href="../assets/styles/main.css" />
+
+    <!-- JavaScript -->
+    <script src="./calendar-app.js" defer></script>
     <script src="../assets/scripts/main.js"></script>
     <script src="./calendar-app.js" defer></script>
     <script src="../assets/scripts/main.js"></script>
     <script src="../login/logout.js" defer></script>
   </head>
   <body>
+    <!-- Background -->
     <div class="background"></div>
+    <div class="dashboard">
+
+
+    <!-- Navigation bar -->
     <nav class="main-navbar">
-      <!-- Widgets -->
       <section class="widgets">
+        <!-- Dashboard link -->
         <span class="nav-element"
           ><a href="../index.html"
             ><img
@@ -25,6 +42,8 @@
             />Dashboard</a
           ></span
         >
+
+        <!-- Journal link -->
         <span class="nav-element"
           ><a href="../journal/journal-page.html"
             ><img
@@ -34,6 +53,8 @@
             />Journal</a
           ></span
         >
+
+        <!-- To Do List link -->
         <span class="nav-element"
           ><a href="../to_do/to-do.html"
             ><img
@@ -43,16 +64,20 @@
             />To Do List</a
           ></span
         >
+
+        <!-- Calendar link (current page) -->
         <span class="nav-element"
           ><a href="../calendar/calendar-page.html"
             ><img
               class="nav-icon"
-              src="../assets/icons/dateFillWhite.png"
+              src="../assets/icons/dateFillBlue.png"
               alt="calendarButton"
             />Calendar</a
           ></span
         >
       </section>
+
+      <!-- Team logo -->
       <section class="logo">
         <span id="team-logo"
           ><img src="../assets/images/110Team30.png" />
@@ -62,19 +87,21 @@
         </span>
       </section>
     </nav>
+
+    <!-- Main content -->
     <div id="main-container">
       <div id="left-column">
+        <!-- Today's Date section -->
         <section id="today-section">
           <h2>Today's Date: <span id="today-date"></span></h2>
           <div id="today-events"></div>
         </section>
-        <section id="upcoming-tasks">
-          <h2>Upcoming Tasks: <span id="upcoming-date"></span></h2>
-          <div id="upcoming-events"></div>
-        </section>
       </div>
+
+      <!-- Calendar app -->
       <main id="calendar-app">
-        <div id="calendar-header">
+        <!-- Calendar header -->
+        <div id="calendar-header" class="header-container">
           <button id="prev-month" class="nav-button">&lt;</button>
           <h2 id="current-month-year"></h2>
           <button id="next-month" class="nav-button">&gt;</button>
@@ -84,13 +111,9 @@
             <option value="day">Day</option>
           </select>
           <input type="text" id="search-bar" placeholder="Search events..." />
-          <select id="category-filter" class="category-filter">
-            <option value="all">All Categories</option>
-            <option value="work">Work</option>
-            <option value="personal">Personal</option>
-            <option value="urgent">Urgent</option>
-          </select>
         </div>
+
+        <!-- Calendar days -->
         <div id="calendar-days" class="calendar-header">
           <div class="day-header">Sun</div>
           <div class="day-header">Mon</div>
@@ -100,26 +123,37 @@
           <div class="day-header">Fri</div>
           <div class="day-header">Sat</div>
         </div>
+
+        <!-- Calendar grid -->
         <div id="calendar-grid"></div>
+
+        <!-- Day view container -->
+        <div id="day-view-button-container" class="day-view-button">
+          <button class="add-button" style="display: none;">Add Task</button>
+          <div id="day-view" class="day-view-container" style="display: none;">
+            <div class="hours-column"></div>
+            <div class="tasks-column"></div>
+          </div>
+        </div>
       </main>
     </div>
 
+    <!-- Event modal -->
     <div id="event-modal" class="modal">
       <div class="modal-content">
-        <span class="close-button">&times;</span>
         <form id="event-form">
           <input type="hidden" id="event-id" name="event-id" />
           <div class="form-group">
             <label for="event-title">Event Title:</label>
-            <input type="text" id="event-title" name="event-title" required />
+            <input type="text" id="event-title" name="event-title" placeholder="Enter event title" required />
           </div>
           <div class="form-group">
-            <label for="event-category">Category:</label>
-            <select id="event-category" name="event-category" required>
-              <option value="work">Work</option>
-              <option value="personal">Personal</option>
-              <option value="urgent">Urgent</option>
-            </select>
+            <label for="event-description">Event Description:</label>
+            <textarea
+              id="event-description"
+              name="event-description"
+              placeholder="Enter event description"
+              ></textarea>
           </div>
           <div class="form-group">
             <label for="event-date">Event Date:</label>
@@ -127,37 +161,27 @@
           </div>
           <div class="form-group">
             <label for="event-time">Event Time:</label>
-            <input type="time" id="event-time" name="event-time" />
+            <input type="time" id="event-time" name="event-time" required />
           </div>
           <div class="form-group">
-            <label for="event-recurrence">Recurrence:</label>
-            <select id="event-recurrence" name="event-recurrence">
-              <option value="none">None</option>
-              <option value="daily">Daily</option>
-              <option value="weekly">Weekly</option>
-              <option value="monthly">Monthly</option>
+            <label for="event-category">Category:</label>
+            <select id="event-category" name="event-category" required>
+              <option value="personal">Personal</option>
+              <option value="work">Work</option>
+              <option value="school">School</option>
+              <option value="other">Other</option>
             </select>
           </div>
-          <div class="form-group">
-            <label for="event-description">Event Description:</label>
-            <textarea
-              id="event-description"
-              name="event-description"
-              required
-            ></textarea>
+
+          <div class = "button-container">
+            <button type="submit" class="save-button">Save Event</button>
+            <button type="submit" class="cancel-button">Cancel</button>
+            <button type="submit" class="task-delete-button">Delete</button>
           </div>
-          <div class="form-group">
-            <label for="event-reminder">Reminder:</label>
-            <input
-              type="datetime-local"
-              id="event-reminder"
-              name="event-reminder"
-            />
-          </div>
-          <button type="submit" class="save-button">Save Event</button>
         </form>
       </div>
     </div>
+  </div>
     <div class="loading-screen" id="loadingScreen">
       <div class="spinner"></div>
       <p>Loading, please wait...</p>
